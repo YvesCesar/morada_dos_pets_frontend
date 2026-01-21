@@ -1,0 +1,91 @@
+/* =============================================
+   MORADA DOS PETS - Design System Variables
+   ============================================= */
+
+:root {
+  /* Colors */
+  --color-primary: #291000;
+  --color-primary-light: #dbb947;
+  --color-secondary: #fbf8ed;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-text: #1e1e1e;
+  --color-text-muted: #5f5d5d;
+  
+  /* Typography */
+  --font-primary: 'Quicksand', sans-serif;
+  --font-logo: 'Rammetto One', cursive;
+  
+  /* Font Sizes */
+  --text-xs: 0.875rem;    /* 14px */
+  --text-sm: 1rem;        /* 16px */
+  --text-base: 1.125rem;  /* 18px */
+  --text-lg: 1.25rem;     /* 20px */
+  --text-xl: 1.5rem;      /* 24px */
+  --text-2xl: 2rem;       /* 32px */
+  --text-3xl: 2.5rem;     /* 40px */
+  --text-4xl: 3rem;       /* 48px */
+  
+  /* Font Weights */
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  
+  /* Spacing */
+  --spacing-xs: 0.5rem;   /* 8px */
+  --spacing-sm: 1rem;     /* 16px */
+  --spacing-md: 1.5rem;   /* 24px */
+  --spacing-lg: 2rem;     /* 32px */
+  --spacing-xl: 3rem;     /* 48px */
+  --spacing-2xl: 4rem;    /* 64px */
+  --spacing-3xl: 6rem;    /* 96px */
+  
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 21px;
+  --radius-full: 50%;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 300ms ease;
+  --transition-slow: 500ms ease;
+  
+  /* Container */
+  --container-max: 1440px;
+  --container-padding: 135px;
+  
+  /* Z-index */
+  --z-header: 100;
+  --z-modal: 200;
+  --z-tooltip: 300;
+}
+
+/* Responsive Container Padding */
+@media (max-width: 1200px) {
+  :root {
+    --container-padding: 80px;
+  }
+}
+
+@media (max-width: 992px) {
+  :root {
+    --container-padding: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --container-padding: 24px;
+    --text-4xl: 2rem;
+    --text-3xl: 1.75rem;
+    --text-2xl: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --container-padding: 16px;
+  }
+}
