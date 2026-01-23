@@ -126,7 +126,7 @@ const addresses = [
   font-family: var(--font-logo);
   font-size: var(--text-xl);
   color: var(--color-primary);
-  margin-left: -0.5rem;
+  margin-left: 6px;
 }
 
 .footer__social {
