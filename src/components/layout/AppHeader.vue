@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useRoute, RouterLink } from 'vue-router'
 import logoSvg from '@/assets/images/logo-casa.svg'
 
+const route = useRoute()
 const isMenuOpen = ref(false)
 
 const toggleMenu = () => {
@@ -13,21 +15,28 @@ const closeMenu = () => {
 }
 
 const navLinks = [
-  { name: 'Início', href: '#inicio', active: true },
-  { name: 'Quem somos', href: '#quem-somos', active: false },
-  { name: 'Serviços', href: '#servicos', active: false },
-  { name: 'Contato', href: '#contato', active: false }
+  { name: 'Início', to: '/', isRoute: true },
+  { name: 'Quem somos', to: '/quem-somos', isRoute: true },
+  { name: 'Serviços', href: '/#servicos', isRoute: false },
+  { name: 'Contato', href: '/#contato', isRoute: false }
 ]
+
+const isActive = (link: typeof navLinks[0]) => {
+  if (link.isRoute) {
+    return route.path === link.to
+  }
+  return false
+}
 </script>
 
 <template>
   <header class="header">
     <div class="header__container">
       <!-- Logo -->
-      <a href="#" class="header__logo">
+      <RouterLink to="/" class="header__logo">
         <img :src="logoSvg" alt="Morada dos Pets" class="header__logo-icon" />
         <span class="header__logo-text">Morada dos Pets</span>
-      </a>
+      </RouterLink>
 
       <!-- Mobile Menu Button -->
       <button
@@ -45,10 +54,19 @@ const navLinks = [
       <nav class="header__nav" :class="{ 'is-open': isMenuOpen }">
         <ul class="header__nav-list">
           <li v-for="link in navLinks" :key="link.name" class="header__nav-item">
+            <RouterLink
+              v-if="link.isRoute"
+              :to="link.to!"
+              class="header__nav-link"
+              :class="{ 'is-active': isActive(link) }"
+              @click="closeMenu"
+            >
+              {{ link.name }}
+            </RouterLink>
             <a
+              v-else
               :href="link.href"
               class="header__nav-link"
-              :class="{ 'is-active': link.active }"
               @click="closeMenu"
             >
               {{ link.name }}

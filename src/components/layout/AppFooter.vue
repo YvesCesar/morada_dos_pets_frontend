@@ -1,13 +1,14 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 import footerWave from '@/assets/images/footer-wave.svg'
 import logoPataSvg from '@/assets/images/logo-pata.svg'
 import logoCasaSvg from '@/assets/images/logo-casa.svg'
 
 const menuLinks = [
-  { name: 'Home', href: '#inicio' },
-  { name: 'Quem somos', href: '#quem-somos' },
-  { name: 'Serviços', href: '#servicos' },
-  { name: 'Contato', href: '#contato' }
+  { name: 'Home', to: '/', isRoute: true },
+  { name: 'Quem somos', to: '/quem-somos', isRoute: true },
+  { name: 'Serviços', href: '/#servicos', isRoute: false },
+  { name: 'Contato', href: '/#contato', isRoute: false }
 ]
 
 const addresses = [
@@ -71,7 +72,14 @@ const socialLinks = [
           <h3 class="footer__heading">Menu</h3>
           <ul class="footer__list">
             <li v-for="link in menuLinks" :key="link.name">
-              <a :href="link.href" class="footer__link">{{ link.name }}</a>
+              <RouterLink
+                v-if="link.isRoute"
+                :to="link.to!"
+                class="footer__link"
+              >
+                {{ link.name }}
+              </RouterLink>
+              <a v-else :href="link.href" class="footer__link">{{ link.name }}</a>
             </li>
           </ul>
         </nav>
