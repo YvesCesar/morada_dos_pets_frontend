@@ -1,6 +1,25 @@
 <script setup lang="ts">
-import videoThumbnail from '@/assets/images/video-thumbnail.png'
+import { ref } from 'vue'
+import videoSource from '@/assets/images/morada_dos_pets_presentation.mp4'
 import playButton from '@/assets/images/play-button.svg'
+
+const videoRef = ref<HTMLVideoElement | null>(null)
+const isPlaying = ref(false)
+
+const togglePlay = () => {
+  if (videoRef.value) {
+    if (isPlaying.value) {
+      videoRef.value.pause()
+    } else {
+      videoRef.value.play()
+    }
+    isPlaying.value = !isPlaying.value
+  }
+}
+
+const onVideoEnded = () => {
+  isPlaying.value = false
+}
 </script>
 
 <template>
@@ -8,8 +27,19 @@ import playButton from '@/assets/images/play-button.svg'
     <div class="about__container">
       <!-- Video Area -->
       <div class="about__video">
-        <img :src="videoThumbnail" alt="Vídeo sobre a Morada dos Pets" class="about__thumbnail" />
-        <button class="about__play-btn" aria-label="Reproduzir vídeo">
+        <video
+          ref="videoRef"
+          class="about__media"
+          :src="videoSource"
+          @ended="onVideoEnded"
+          @click="togglePlay"
+        ></video>
+        <button
+          v-show="!isPlaying"
+          class="about__play-btn"
+          aria-label="Reproduzir vídeo"
+          @click="togglePlay"
+        >
           <img :src="playButton" alt="" />
         </button>
       </div>
@@ -49,9 +79,10 @@ import playButton from '@/assets/images/play-button.svg'
   border-radius: var(--radius-lg);
   overflow: hidden;
   aspect-ratio: 590 / 330;
+  cursor: pointer;
 }
 
-.about__thumbnail {
+.about__media {
   width: 100%;
   height: 100%;
   object-fit: cover;
