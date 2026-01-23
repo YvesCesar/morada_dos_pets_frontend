@@ -7,17 +7,20 @@ const services = [
   {
     image: dogSpa,
     title: 'Dog Spa',
-    alt: 'Cachorro no spa'
+    alt: 'Cachorro no spa',
+    description: 'Oferecemos tratamentos de spa personalizados, tosas profissionais e cuidados de alta qualidade para deixar seu cão relaxado'
   },
   {
     image: hospedagem,
     title: 'Hospedagem',
-    alt: 'Cachorro na hospedagem'
+    alt: 'Cachorro na hospedagem',
+    description: 'Proporcionamos conforto, diversão, garantindo que seu amigo de quatro patas tenha uma estadia feliz e tranquila enquanto você estiver ausente'
   },
   {
     image: dogTaxi,
     title: 'Dog Táxi',
-    alt: 'Cachorro no táxi'
+    alt: 'Cachorro no táxi',
+    description: 'Transporte seguro e confiável, garantindo viagens confortáveis'
   }
 ]
 </script>
@@ -36,6 +39,13 @@ const services = [
         <img :src="service.image" :alt="service.alt" class="services__image" />
         <div class="services__overlay"></div>
         <h3 class="services__card-title">{{ service.title }}</h3>
+        
+        <!-- Hover Content -->
+        <div class="services__hover-content">
+          <h3 class="services__hover-title">{{ service.title }}</h3>
+          <p class="services__hover-description">{{ service.description }}</p>
+          <button class="services__hover-btn">Saiba mais</button>
+        </div>
       </article>
     </div>
   </section>
@@ -87,10 +97,6 @@ const services = [
   transition: transform var(--transition-slow);
 }
 
-.services__card:hover .services__image {
-  transform: scale(1.05);
-}
-
 .services__overlay {
   position: absolute;
   inset: 0;
@@ -102,29 +108,111 @@ const services = [
     rgba(113, 110, 110, 0.72) 75%,
     rgba(217, 217, 217, 0) 100%
   );
+  opacity: 1;
   transition: opacity var(--transition-base);
-}
-
-.services__card:hover .services__overlay {
-  opacity: 0.8;
 }
 
 .services__card-title {
   position: absolute;
-  top: 50%;
+  top: 286px;
   left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: var(--text-3xl);
-  font-weight: var(--font-semibold);
+  transform: translateX(-50%);
+  font-family: 'Quicksand', sans-serif;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1.25em;
   color: var(--color-white);
   text-align: center;
   z-index: 1;
+  transition: opacity var(--transition-base);
+}
+
+.services__card:hover .services__card-title {
+  opacity: 0;
+}
+
+/* Hover Content */
+.services__hover-content {
+  position: absolute;
+  top: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 52px;
+  width: 300px;
+  text-align: center;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.services__card:hover .services__hover-content {
+  opacity: 1;
+}
+
+.services__hover-title {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1.25em;
+  color: var(--color-white);
+}
+
+.services__hover-description {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.25em;
+  color: var(--color-white);
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+}
+
+.services__hover-btn {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.25em;
+  color: var(--color-white);
+  background: var(--color-primary);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 24px;
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+
+.services__hover-btn:hover {
+  opacity: 0.9;
 }
 
 /* Responsive */
 @media (max-width: 1200px) {
   .services__card {
     height: 450px;
+  }
+
+  .services__card-title {
+    top: 220px;
+    font-size: 32px;
+  }
+
+  .services__hover-content {
+    top: 100px;
+    gap: 30px;
+    width: 250px;
+  }
+
+  .services__hover-title {
+    font-size: 32px;
+  }
+
+  .services__hover-description {
+    font-size: 16px;
+    min-height: 100px;
   }
 }
 
@@ -143,7 +231,29 @@ const services = [
   }
 
   .services__card-title {
-    font-size: var(--text-2xl);
+    top: 170px;
+    font-size: 28px;
+  }
+
+  .services__hover-content {
+    top: 60px;
+    gap: 24px;
+    width: 80%;
+    max-width: 400px;
+  }
+
+  .services__hover-title {
+    font-size: 28px;
+  }
+
+  .services__hover-description {
+    font-size: 14px;
+    min-height: auto;
+  }
+
+  .services__hover-btn {
+    font-size: 16px;
+    padding: 6px 20px;
   }
 }
 
@@ -163,6 +273,29 @@ const services = [
   .services__card {
     height: 280px;
   }
+
+  .services__card-title {
+    top: 130px;
+    font-size: 24px;
+  }
+
+  .services__hover-content {
+    top: 40px;
+    gap: 16px;
+  }
+
+  .services__hover-title {
+    font-size: 24px;
+  }
+
+  .services__hover-description {
+    font-size: 13px;
+  }
+
+  .services__hover-btn {
+    font-size: 14px;
+    padding: 6px 16px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -171,7 +304,28 @@ const services = [
   }
 
   .services__card-title {
-    font-size: var(--text-lg);
+    top: 100px;
+    font-size: 20px;
+  }
+
+  .services__hover-content {
+    top: 20px;
+    gap: 12px;
+    width: 90%;
+  }
+
+  .services__hover-title {
+    font-size: 20px;
+  }
+
+  .services__hover-description {
+    font-size: 12px;
+    line-height: 1.3em;
+  }
+
+  .services__hover-btn {
+    font-size: 12px;
+    padding: 5px 14px;
   }
 }
 </style>
