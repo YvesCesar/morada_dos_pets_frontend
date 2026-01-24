@@ -6,14 +6,14 @@ import type { NavLink, SocialLink } from '@/types'
 export const navLinks: NavLink[] = [
   { name: 'Início', to: '/', isRoute: true },
   { name: 'Quem somos', to: '/quem-somos', isRoute: true },
-  { name: 'Serviços', href: '/#servicos', isRoute: false },
+  { name: 'Serviços', to: '/servicos', isRoute: true },
   { name: 'Contato', href: '/#contato', isRoute: false },
 ]
 
 export const footerMenuLinks: NavLink[] = [
   { name: 'Home', to: '/', isRoute: true },
   { name: 'Quem somos', to: '/quem-somos', isRoute: true },
-  { name: 'Serviços', href: '/#servicos', isRoute: false },
+  { name: 'Serviços', to: '/servicos', isRoute: true },
   { name: 'Contato', href: '/#contato', isRoute: false },
 ]
 

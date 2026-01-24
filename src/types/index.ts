@@ -46,6 +46,26 @@ export interface Testimonial {
 }
 
 // ============================================
+// Clients Carousel
+// ============================================
+
+export interface ClientImage {
+  id: number
+  image: string
+  alt: string
+}
+
+// ============================================
+// Tutorial Steps
+// ============================================
+
+export interface TutorialStep {
+  id: number
+  title: string
+  description: string
+}
+
+// ============================================
 // Units
 // ============================================
 
