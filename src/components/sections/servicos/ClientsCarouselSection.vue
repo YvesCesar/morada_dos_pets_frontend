@@ -125,6 +125,8 @@ const getTranslateX = () => {
   position: relative;
   width: 100%;
   height: 307px;
+  padding-top: 14px;
+  padding-bottom: 24px;
 }
 
 .clients-carousel__arrow {
@@ -164,7 +166,7 @@ const getTranslateX = () => {
 .clients-carousel__container {
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .clients-carousel__track {
@@ -184,6 +186,16 @@ const getTranslateX = () => {
   height: 307px;
   border-radius: 10px;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s;
+  cursor: pointer;
+}
+
+.clients-carousel__card:hover {
+  transform: scale(1.09) translateY(-14px);
+  z-index: 10;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
 .clients-carousel__image {
@@ -229,8 +241,14 @@ const getTranslateX = () => {
     height: 264px;
   }
 
+  .clients-carousel__card:hover {
+    transform: scale(1.09) translateY(-12px);
+  }
+
   .clients-carousel__wrapper {
     height: 264px;
+    padding-top: 12px;
+    padding-bottom: 20px;
   }
 }
 
@@ -240,8 +258,14 @@ const getTranslateX = () => {
     height: 226px;
   }
 
+  .clients-carousel__card:hover {
+    transform: scale(1.09) translateY(-10px);
+  }
+
   .clients-carousel__wrapper {
     height: 226px;
+    padding-top: 10px;
+    padding-bottom: 18px;
   }
 
   .clients-carousel__arrow-icon {
@@ -253,11 +277,17 @@ const getTranslateX = () => {
 @media (max-width: 992px) {
   .clients-carousel__wrapper {
     height: 200px;
+    padding-top: 8px;
+    padding-bottom: 16px;
   }
 
   .clients-carousel__card {
     width: 260px;
     height: 200px;
+  }
+
+  .clients-carousel__card:hover {
+    transform: scale(1.09) translateY(-8px);
   }
 
   .clients-carousel__arrow-icon {
@@ -277,6 +307,8 @@ const getTranslateX = () => {
 
   .clients-carousel__wrapper {
     padding: 0 var(--container-padding);
+    padding-top: 0;
+    padding-bottom: 0;
     height: 250px;
   }
 
@@ -292,6 +324,13 @@ const getTranslateX = () => {
     width: 100%;
     flex-shrink: 0;
     height: 250px;
+    cursor: default;
+  }
+
+  .clients-carousel__card:hover {
+    transform: none;
+    box-shadow: none;
+    z-index: 1;
   }
 }
 
