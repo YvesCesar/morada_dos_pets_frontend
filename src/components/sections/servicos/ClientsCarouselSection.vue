@@ -1,72 +1,35 @@
 <script setup lang="ts">
-
-
-import { ref, computed, onMounted, onUnmounted } from 'vue'
-import arrowCarousel from '@/assets/images/arrow-carousel.svg'
-import { useSwipe } from '@/composables'
-import { useCarousel } from '@/composables/useCarousel'
+import { useViewport, useInfiniteCarousel, useSwipe } from '@/composables'
 import { clients } from '@/data/clients'
+import { CAROUSEL_CONFIG } from '@/config/carousel'
+import arrowCarousel from '@/assets/images/arrow-carousel.svg'
 
+// Composables
+const { isMobile } = useViewport()
 
-
-// Triplica o array para efeito visual infinito
-const extendedClients = computed(() => [...clients, ...clients, ...clients])
-const groupSize = clients.length
-const offset = groupSize // início do grupo do meio
-
-// useCarousel controla o índice do carrossel visual
-const { currentIndex, next, prev } = useCarousel(extendedClients.value, { initialIndex: offset, loop: true })
-
-const isMobile = ref(false)
-const isTransitioning = ref(true)
-const cardWidth = 407
-const gap = 9
-
-const checkViewport = () => {
-  isMobile.value = window.innerWidth <= 768
-}
-
-onMounted(() => {
-  checkViewport()
-  window.addEventListener('resize', checkViewport)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', checkViewport)
-})
-
-const getTranslateX = () => {
-  if (isMobile.value) {
-    return `translateX(-${currentIndex.value * 100}%)`
-  }
-  return `translateX(-${currentIndex.value * (cardWidth + gap)}px)`
-}
-
-// Efeito infinito real: teleporta para o grupo do meio ao chegar nas bordas
-const handleTransitionEnd = () => {
-  if (currentIndex.value >= groupSize * 2) {
-    isTransitioning.value = false
-    currentIndex.value = offset
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        isTransitioning.value = true
-      })
-    })
-  } else if (currentIndex.value < groupSize) {
-    isTransitioning.value = false
-    currentIndex.value = offset + (currentIndex.value % groupSize)
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        isTransitioning.value = true
-      })
-    })
-  }
-}
+const {
+  currentIndex,
+  extendedItems: extendedClients,
+  realIndex,
+  isTransitioning,
+  next,
+  prev,
+  goTo,
+  handleTransitionEnd,
+} = useInfiniteCarousel(clients)
 
 const { handleTouchStart, handleTouchMove, handleTouchEnd } = useSwipe({
   onSwipeLeft: next,
   onSwipeRight: prev,
 })
+
+// Computed transform
+const getTranslateX = () => {
+  if (isMobile.value) {
+    return `translateX(-${currentIndex.value * 100}%)`
+  }
+  return `translateX(-${currentIndex.value * (CAROUSEL_CONFIG.CARD_WIDTH + CAROUSEL_CONFIG.GAP)}px)`
+}
 </script>
 
 <template>
@@ -129,9 +92,9 @@ const { handleTouchStart, handleTouchMove, handleTouchEnd } = useSwipe({
         v-for="(client, index) in clients"
         :key="client.id"
         class="clients-carousel__dot"
-        :class="{ 'clients-carousel__dot--active': ((currentIndex - offset + groupSize) % groupSize) === index }"
+        :class="{ 'clients-carousel__dot--active': realIndex === index }"
         :aria-label="`Ir para cliente ${index + 1}`"
-        @click="currentIndex = offset + index"
+        @click="goTo(index)"
       />
     </div>
   </section>
