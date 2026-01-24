@@ -126,7 +126,7 @@ import { tutorialSteps } from '@/data/tutorialSteps'
 
 .tutorial__step-title {
   font-size: var(--text-base);
-  font-weight: var(--font-regular);
+  font-weight: var(--font-semibold);
   color: var(--color-text);
   line-height: 1.25;
 }
