@@ -4,25 +4,31 @@ import iconSeguranca from '@/assets/images/icon-seguranca.svg'
 import iconAmbiente from '@/assets/images/icon-pata.svg'
 import iconAtividades from '@/assets/images/icon-atividades.svg'
 
-const features = [
+interface Feature {
+  icon: string
+  titleLines: string[]
+  alt: string
+}
+
+const features: Feature[] = [
   {
     icon: iconEquipe,
-    title: 'Equipe especializada',
+    titleLines: ['Equipe especializada'],
     alt: 'Ícone de funcionário'
   },
   {
     icon: iconSeguranca,
-    title: 'Segurança\n24 horas',
+    titleLines: ['Segurança', '24 horas'],
     alt: 'Ícone de câmera'
   },
   {
     icon: iconAmbiente,
-    title: 'Ambientes\npersonalizados',
+    titleLines: ['Ambientes', 'personalizados'],
     alt: 'Ícone de pata'
   },
   {
     icon: iconAtividades,
-    title: 'Atividades diversificadas',
+    titleLines: ['Atividades diversificadas'],
     alt: 'Ícone de atividades'
   }
 ]
@@ -31,11 +37,15 @@ const features = [
 <template>
   <section class="features">
     <div class="features__container">
-      <div v-for="(feature, index) in features" :key="feature.title" class="features__item">
+      <div v-for="(feature, index) in features" :key="feature.titleLines.join('-')" class="features__item">
         <div class="features__icon">
           <img :src="feature.icon" :alt="feature.alt" />
         </div>
-        <p class="features__title" v-html="feature.title.replace('\n', '<br>')"></p>
+        <p class="features__title">
+          <template v-for="(line, lineIndex) in feature.titleLines" :key="lineIndex">
+            {{ line }}<br v-if="lineIndex < feature.titleLines.length - 1" />
+          </template>
+        </p>
         <div v-if="index < features.length - 1" class="features__separator"></div>
       </div>
     </div>

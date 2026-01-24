@@ -56,14 +56,21 @@ const touchEndX = ref(0)
 const minSwipeDistance = 50
 
 const handleTouchStart = (e: TouchEvent) => {
-  touchStartX.value = e.touches[0].clientX
+  const touch = e.touches[0]
+  if (!touch) return
+  touchStartX.value = touch.clientX
 }
 
 const handleTouchMove = (e: TouchEvent) => {
-  touchEndX.value = e.touches[0].clientX
+  const touch = e.touches[0]
+  if (!touch) return
+  touchEndX.value = touch.clientX
 }
 
 const handleTouchEnd = () => {
+  // Verifica se houve interação válida
+  if (touchStartX.value === 0) return
+
   const swipeDistance = touchStartX.value - touchEndX.value
 
   if (Math.abs(swipeDistance) > minSwipeDistance) {

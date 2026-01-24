@@ -2,11 +2,13 @@
 import bannerQuemSomos from '@/assets/images/banner-quem-somos.png'
 
 interface Props {
-  title?: string
-  subtitle?: string
+  /** Título principal do banner */
+  title: string
+  /** Subtítulo descritivo */
+  subtitle: string
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   title: 'Quem somos?',
   subtitle: 'Como tudo começou...'
 })
