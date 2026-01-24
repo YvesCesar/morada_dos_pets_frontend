@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useViewport, useInfiniteCarousel, useSwipe } from '@/composables'
 import { clients } from '@/data/clients'
-import { CAROUSEL_CONFIG } from '@/config/carousel'
+import { CAROUSEL_CONFIG, CAROUSEL_BREAKPOINTS } from '@/config/carousel'
 import arrowCarousel from '@/assets/images/arrow-carousel.svg'
 
 // Composables
-const { isMobile } = useViewport()
+const { isMobile, width } = useViewport()
 
 const {
   currentIndex,
@@ -23,12 +24,33 @@ const { handleTouchStart, handleTouchMove, handleTouchEnd } = useSwipe({
   onSwipeRight: prev,
 })
 
+// Computed card width based on viewport
+const cardWidth = computed(() => {
+  if (isMobile.value) {
+    return 0 // Mobile uses percentage, not pixels
+  }
+  
+  if (width.value <= 992) {
+    return CAROUSEL_BREAKPOINTS.SMALL.cardWidth
+  }
+  if (width.value <= 1200) {
+    return CAROUSEL_BREAKPOINTS.MEDIUM.cardWidth
+  }
+  if (width.value <= 1400) {
+    return CAROUSEL_BREAKPOINTS.LARGE.cardWidth
+  }
+  return CAROUSEL_CONFIG.CARD_WIDTH
+})
+
 // Computed transform
 const getTranslateX = () => {
   if (isMobile.value) {
     return `translateX(-${currentIndex.value * 100}%)`
   }
-  return `translateX(-${currentIndex.value * (CAROUSEL_CONFIG.CARD_WIDTH + CAROUSEL_CONFIG.GAP)}px)`
+  
+  // Calculate transform using the correct card width for the current viewport
+  const cardAndGap = cardWidth.value + CAROUSEL_CONFIG.GAP
+  return `translateX(-${currentIndex.value * cardAndGap}px)`
 }
 </script>
 
@@ -56,7 +78,6 @@ const getTranslateX = () => {
         @touchend="handleTouchEnd"
       >
         <div
-          ref="trackRef"
           class="clients-carousel__track"
           :class="{ 'clients-carousel__track--no-transition': !isTransitioning }"
           :style="{ transform: getTranslateX() }"
@@ -104,7 +125,8 @@ const getTranslateX = () => {
 .clients-carousel {
   background: var(--color-white);
   padding: 3rem 0 4rem;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
 }
 
 .clients-carousel__header {
@@ -127,6 +149,10 @@ const getTranslateX = () => {
   height: 307px;
   padding-top: 14px;
   padding-bottom: 24px;
+  overflow: visible;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  box-sizing: border-box;
 }
 
 .clients-carousel__arrow {
@@ -167,6 +193,7 @@ const getTranslateX = () => {
   width: 100%;
   height: 100%;
   overflow: visible;
+  position: relative;
 }
 
 .clients-carousel__track {
@@ -174,6 +201,8 @@ const getTranslateX = () => {
   gap: 9px;
   transition: transform 0.4s ease;
   height: 100%;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .clients-carousel__track--no-transition {
@@ -306,7 +335,8 @@ const getTranslateX = () => {
   }
 
   .clients-carousel__wrapper {
-    padding: 0 var(--container-padding);
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
     padding-top: 0;
     padding-bottom: 0;
     height: 250px;
