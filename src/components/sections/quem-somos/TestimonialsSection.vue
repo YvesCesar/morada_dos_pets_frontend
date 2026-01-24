@@ -1,92 +1,14 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import clienteImg from '@/assets/images/testemunho-cliente.png'
 import arrowCarousel from '@/assets/images/arrow-carousel.svg'
+import { testimonials } from '@/data'
+import { useCarousel, useSwipe } from '@/composables'
 
-interface Testimonial {
-  id: number
-  image: string
-  quote: string
-  author: string
-}
+const { currentIndex, currentItem: currentTestimonial, next, prev, goTo } = useCarousel(testimonials)
 
-const testimonials: Testimonial[] = [
-  {
-    id: 1,
-    image: clienteImg,
-    quote:
-      'Eu deixei meu cãozinho no hotel e fiquei muito satisfeita com o serviço prestado. Os funcionários foram super atenciosos e meu cachorro se divertiu muito durante todo o dia. Foi ótimo poder ter essa opção para cuidar do meu pet enquanto eu estava no trabalho. Recomendo!',
-    author: 'Cley Celeste'
-  },
-  {
-    id: 2,
-    image: clienteImg,
-    quote:
-      'Melhor hotel para pets de Manaus! Deixei minha cachorrinha por uma semana e ela voltou super feliz. A equipe é incrível e muito carinhosa. Com certeza voltarei!',
-    author: 'Maria Santos'
-  },
-  {
-    id: 3,
-    image: clienteImg,
-    quote:
-      'Atendimento excelente e ambiente muito acolhedor. Meu pet foi muito bem cuidado. Recomendo a todos que precisam de um lugar seguro para deixar seus animais.',
-    author: 'João Silva'
-  }
-]
-
-const currentIndex = ref(0)
-
-const currentTestimonial = computed(() => testimonials[currentIndex.value]!)
-
-const nextSlide = () => {
-  currentIndex.value = (currentIndex.value + 1) % testimonials.length
-}
-
-const prevSlide = () => {
-  currentIndex.value = (currentIndex.value - 1 + testimonials.length) % testimonials.length
-}
-
-const goToSlide = (index: number) => {
-  currentIndex.value = index
-}
-
-// Touch/Swipe handling for mobile
-const touchStartX = ref(0)
-const touchEndX = ref(0)
-const minSwipeDistance = 50
-
-const handleTouchStart = (e: TouchEvent) => {
-  const touch = e.touches[0]
-  if (!touch) return
-  touchStartX.value = touch.clientX
-}
-
-const handleTouchMove = (e: TouchEvent) => {
-  const touch = e.touches[0]
-  if (!touch) return
-  touchEndX.value = touch.clientX
-}
-
-const handleTouchEnd = () => {
-  // Verifica se houve interação válida
-  if (touchStartX.value === 0) return
-
-  const swipeDistance = touchStartX.value - touchEndX.value
-
-  if (Math.abs(swipeDistance) > minSwipeDistance) {
-    if (swipeDistance > 0) {
-      // Swipe left - next slide
-      nextSlide()
-    } else {
-      // Swipe right - previous slide
-      prevSlide()
-    }
-  }
-
-  // Reset values
-  touchStartX.value = 0
-  touchEndX.value = 0
-}
+const { handleTouchStart, handleTouchMove, handleTouchEnd } = useSwipe({
+  onSwipeLeft: next,
+  onSwipeRight: prev,
+})
 </script>
 
 <template>
@@ -94,7 +16,7 @@ const handleTouchEnd = () => {
     <!-- Navigation Arrow Left (outside container) -->
     <button
       class="testimonials__arrow testimonials__arrow--left"
-      @click="prevSlide"
+      @click="prev"
       aria-label="Depoimento anterior"
     >
       <img :src="arrowCarousel" alt="" class="testimonials__arrow-icon" />
@@ -103,7 +25,7 @@ const handleTouchEnd = () => {
     <!-- Navigation Arrow Right (outside container) -->
     <button
       class="testimonials__arrow testimonials__arrow--right"
-      @click="nextSlide"
+      @click="next"
       aria-label="Próximo depoimento"
     >
       <img :src="arrowCarousel" alt="" class="testimonials__arrow-icon" />
@@ -148,7 +70,7 @@ const handleTouchEnd = () => {
           class="testimonials__dot"
           :class="{ 'testimonials__dot--active': index === currentIndex }"
           :aria-label="`Ir para depoimento ${index + 1}`"
-          @click="goToSlide(index)"
+          @click="goTo(index)"
         />
       </div>
     </div>

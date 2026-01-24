@@ -3,24 +3,7 @@ import { RouterLink } from 'vue-router'
 import footerWave from '@/assets/images/footer-wave.svg'
 import logoPataSvg from '@/assets/images/logo-pata.svg'
 import logoCasaSvg from '@/assets/images/logo-casa.svg'
-
-const menuLinks = [
-  { name: 'Home', to: '/', isRoute: true },
-  { name: 'Quem somos', to: '/quem-somos', isRoute: true },
-  { name: 'Serviços', href: '/#servicos', isRoute: false },
-  { name: 'Contato', href: '/#contato', isRoute: false }
-]
-
-const addresses = [
-  'Rua Holanda, n° 125, Horizonte - AM',
-  'Av. Flores, n° 86, São Bernardo - AM'
-]
-
-const socialLinks = [
-  { name: 'Instagram', url: 'https://www.instagram.com' },
-  { name: 'Facebook', url: 'https://www.facebook.com' },
-  { name: 'TikTok', url: 'https://www.tiktok.com' }
-]
+import { footerMenuLinks, addresses, socialLinks } from '@/data'
 </script>
 
 <template>
@@ -71,7 +54,7 @@ const socialLinks = [
         <nav class="footer__nav">
           <h3 class="footer__heading">Menu</h3>
           <ul class="footer__list">
-            <li v-for="link in menuLinks" :key="link.name">
+            <li v-for="link in footerMenuLinks" :key="link.name">
               <RouterLink
                 v-if="link.isRoute"
                 :to="link.to!"

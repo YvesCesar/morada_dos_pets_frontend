@@ -1,28 +1,5 @@
 <script setup lang="ts">
-import dogSpa from '@/assets/images/dog-spa.png'
-import hospedagem from '@/assets/images/hospedagem.png'
-import dogTaxi from '@/assets/images/dog-taxi.png'
-
-const services = [
-  {
-    image: dogSpa,
-    title: 'Dog Spa',
-    alt: 'Cachorro no spa',
-    description: 'Oferecemos tratamentos de spa personalizados, tosas profissionais e cuidados de alta qualidade para deixar seu cão relaxado'
-  },
-  {
-    image: hospedagem,
-    title: 'Hospedagem',
-    alt: 'Cachorro na hospedagem',
-    description: 'Proporcionamos conforto, diversão, garantindo que seu amigo de quatro patas tenha uma estadia feliz e tranquila enquanto você estiver ausente'
-  },
-  {
-    image: dogTaxi,
-    title: 'Dog Táxi',
-    alt: 'Cachorro no táxi',
-    description: 'Transporte seguro e confiável, garantindo viagens confortáveis'
-  }
-]
+import { services } from '@/data'
 </script>
 
 <template>

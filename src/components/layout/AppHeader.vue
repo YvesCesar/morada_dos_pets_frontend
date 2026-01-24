@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
 import logoSvg from '@/assets/images/logo-casa.svg'
+import { navLinks } from '@/data'
+import type { NavLink } from '@/types'
 
 const route = useRoute()
 const isMenuOpen = ref(false)
@@ -14,14 +16,7 @@ const closeMenu = () => {
   isMenuOpen.value = false
 }
 
-const navLinks = [
-  { name: 'Início', to: '/', isRoute: true },
-  { name: 'Quem somos', to: '/quem-somos', isRoute: true },
-  { name: 'Serviços', href: '/#servicos', isRoute: false },
-  { name: 'Contato', href: '/#contato', isRoute: false }
-]
-
-const isActive = (link: typeof navLinks[0]) => {
+const isActive = (link: NavLink) => {
   if (link.isRoute) {
     return route.path === link.to
   }

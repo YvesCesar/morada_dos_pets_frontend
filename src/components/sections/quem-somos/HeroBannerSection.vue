@@ -8,9 +8,9 @@ interface Props {
   subtitle: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   title: 'Quem somos?',
-  subtitle: 'Como tudo começou...'
+  subtitle: 'Como tudo começou...',
 })
 </script>
 
