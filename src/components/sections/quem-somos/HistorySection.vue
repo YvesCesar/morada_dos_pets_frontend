@@ -47,17 +47,14 @@ import historiaPets from '@/assets/images/historia-pets.png'
 }
 
 .history__container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: start;
+  display: block;
   max-width: var(--container-max);
   margin: 0 auto;
   padding: 0 var(--container-padding);
 }
 
 .history__content {
-  padding-right: 2rem;
+  max-width: 636px;
 }
 
 .history__title {
@@ -71,6 +68,7 @@ import historiaPets from '@/assets/images/historia-pets.png'
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .history__text p {
@@ -99,12 +97,8 @@ import historiaPets from '@/assets/images/historia-pets.png'
 
 /* Responsive */
 @media (max-width: 1200px) {
-  .history__container {
-    gap: 2rem;
-  }
-
   .history__content {
-    padding-right: 0;
+    max-width: 50%;
   }
 
   .history__image-wrapper {
@@ -114,12 +108,9 @@ import historiaPets from '@/assets/images/historia-pets.png'
 
 @media (max-width: 992px) {
   .history {
+    display: flex;
+    flex-direction: column;
     padding: 4rem 0;
-  }
-
-  .history__container {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
   }
 
   .history__image-wrapper {
@@ -130,8 +121,7 @@ import historiaPets from '@/assets/images/historia-pets.png'
     width: 100%;
     max-width: 100%;
     height: 350px;
-    order: -1;
-    margin-bottom: 2rem;
+    margin-top: 2rem;
   }
 
   .history__image {
@@ -139,7 +129,8 @@ import historiaPets from '@/assets/images/historia-pets.png'
   }
 
   .history__content {
-    text-align: center;
+    max-width: 100%;
+    text-align: left;
     padding: 0 var(--container-padding);
   }
 }
@@ -165,6 +156,7 @@ import historiaPets from '@/assets/images/historia-pets.png'
 @media (max-width: 480px) {
   .history__text {
     gap: 1rem;
+    margin-bottom: 2rem;
   }
 
   .history__image-wrapper {

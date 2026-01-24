@@ -147,11 +147,11 @@ const onVideoEnded = () => {
 
   .about__content {
     padding-left: 0;
-    text-align: center;
+    text-align: left;
   }
 
   .about__text {
-    margin: 0 auto;
+    margin: 0;
   }
 }
 

@@ -51,11 +51,11 @@ import ilustracaoPets from '@/assets/images/ilustracao-pets.svg'
 @media (max-width: 992px) {
   .cta__container {
     grid-template-columns: 1fr;
-    text-align: center;
+    text-align: left;
   }
 
   .cta__title {
-    margin: 0 auto;
+    margin: 0;
   }
 
   .cta__illustration {

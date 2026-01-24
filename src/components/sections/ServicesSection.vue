@@ -63,6 +63,12 @@ const services = [
   padding: 0 var(--container-padding);
 }
 
+@media (max-width: 768px) {
+  .services__header {
+    text-align: left;
+  }
+}
+
 .services__title {
   font-size: var(--text-2xl);
   font-weight: var(--font-medium);
