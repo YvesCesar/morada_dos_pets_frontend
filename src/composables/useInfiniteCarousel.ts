@@ -59,6 +59,7 @@ export function useInfiniteCarousel<T extends { id: number | string }>(
 
   const currentIndex = ref(offset)
   const isTransitioning = ref(true)
+  const isAnimating = ref(false)
 
   // Índice real no array original (0 a items.length - 1)
   const realIndex = computed(() => {
@@ -66,15 +67,21 @@ export function useInfiniteCarousel<T extends { id: number | string }>(
   })
 
   const next = () => {
+    if (isAnimating.value) return
+    isAnimating.value = true
     currentIndex.value++
   }
 
   const prev = () => {
+    if (isAnimating.value) return
+    isAnimating.value = true
     currentIndex.value--
   }
 
   const goTo = (index: number) => {
+    if (isAnimating.value) return
     if (index >= 0 && index < groupSize) {
+      isAnimating.value = true
       currentIndex.value = offset + index
     }
   }
@@ -84,7 +91,14 @@ export function useInfiniteCarousel<T extends { id: number | string }>(
    * Teleporta para o grupo do meio quando atinge as bordas,
    * desabilitando temporariamente a transição para evitar flicker
    */
+  /**
+   * Handler para o evento transitionend
+   * Teleporta para o grupo do meio quando atinge as bordas,
+   * desabilitando temporariamente a transição para evitar flicker
+   */
   const handleTransitionEnd = () => {
+    isAnimating.value = false
+
     if (currentIndex.value >= groupSize * 2) {
       // Chegou no final - volta para o grupo do meio
       isTransitioning.value = false
