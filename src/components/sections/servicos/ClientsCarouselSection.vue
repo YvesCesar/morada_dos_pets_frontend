@@ -11,11 +11,9 @@ const { isMobile, width } = useViewport()
 const {
   currentIndex,
   extendedItems: extendedClients,
-  realIndex,
   isTransitioning,
   next,
   prev,
-  goTo,
   handleTransitionEnd,
 } = useInfiniteCarousel(clients)
 
@@ -29,7 +27,7 @@ const cardWidth = computed(() => {
   if (isMobile.value) {
     return 0 // Mobile uses percentage, not pixels
   }
-  
+
   if (width.value <= 992) {
     return CAROUSEL_BREAKPOINTS.SMALL.cardWidth
   }
@@ -47,7 +45,7 @@ const getTranslateX = () => {
   if (isMobile.value) {
     return `translateX(-${currentIndex.value * 100}%)`
   }
-  
+
   // Calculate transform using the correct card width for the current viewport
   const cardAndGap = cardWidth.value + CAROUSEL_CONFIG.GAP
   return `translateX(-${currentIndex.value * cardAndGap}px)`
@@ -107,17 +105,6 @@ const getTranslateX = () => {
       </button>
     </div>
 
-    <!-- Mobile Pagination Dots -->
-    <div v-if="isMobile" class="clients-carousel__pagination">
-      <button
-        v-for="(client, index) in clients"
-        :key="client.id"
-        class="clients-carousel__dot"
-        :class="{ 'clients-carousel__dot--active': realIndex === index }"
-        :aria-label="`Ir para cliente ${index + 1}`"
-        @click="goTo(index)"
-      />
-    </div>
   </section>
 </template>
 
