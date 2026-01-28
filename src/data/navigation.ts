@@ -7,14 +7,14 @@ export const navLinks: NavLink[] = [
   { name: 'Início', to: '/', isRoute: true },
   { name: 'Quem somos', to: '/quem-somos', isRoute: true },
   { name: 'Serviços', to: '/servicos', isRoute: true },
-  { name: 'Contato', href: '/#contato', isRoute: false },
+  { name: 'Contato', to: '/contato', isRoute: true },
 ]
 
 export const footerMenuLinks: NavLink[] = [
   { name: 'Home', to: '/', isRoute: true },
   { name: 'Quem somos', to: '/quem-somos', isRoute: true },
   { name: 'Serviços', to: '/servicos', isRoute: true },
-  { name: 'Contato', href: '/#contato', isRoute: false },
+  { name: 'Contato', to: '/contato', isRoute: true },
 ]
 
 export const socialLinks = [

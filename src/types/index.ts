@@ -76,6 +76,21 @@ export interface Unit {
 }
 
 // ============================================
+// Contact
+// ============================================
+
+export interface ContactItem {
+  icon: string
+  text: string
+  link?: string
+}
+
+export interface ContactCard {
+  title: string
+  items: ContactItem[]
+}
+
+// ============================================
 // Mission/Vision/Values
 // ============================================
 
