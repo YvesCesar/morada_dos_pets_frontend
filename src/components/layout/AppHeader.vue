@@ -5,6 +5,10 @@ import logoSvg from '@/assets/images/logo-casa.svg'
 import { navLinks } from '@/data'
 import type { NavLink } from '@/types'
 
+defineProps<{
+  minimal?: boolean
+}>()
+
 const route = useRoute()
 const isMenuOpen = ref(false)
 
@@ -33,48 +37,50 @@ const isActive = (link: NavLink) => {
         <span class="header__logo-text">Morada dos Pets</span>
       </RouterLink>
 
-      <!-- Mobile Menu Button -->
-      <button
-        class="header__menu-btn"
-        :class="{ 'is-active': isMenuOpen }"
-        @click="toggleMenu"
-        aria-label="Menu"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      <template v-if="!minimal">
+        <!-- Mobile Menu Button -->
+        <button
+          class="header__menu-btn"
+          :class="{ 'is-active': isMenuOpen }"
+          @click="toggleMenu"
+          aria-label="Menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
 
-      <!-- Navigation -->
-      <nav class="header__nav" :class="{ 'is-open': isMenuOpen }">
-        <ul class="header__nav-list">
-          <li v-for="link in navLinks" :key="link.name" class="header__nav-item">
-            <RouterLink
-              v-if="link.isRoute"
-              :to="link.to!"
-              class="header__nav-link"
-              :class="{ 'is-active': isActive(link) }"
-              @click="closeMenu"
-            >
-              {{ link.name }}
-            </RouterLink>
-            <a
-              v-else
-              :href="link.href"
-              class="header__nav-link"
-              @click="closeMenu"
-            >
-              {{ link.name }}
-            </a>
-          </li>
-        </ul>
+        <!-- Navigation -->
+        <nav class="header__nav" :class="{ 'is-open': isMenuOpen }">
+          <ul class="header__nav-list">
+            <li v-for="link in navLinks" :key="link.name" class="header__nav-item">
+              <RouterLink
+                v-if="link.isRoute"
+                :to="link.to!"
+                class="header__nav-link"
+                :class="{ 'is-active': isActive(link) }"
+                @click="closeMenu"
+              >
+                {{ link.name }}
+              </RouterLink>
+              <a
+                v-else
+                :href="link.href"
+                class="header__nav-link"
+                @click="closeMenu"
+              >
+                {{ link.name }}
+              </a>
+            </li>
+          </ul>
 
-        <!-- Auth Buttons -->
-        <div class="header__auth">
-          <button class="btn btn--outline">Entrar</button>
-          <button class="btn btn--primary">Criar conta</button>
-        </div>
-      </nav>
+          <!-- Auth Buttons -->
+          <div class="header__auth">
+            <RouterLink to="/entrar" class="btn btn--outline" @click="closeMenu">Entrar</RouterLink>
+            <RouterLink to="/cadastro" class="btn btn--primary" @click="closeMenu">Criar conta</RouterLink>
+          </div>
+        </nav>
+      </template>
     </div>
   </header>
 </template>
