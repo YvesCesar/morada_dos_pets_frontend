@@ -246,7 +246,7 @@ const handleGoogleLogin = () => {
   justify-content: center;
   gap: 12px;
   width: 100%;
-  padding: 8px 100px;
+  padding: 8px 65px;
   background-color: var(--color-white);
   border: 1px solid var(--color-primary);
   border-radius: 8px;
