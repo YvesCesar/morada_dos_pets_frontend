@@ -21,8 +21,15 @@ const closeMenu = () => {
 }
 
 const isActive = (link: NavLink) => {
-  if (link.isRoute) {
-    return route.path === link.to
+  if (link.isRoute && link.to) {
+    // Check for exact match or if current path starts with the link path (for sub-pages)
+    if (route.path === link.to) {
+      return true
+    }
+    // For non-home routes, check if current path is a sub-page
+    if (link.to !== '/' && route.path.startsWith(link.to)) {
+      return true
+    }
   }
   return false
 }

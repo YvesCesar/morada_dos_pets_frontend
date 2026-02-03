@@ -42,6 +42,11 @@ const router = createRouter({
       name: 'cadastro',
       component: () => import('../views/CadastroView.vue'),
     },
+    {
+      path: '/servicos/dog-spa',
+      name: 'dog-spa',
+      component: () => import('../views/DogSpaView.vue'),
+    },
   ],
 })
 

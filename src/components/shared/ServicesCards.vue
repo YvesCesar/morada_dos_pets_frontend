@@ -1,5 +1,14 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import { services } from '@/data'
+
+const router = useRouter()
+
+const handleLearnMore = (route?: string) => {
+  if (route) {
+    router.push(route)
+  }
+}
 </script>
 
 <template>
@@ -13,7 +22,13 @@ import { services } from '@/data'
       <div class="services-cards__hover-content">
         <h3 class="services-cards__hover-title">{{ service.title }}</h3>
         <p class="services-cards__hover-description">{{ service.description }}</p>
-        <button class="services-cards__hover-btn">Saiba mais</button>
+        <button
+          class="services-cards__hover-btn"
+          :disabled="!service.route"
+          @click="handleLearnMore(service.route)"
+        >
+          Saiba mais
+        </button>
       </div>
     </article>
   </div>
@@ -128,8 +143,13 @@ import { services } from '@/data'
   transition: opacity var(--transition-fast);
 }
 
-.services-cards__hover-btn:hover {
+.services-cards__hover-btn:hover:not(:disabled) {
   opacity: 0.9;
+}
+
+.services-cards__hover-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* Responsive */

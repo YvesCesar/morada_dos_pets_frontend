@@ -13,6 +13,7 @@ export const services: Service[] = [
     alt: 'Cachorro no spa',
     description:
       'Oferecemos tratamentos de spa personalizados, tosas profissionais e cuidados de alta qualidade para deixar seu cão relaxado',
+    route: '/servicos/dog-spa',
   },
   {
     image: hospedagem,

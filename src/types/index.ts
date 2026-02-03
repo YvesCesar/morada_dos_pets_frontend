@@ -22,6 +22,7 @@ export interface Service {
   title: string
   alt: string
   description: string
+  route?: string
 }
 
 // ============================================
@@ -107,4 +108,34 @@ export interface MissionValue {
 export interface SocialLink {
   name: string
   url: string
+}
+
+// ============================================
+// Dog Spa
+// ============================================
+
+export interface DogSpaPrice {
+  size: string
+  price: string
+}
+
+export interface DogSpaAdditional {
+  name: string
+  price?: string
+  description?: string
+}
+
+export interface DogSpaService {
+  id: string
+  image: string
+  title: string
+  description: string
+  prices: DogSpaPrice[]
+  additionals: DogSpaAdditional[]
+}
+
+export interface DogSpaBenefit {
+  icon: string
+  title: string
+  description: string
 }
