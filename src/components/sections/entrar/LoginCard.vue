@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import iconGoogle from '@/assets/images/icon-google.svg'
 
 const email = ref('')
 const password = ref('')
 const showPassword = ref(false)
+
+const isFormValid = computed(() => email.value !== '' && password.value !== '')
 
 const handleSubmit = () => {
   console.log('Login submitted', { email: email.value, password: password.value })
@@ -63,7 +65,7 @@ const handleGoogleLogin = () => {
           </div>
 
           <div class="login-card__submit-area">
-            <button type="submit" class="login-card__button login-card__button--primary">
+            <button type="submit" class="login-card__button login-card__button--primary" :disabled="!isFormValid">
               Continuar
             </button>
           </div>
@@ -232,6 +234,11 @@ const handleGoogleLogin = () => {
 
 .login-card__button:hover {
   opacity: 0.9;
+}
+
+.login-card__button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .login-card__button--primary {
