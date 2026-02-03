@@ -16,7 +16,7 @@ import bannerHero from '@/assets/images/banner-hero.png'
       </h1>
     </div>
 
-    <button class="hero__cta">Saiba mais</button>
+    <router-link to="/servicos" class="hero__cta">Saiba mais</router-link>
   </section>
 </template>
 
