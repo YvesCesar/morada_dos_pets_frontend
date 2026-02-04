@@ -21,6 +21,7 @@ export const services: Service[] = [
     alt: 'Cachorro na hospedagem',
     description:
       'Proporcionamos conforto, diversão, garantindo que seu amigo de quatro patas tenha uma estadia feliz e tranquila enquanto você estiver ausente',
+    route: '/servicos/hospedagem',
   },
   {
     image: dogTaxi,

@@ -47,6 +47,11 @@ const router = createRouter({
       name: 'dog-spa',
       component: () => import('../views/DogSpaView.vue'),
     },
+    {
+      path: '/servicos/hospedagem',
+      name: 'hospedagem',
+      component: () => import('../views/HospedagemView.vue'),
+    },
   ],
 })
 

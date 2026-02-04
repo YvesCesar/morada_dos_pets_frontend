@@ -139,3 +139,36 @@ export interface DogSpaBenefit {
   title: string
   description: string
 }
+
+// ============================================
+// Hospedagem
+// ============================================
+
+export interface HospedagemPrice {
+  size: string
+  price: string
+}
+
+export interface HospedagemPlan {
+  id: string
+  image: string
+  title: string
+  prices: HospedagemPrice[]
+}
+
+// ============================================
+// Creche
+// ============================================
+
+export interface CrechePrice {
+  frequency: string
+  price: string
+}
+
+export interface CrechePlan {
+  id: string
+  image: string
+  title: string
+  schedule: string
+  prices: CrechePrice[]
+}
