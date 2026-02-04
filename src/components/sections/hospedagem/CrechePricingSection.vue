@@ -184,10 +184,24 @@ import { crechePlans } from '@/data'
 }
 
 /* Responsive */
+@media (max-width: 1200px) {
+  .creche-pricing__grid {
+    gap: 24px;
+  }
+
+  .creche-pricing__card-image {
+    height: 200px;
+  }
+}
+
 @media (max-width: 992px) {
+  .creche-pricing {
+    padding: 35px var(--container-padding) 80px;
+  }
+
   .creche-pricing__grid {
     grid-template-columns: repeat(2, 1fr);
-    max-width: 828px;
+    gap: 20px;
   }
 
   .creche-pricing__card {
@@ -197,26 +211,41 @@ import { crechePlans } from '@/data'
 
 @media (max-width: 768px) {
   .creche-pricing {
-    padding: 0 var(--container-padding) 60px;
+    padding: 35px var(--container-padding) 60px;
   }
 
   .creche-pricing__grid {
     grid-template-columns: 1fr;
-    max-width: 404px;
+    max-width: 450px;
+    margin: 0 auto;
   }
 
-  .creche-pricing__card-image {
-    height: 200px;
+  .creche-pricing__card-content {
+    padding: 16px 20px 24px;
+    gap: 30px;
+  }
+
+  .creche-pricing__card-title {
+    font-size: 20px;
   }
 }
 
 @media (max-width: 480px) {
   .creche-pricing {
-    padding: 0 var(--container-padding) 40px;
+    padding: 35px var(--container-padding) 50px;
+  }
+
+  .creche-pricing__card-image {
+    height: 180px;
+  }
+
+  .creche-pricing__card-content {
+    padding: 14px 16px 20px;
+    gap: 24px;
   }
 
   .creche-pricing__card-title {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .creche-pricing__card-schedule,
@@ -228,13 +257,9 @@ import { crechePlans } from '@/data'
     font-size: 16px;
   }
 
-  .creche-pricing__card-image {
-    height: 180px;
-  }
-
   .creche-pricing__btn {
     font-size: 16px;
-    width: 100%;
+    padding: 6px 20px;
   }
 }
 </style>
