@@ -28,5 +28,6 @@ export const services: Service[] = [
     title: 'Dog Táxi',
     alt: 'Cachorro no táxi',
     description: 'Transporte seguro e confiável, garantindo viagens confortáveis',
+    route: '/servicos/dog-taxi',
   },
 ]
