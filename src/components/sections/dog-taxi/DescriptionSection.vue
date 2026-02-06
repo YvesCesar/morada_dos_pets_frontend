@@ -1,5 +1,16 @@
 <script setup lang="ts">
-import mapIllustration from '@/assets/images/dog-taxi/map-illustration.svg'
+import { ref, computed } from 'vue'
+import { units } from '@/data/units'
+
+const selectedUnitId = ref<string>(units[0]?.id ?? '')
+
+const selectedUnit = computed(() => units.find((unit) => unit.id === selectedUnitId.value))
+
+const embedUrl = computed(() => {
+  if (!selectedUnit.value) return ''
+  const { lat, lng } = selectedUnit.value.coordinates
+  return `https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3000!2d${lng}!3d${lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr`
+})
 </script>
 
 <template>
@@ -13,11 +24,15 @@ import mapIllustration from '@/assets/images/dog-taxi/map-illustration.svg'
 
       <div class="dog-taxi-description__content">
         <div class="dog-taxi-description__map">
-          <img
-            :src="mapIllustration"
-            alt="Mapa de rotas do Dog Táxi"
-            class="dog-taxi-description__map-image"
-          />
+          <iframe
+            v-if="embedUrl"
+            :src="embedUrl"
+            class="dog-taxi-description__map-iframe"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Mapa da unidade selecionada"
+          ></iframe>
         </div>
 
         <div class="dog-taxi-description__card">
@@ -47,10 +62,11 @@ import mapIllustration from '@/assets/images/dog-taxi/map-illustration.svg'
 
                 <div class="dog-taxi-description__input-group">
                   <label class="dog-taxi-description__label">Selecione a unidade de destino</label>
-                  <select class="dog-taxi-description__select">
-                    <option value="" disabled selected>Selecione uma unidade</option>
-                    <option value="horizonte">Rua Holanda, n° 125, Horizonte - AM</option>
-                    <option value="sao-bernardo">Av. Flores, n° 86, São Bernardo - AM</option>
+                  <select v-model="selectedUnitId" class="dog-taxi-description__select">
+                    <option value="" disabled>Selecione uma unidade</option>
+                    <option v-for="unit in units" :key="unit.id" :value="unit.id">
+                      {{ unit.address }}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -102,16 +118,17 @@ import mapIllustration from '@/assets/images/dog-taxi/map-illustration.svg'
 .dog-taxi-description__map {
   flex: 1;
   max-width: 669px;
-  height: 529px;
+  aspect-ratio: 669 / 529;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.15);
 }
 
-.dog-taxi-description__map-image {
+.dog-taxi-description__map-iframe {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  border: none;
+  display: block;
 }
 
 .dog-taxi-description__card {
@@ -244,8 +261,7 @@ import mapIllustration from '@/assets/images/dog-taxi/map-illustration.svg'
   }
 
   .dog-taxi-description__map {
-    max-width: 550px;
-    height: 450px;
+    max-width: 500px;
   }
 
   .dog-taxi-description__card {
@@ -260,26 +276,30 @@ import mapIllustration from '@/assets/images/dog-taxi/map-illustration.svg'
 
   .dog-taxi-description__title {
     font-size: 28px;
+    text-align: center;
   }
 
   .dog-taxi-description__text {
     font-size: 20px;
+    text-align: center;
   }
 
   .dog-taxi-description__content {
     flex-direction: column;
     align-items: center;
+    gap: 32px;
   }
 
   .dog-taxi-description__map {
-    max-width: 100%;
+    max-width: 500px;
     width: 100%;
-    height: 400px;
+    order: 2;
   }
 
   .dog-taxi-description__card {
     width: 100%;
     max-width: 500px;
+    order: 1;
   }
 }
 
@@ -290,20 +310,99 @@ import mapIllustration from '@/assets/images/dog-taxi/map-illustration.svg'
 
   .dog-taxi-description__title {
     font-size: 24px;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
   }
 
   .dog-taxi-description__text {
     font-size: 18px;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
   }
 
   .dog-taxi-description__map {
-    height: 350px;
+    max-width: 100%;
+    border-radius: 16px;
+  }
+
+  .dog-taxi-description__card {
+    max-width: 100%;
   }
 
   .dog-taxi-description__card-title {
+    font-size: 20px;
+  }
+
+  .dog-taxi-description__card-note {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .dog-taxi-description__input,
+  .dog-taxi-description__select {
+    font-size: 14px;
+    padding: 12px 14px;
+  }
+
+  .dog-taxi-description__label {
+    font-size: 13px;
+  }
+
+  .dog-taxi-description__button {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .dog-taxi-description {
+    padding: 50px var(--container-padding) 30px;
+  }
+
+  .dog-taxi-description__title {
     font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .dog-taxi-description__text {
+    font-size: 16px;
+    margin-bottom: 28px;
+  }
+
+  .dog-taxi-description__content {
+    gap: 24px;
+  }
+
+  .dog-taxi-description__map {
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+  }
+
+  .dog-taxi-description__card-title {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .dog-taxi-description__card-note {
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .dog-taxi-description__form-row {
+    gap: 10px;
+  }
+
+  .dog-taxi-description__connector {
+    padding-top: 26px;
+    width: 10px;
+  }
+
+  .dog-taxi-description__connector-dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .dog-taxi-description__connector-line {
+    min-height: 60px;
   }
 
   .dog-taxi-description__input,
@@ -313,52 +412,73 @@ import mapIllustration from '@/assets/images/dog-taxi/map-illustration.svg'
   }
 
   .dog-taxi-description__label {
-    font-size: 13px;
-  }
-}
-
-@media (max-width: 480px) {
-  .dog-taxi-description {
-    padding: 50px var(--container-padding) 30px;
-  }
-
-  .dog-taxi-description__title {
-    font-size: 22px;
-  }
-
-  .dog-taxi-description__text {
-    font-size: 16px;
-  }
-
-  .dog-taxi-description__map {
-    height: 300px;
-  }
-
-  .dog-taxi-description__card-title {
-    font-size: 20px;
-  }
-
-  .dog-taxi-description__card-note {
-    font-size: 12px;
-  }
-
-  .dog-taxi-description__input,
-  .dog-taxi-description__select {
-    font-size: 13px;
-    padding: 8px 10px;
-  }
-
-  .dog-taxi-description__label {
     font-size: 12px;
   }
 
   .dog-taxi-description__button {
     width: 100%;
     font-size: 16px;
+    padding: 12px 20px;
   }
 
   .dog-taxi-description__button-wrapper {
     justify-content: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .dog-taxi-description {
+    padding: 40px var(--container-padding) 24px;
+  }
+
+  .dog-taxi-description__title {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .dog-taxi-description__text {
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+
+  .dog-taxi-description__map {
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+  }
+
+  .dog-taxi-description__card-title {
+    font-size: 17px;
+  }
+
+  .dog-taxi-description__connector {
+    padding-top: 24px;
+    width: 8px;
+  }
+
+  .dog-taxi-description__connector-dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .dog-taxi-description__connector-line {
+    width: 2px;
+    border-left-width: 2px;
+    min-height: 55px;
+  }
+
+  .dog-taxi-description__input,
+  .dog-taxi-description__select {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .dog-taxi-description__label {
+    font-size: 11px;
+  }
+
+  .dog-taxi-description__button {
+    font-size: 15px;
+    padding: 10px 16px;
   }
 }
 </style>

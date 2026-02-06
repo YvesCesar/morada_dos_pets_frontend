@@ -70,10 +70,18 @@ export interface TutorialStep {
 // Units
 // ============================================
 
+export interface UnitCoordinates {
+  lat: number
+  lng: number
+}
+
 export interface Unit {
+  id: string
+  name: string
   image: string
   address: string
   mapUrl: string
+  coordinates: UnitCoordinates
 }
 
 // ============================================
