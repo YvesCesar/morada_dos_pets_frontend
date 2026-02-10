@@ -1,5 +1,12 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import { crechePlans } from '@/data'
+
+const router = useRouter()
+
+const handleSolicitar = (planId: string) => {
+  router.push({ name: 'pagamento', query: { tipo: 'creche', plano: planId } })
+}
 </script>
 
 <template>
@@ -38,7 +45,7 @@ import { crechePlans } from '@/data'
               </div>
             </div>
 
-            <button class="creche-pricing__btn">Solicitar</button>
+            <button class="creche-pricing__btn" @click="handleSolicitar(plan.id)">Solicitar</button>
           </div>
         </article>
       </div>

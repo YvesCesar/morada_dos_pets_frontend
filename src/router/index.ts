@@ -57,6 +57,11 @@ const router = createRouter({
       name: 'dog-taxi',
       component: () => import('../views/DogTaxiView.vue'),
     },
+    {
+      path: '/servicos/pagamento',
+      name: 'pagamento',
+      component: () => import('../views/PagamentoView.vue'),
+    },
   ],
 })
 

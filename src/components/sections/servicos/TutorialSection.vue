@@ -1,7 +1,13 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import ilustracaoLaptop from '@/assets/images/ilustracao-laptop-pets.svg'
 import { tutorialSteps } from '@/data/tutorialSteps'
 
+const router = useRouter()
+
+const handleSolicitar = () => {
+  router.push({ name: 'pagamento', query: { tipo: 'geral' } })
+}
 </script>
 
 <template>
@@ -36,7 +42,7 @@ import { tutorialSteps } from '@/data/tutorialSteps'
             class="tutorial__image"
           />
         </div>
-        <button class="tutorial__btn">Solicitar agora</button>
+        <button class="tutorial__btn" @click="handleSolicitar">Solicitar agora</button>
       </div>
     </div>
   </section>

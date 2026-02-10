@@ -180,3 +180,64 @@ export interface CrechePlan {
   schedule: string
   prices: CrechePrice[]
 }
+
+// ============================================
+// Pagamento (Reserva)
+// ============================================
+
+export type PaymentStep = 'solicitacao' | 'pagamento' | 'confirmacao'
+
+export type PaymentMethod = 'pix' | 'debito' | 'credito'
+
+export type ServiceType = 'dog-spa' | 'hospedagem' | 'creche' | 'dog-taxi' | 'geral'
+
+export interface Pet {
+  id: string
+  name: string
+  species: string
+  breed: string
+  size: string
+}
+
+export interface ServiceRequest {
+  id: string
+  serviceType: string
+  serviceName: string
+  unit: string
+  pet: Pet
+  date: string
+  time: string
+  additionalInfo: string
+  price: number
+}
+
+export interface CardPaymentData {
+  cardNumber: string
+  cardName: string
+  expiry: string
+  securityCode: string
+  rememberCard: boolean
+  installments?: number
+}
+
+export interface PaymentState {
+  currentStep: PaymentStep
+  serviceRequests: ServiceRequest[]
+  paymentMethod: PaymentMethod | null
+  cardData: CardPaymentData | null
+  couponCode: string
+  discount: number
+  subtotal: number
+  total: number
+}
+
+export interface ServiceOption {
+  id: string
+  label: string
+  price: number
+}
+
+export interface UnitOption {
+  id: string
+  label: string
+}

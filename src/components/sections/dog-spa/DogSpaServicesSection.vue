@@ -1,5 +1,12 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import { dogSpaServices } from '@/data'
+
+const router = useRouter()
+
+const handleSolicitar = (serviceId: string) => {
+  router.push({ name: 'pagamento', query: { tipo: 'dog-spa', servico: serviceId } })
+}
 </script>
 
 <template>
@@ -59,7 +66,7 @@ import { dogSpaServices } from '@/data'
               </div>
             </div>
 
-            <button class="dog-spa-services__btn">Solicitar</button>
+            <button class="dog-spa-services__btn" @click="handleSolicitar(service.id)">Solicitar</button>
           </div>
         </article>
       </div>

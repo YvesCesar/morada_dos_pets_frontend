@@ -1,5 +1,12 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import { hospedagemPlans } from '@/data'
+
+const router = useRouter()
+
+const handleSolicitar = (planId: string) => {
+  router.push({ name: 'pagamento', query: { tipo: 'hospedagem', plano: planId } })
+}
 </script>
 
 <template>
@@ -37,7 +44,7 @@ import { hospedagemPlans } from '@/data'
               </div>
             </div>
 
-            <button class="hospedagem-pricing__btn">Solicitar</button>
+            <button class="hospedagem-pricing__btn" @click="handleSolicitar(plan.id)">Solicitar</button>
           </div>
         </article>
       </div>
