@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import type { PaymentStep, ServiceRequest } from '@/types'
 import ProgressBar from '@/components/sections/pagamento/ProgressBar.vue'
 import ServiceRequestStep from '@/components/sections/pagamento/ServiceRequestStep.vue'
+import PaymentStepComponent from '@/components/sections/pagamento/PaymentStep.vue'
 
 const route = useRoute()
 
@@ -19,6 +20,16 @@ const initialService = computed(() => (route.query.servico as string) || (route.
 const handleServiceConfirm = (requests: ServiceRequest[]) => {
   serviceRequests.value = requests
   currentStep.value = 'pagamento'
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+const handlePaymentBack = () => {
+  currentStep.value = 'solicitacao'
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+const handlePaymentConfirm = () => {
+  currentStep.value = 'confirmacao'
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 </script>
@@ -42,6 +53,13 @@ const handleServiceConfirm = (requests: ServiceRequest[]) => {
           :initial-service-type="initialServiceType"
           :initial-service="initialService"
           @confirm="handleServiceConfirm"
+        />
+
+        <PaymentStepComponent
+          v-else-if="currentStep === 'pagamento'"
+          :service-requests="serviceRequests"
+          @back="handlePaymentBack"
+          @confirm="handlePaymentConfirm"
         />
       </div>
     </div>

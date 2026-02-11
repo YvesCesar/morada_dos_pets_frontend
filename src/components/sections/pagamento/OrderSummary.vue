@@ -7,6 +7,7 @@ interface Props {
   discount?: number
   showTotal?: boolean
   showCouponHint?: boolean
+  showItems?: boolean
   serviceRequests?: ServiceRequest[]
 }
 
@@ -14,6 +15,7 @@ const props = withDefaults(defineProps<Props>(), {
   discount: 0,
   showTotal: false,
   showCouponHint: true,
+  showItems: true,
   serviceRequests: () => [],
 })
 
@@ -37,7 +39,7 @@ const formatPrice = (value: number) => {
     <h3 class="order-summary__title">Resumo da solicitação</h3>
 
     <!-- Service requests adicionados -->
-    <div v-if="serviceRequests.length > 0" class="order-summary__items">
+    <div v-if="showItems && serviceRequests.length > 0" class="order-summary__items">
       <div
         v-for="request in serviceRequests"
         :key="request.id"
