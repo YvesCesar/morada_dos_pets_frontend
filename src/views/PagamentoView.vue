@@ -5,6 +5,7 @@ import type { PaymentStep, ServiceRequest } from '@/types'
 import ProgressBar from '@/components/sections/pagamento/ProgressBar.vue'
 import ServiceRequestStep from '@/components/sections/pagamento/ServiceRequestStep.vue'
 import PaymentStepComponent from '@/components/sections/pagamento/PaymentStep.vue'
+import ConfirmationStep from '@/components/sections/pagamento/ConfirmationStep.vue'
 
 const route = useRoute()
 
@@ -61,6 +62,8 @@ const handlePaymentConfirm = () => {
           @back="handlePaymentBack"
           @confirm="handlePaymentConfirm"
         />
+
+        <ConfirmationStep v-else-if="currentStep === 'confirmacao'" />
       </div>
     </div>
   </main>
