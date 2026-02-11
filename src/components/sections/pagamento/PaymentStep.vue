@@ -40,9 +40,8 @@ const total = computed(() => {
 })
 
 // Handlers
-const selectPaymentMethod = (method: PaymentMethod) => {
+const selectPaymentMethod = (method: PaymentMethod | null) => {
   paymentMethod.value = method
-  paymentSubStep.value = method
 }
 
 const handleCouponApply = (code: string) => {

@@ -173,13 +173,13 @@ const handleSubmit = () => {
 .payment-debit__radio-indicator::after {
   content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 10px;
-  height: 10px;
-  border-radius: 2px;
-  background-color: var(--color-white);
+  top: 3px;
+  left: 7px;
+  width: 6px;
+  height: 11px;
+  border: solid var(--color-white);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
 }
 
 .payment-debit__card-icon {

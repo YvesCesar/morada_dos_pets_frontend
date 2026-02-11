@@ -7,9 +7,9 @@ interface Props {
   modelValue: PaymentMethod | null
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 const emit = defineEmits<{
-  'update:modelValue': [method: PaymentMethod]
+  'update:modelValue': [method: PaymentMethod | null]
 }>()
 
 const methods: { id: PaymentMethod; label: string; icon: string }[] = [
@@ -17,26 +17,31 @@ const methods: { id: PaymentMethod; label: string; icon: string }[] = [
   { id: 'debito', label: 'Cartão de débito', icon: cardIcon },
   { id: 'credito', label: 'Cartão de crédito', icon: cardIcon },
 ]
+
+const toggleMethod = (methodId: PaymentMethod) => {
+  if (props.modelValue === methodId) {
+    emit('update:modelValue', null)
+  } else {
+    emit('update:modelValue', methodId)
+  }
+}
 </script>
 
 <template>
-  <div class="payment-methods" role="radiogroup" aria-label="Método de pagamento">
+  <div class="payment-methods" aria-label="Método de pagamento">
     <label
       v-for="method in methods"
       :key="method.id"
       class="payment-methods__option"
-      :class="{ 'payment-methods__option--selected': modelValue === method.id }"
     >
-      <span class="payment-methods__radio-wrapper">
+      <span class="payment-methods__checkbox-wrapper">
         <input
-          type="radio"
-          name="payment-method"
-          :value="method.id"
+          type="checkbox"
           :checked="modelValue === method.id"
-          class="payment-methods__radio-input sr-only"
-          @change="emit('update:modelValue', method.id)"
+          class="payment-methods__checkbox-input sr-only"
+          @change="toggleMethod(method.id)"
         />
-        <span class="payment-methods__radio" />
+        <span class="payment-methods__checkbox" />
       </span>
       <img
         :src="method.icon"
@@ -67,36 +72,42 @@ const methods: { id: PaymentMethod; label: string; icon: string }[] = [
   opacity: 0.8;
 }
 
-.payment-methods__radio-wrapper {
+.payment-methods__checkbox-wrapper {
   flex-shrink: 0;
 }
 
-.payment-methods__radio {
+.payment-methods__checkbox {
   display: block;
   width: 23px;
   height: 22px;
   border: 1px solid #b2abab;
   border-radius: var(--radius-sm);
   background-color: var(--color-white);
-  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  flex-shrink: 0;
   position: relative;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
 }
 
-.payment-methods__option--selected .payment-methods__radio {
-  border-color: var(--color-primary);
+.payment-methods__checkbox-input:checked + .payment-methods__checkbox {
   background-color: var(--color-primary);
+  border-color: var(--color-primary);
 }
 
-.payment-methods__option--selected .payment-methods__radio::after {
+.payment-methods__checkbox-input:checked + .payment-methods__checkbox::after {
   content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 10px;
-  height: 10px;
-  border-radius: 2px;
-  background-color: var(--color-white);
+  top: 3px;
+  left: 7px;
+  width: 6px;
+  height: 11px;
+  border: solid var(--color-white);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.payment-methods__checkbox-input:focus-visible + .payment-methods__checkbox {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .payment-methods__icon {
