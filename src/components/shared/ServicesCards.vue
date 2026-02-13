@@ -194,12 +194,16 @@ const handleLearnMore = (route?: string) => {
   }
 
   .services-cards__card-title {
-    top: 170px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     font-size: 28px;
   }
 
   .services-cards__hover-content {
-    top: 60px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     gap: 24px;
     width: 80%;
     max-width: 400px;
@@ -225,13 +229,7 @@ const handleLearnMore = (route?: string) => {
     height: 280px;
   }
 
-  .services-cards__card-title {
-    top: 130px;
-    font-size: 24px;
-  }
-
   .services-cards__hover-content {
-    top: 40px;
     gap: 16px;
   }
 
@@ -254,13 +252,7 @@ const handleLearnMore = (route?: string) => {
     height: 220px;
   }
 
-  .services-cards__card-title {
-    top: 100px;
-    font-size: 20px;
-  }
-
   .services-cards__hover-content {
-    top: 20px;
     gap: 12px;
     width: 90%;
   }

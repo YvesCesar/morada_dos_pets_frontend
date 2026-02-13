@@ -224,7 +224,7 @@ import { footerMenuLinks, addresses, socialLinks } from '@/data'
 
 @media (max-width: 992px) {
   .footer {
-    background: var(--color-secondary);
+    background: white;
     padding-top: 2rem;
   }
 
