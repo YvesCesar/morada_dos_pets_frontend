@@ -299,7 +299,7 @@ const copyCode = async () => {
 
 .payment-pix__actions {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   gap: var(--spacing-md);
   margin-top: var(--spacing-xl);
 }

@@ -309,6 +309,7 @@ const togglePaymentMethod = () => {
 /* Botões de navegação */
 .payment-step__actions {
   display: flex;
+  justify-content: flex-end;
   gap: var(--spacing-md);
   margin-top: var(--spacing-xl);
 }
