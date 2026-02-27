@@ -11,7 +11,7 @@
  * </script>
  * ```
  */
-import { ref, computed, type Ref, type ComputedRef } from 'vue'
+import { ref, computed, unref, type Ref, type ComputedRef, type MaybeRef } from 'vue'
 
 export interface UseCarouselOptions {
   /** Índice inicial (default: 0) */
@@ -42,39 +42,43 @@ export interface UseCarouselReturn<T> {
 }
 
 export function useCarousel<T>(
-  items: T[],
+  items: MaybeRef<T[]> | ComputedRef<T[]>,
   options: UseCarouselOptions = {},
 ): UseCarouselReturn<T> {
   const { initialIndex = 0, loop = true } = options
 
   const currentIndex = ref(initialIndex)
 
-  const total = computed(() => items.length)
+  const resolvedItems = computed(() => unref(items))
 
-  const currentItem = computed(() => items[currentIndex.value]!)
+  const total = computed(() => resolvedItems.value.length)
+
+  const currentItem = computed(() => resolvedItems.value[currentIndex.value]!)
 
   const isFirst = computed(() => currentIndex.value === 0)
 
-  const isLast = computed(() => currentIndex.value === items.length - 1)
+  const isLast = computed(() => currentIndex.value === resolvedItems.value.length - 1)
 
   const next = () => {
+    const len = resolvedItems.value.length
     if (loop) {
-      currentIndex.value = (currentIndex.value + 1) % items.length
+      currentIndex.value = (currentIndex.value + 1) % len
     } else if (!isLast.value) {
       currentIndex.value++
     }
   }
 
   const prev = () => {
+    const len = resolvedItems.value.length
     if (loop) {
-      currentIndex.value = (currentIndex.value - 1 + items.length) % items.length
+      currentIndex.value = (currentIndex.value - 1 + len) % len
     } else if (!isFirst.value) {
       currentIndex.value--
     }
   }
 
   const goTo = (index: number) => {
-    if (index >= 0 && index < items.length) {
+    if (index >= 0 && index < resolvedItems.value.length) {
       currentIndex.value = index
     }
   }

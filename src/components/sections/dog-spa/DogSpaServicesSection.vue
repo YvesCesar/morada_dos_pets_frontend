@@ -1,8 +1,15 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { dogSpaServices } from '@/data'
+import { dogSpaServices as staticDogSpaServices } from '@/data'
+import { usePricesStore } from '@/stores/prices'
 
 const router = useRouter()
+const pricesStore = usePricesStore()
+
+const dogSpaServices = computed(() =>
+  pricesStore.dogSpaServices.length > 0 ? pricesStore.dogSpaServices : staticDogSpaServices,
+)
 
 const handleSolicitar = (serviceId: string) => {
   router.push({ name: 'pagamento', query: { tipo: 'dog-spa', servico: serviceId } })
