@@ -18,16 +18,16 @@ npm run format       # Prettier
 src/
 ├── assets/           # Images, global styles, static files
 ├── components/
-│   ├── layout/       # AppHeader, AppFooter
-│   ├── sections/     # Page sections organized by route
-│   └── shared/       # Reusable components (BenefitsSection, ImagesCarousel, ServicesCards, ServiceTabs)
+│   ├── layout/       # AppHeader, AppFooter, DashboardLayout, NotificationBell, ProfileDropdown
+│   ├── sections/     # Page sections organized by route (includes dashboard subfolders)
+│   └── shared/       # Reusable components (BaseModal, ConfirmModal, DashboardStatsSection, DashboardFilterBar, ServiceBadge, StatusBadge, BenefitsSection, ImagesCarousel, ServicesCards, ServiceTabs)
 ├── composables/      # Reusable logic (barrel export via index.ts)
-├── config/           # App constants (carousel dimensions, etc.)
-├── data/             # Static data (barrel export via index.ts)
-├── stores/           # Pinia stores
+├── config/           # App constants (carousel dimensions, service/status badge colors)
+├── data/             # Static data + mock data for dashboard (barrel export via index.ts)
+├── stores/           # Pinia stores (auth, appointments, coupons, notifications, pets, prices, testimonials, users)
 ├── types/            # TypeScript interfaces (barrel export via index.ts)
 ├── views/            # Route-level page components
-└── router/           # Vue Router config
+└── router/           # Vue Router config + navigation guards
 ```
 
 ## Code Conventions
@@ -45,6 +45,20 @@ src/
 5. Views compose sections — keep views thin, delegate to section components
 6. Reuse existing shared components before creating new ones (DRY)
 7. Use barrel exports — import from `@/composables`, `@/data`, `@/types`
+8. Stores use Composition API style — `defineStore('name', () => { ... })` with `use*Store` naming
+9. Dashboard pages wrap content in `DashboardLayout` component (provides title/subtitle header)
+10. Route auth via meta fields — `requiresAuth`, `requiresAdmin`, `requiresCustomer`, `guestOnly`
+11. Mock data lives in `/data/dashboard.ts` — dashboard currently runs without a backend (localStorage persistence)
+
+## Dashboard System
+
+The app includes an authenticated dashboard with two roles:
+
+- **Admin** (`/dashboard/admin`): manages appointments, users, coupons, prices, testimonials
+- **Customer** (`/dashboard/cliente`): views pets, appointments, submits testimonials
+- **Shared pages**: profile (`/dashboard/perfil`), settings (`/dashboard/configuracoes`), change password (`/dashboard/alterar-senha`)
+
+Auth is mock-based (hardcoded users in `/data/dashboard.ts`, persisted in localStorage). Navigation guards in the router redirect unauthenticated users to `/entrar`.
 
 ## Deep Reference (AGENTS.md)
 
@@ -54,8 +68,10 @@ Agents should read these only when working on the related area:
 |------|-------------|
 | `src/assets/styles/AGENTS.md` | Styling, CSS variables, design tokens, responsive breakpoints |
 | `src/components/sections/AGENTS.md` | Creating/editing page sections, understanding page composition |
-| `src/composables/AGENTS.md` | Using or creating composables (carousel, swipe, viewport) |
-| `src/router/AGENTS.md` | Adding/modifying routes, understanding navigation |
+| `src/components/layout/AGENTS.md` | Layout components (header, footer, dashboard layout, dropdowns) |
+| `src/composables/AGENTS.md` | Using or creating composables (carousel, swipe, viewport, masks, photo upload) |
+| `src/router/AGENTS.md` | Adding/modifying routes, navigation guards, auth redirects |
+| `src/stores/AGENTS.md` | Pinia stores, auth flow, CRUD patterns, mock data |
 
 ## Figma Integration
 

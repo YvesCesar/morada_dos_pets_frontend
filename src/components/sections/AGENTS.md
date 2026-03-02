@@ -6,6 +6,9 @@ Sections are page-specific layout blocks, organized by route.
 
 ```
 sections/
+├── admin-dashboard/  # Admin dashboard page
+│   ├── AdminAppointmentsTable.vue
+│   └── AdminServiceCards.vue
 ├── cadastro/         # Registration page
 │   ├── RegisterBanner.vue
 │   └── RegisterCard.vue
@@ -13,6 +16,15 @@ sections/
 │   ├── ContactBanner.vue
 │   ├── ContactFormSection.vue
 │   └── ContactInfoSection.vue
+├── coupons/          # Admin coupon management
+│   ├── CouponFormModal.vue
+│   └── CouponsTable.vue
+├── customer-dashboard/ # Customer dashboard page
+│   ├── CustomerTestimonialSection.vue
+│   ├── EditPetModal.vue
+│   ├── NewPetModal.vue
+│   ├── UserAppointmentsSection.vue
+│   └── UserPetsSection.vue
 ├── dog-spa/          # Dog Spa service page
 │   ├── BenefitsSection.vue
 │   ├── DescriptionSection.vue
@@ -44,6 +56,10 @@ sections/
 │   ├── PaymentStep.vue
 │   ├── ProgressBar.vue
 │   └── ServiceRequestStep.vue
+├── prices/           # Admin price editor
+│   └── PricesEditor.vue
+├── profile/          # User profile page
+│   └── ProfileForm.vue
 ├── quem-somos/       # About page
 │   ├── HeroBannerSection.vue
 │   ├── HistorySection.vue
@@ -55,6 +71,13 @@ sections/
 │   ├── DedicationSection.vue
 │   ├── HeroBannerServicos.vue
 │   └── TutorialSection.vue
+├── settings/         # Settings & change password
+│   └── ChangePasswordForm.vue
+├── testimonials/     # Admin testimonial moderation
+│   └── AdminTestimonialsSection.vue
+├── users/            # Admin user management
+│   ├── UserFormModal.vue
+│   └── UsersTable.vue
 └── *.vue             # Home page sections (root level)
     ├── AboutSection.vue
     ├── CtaSection.vue
@@ -70,3 +93,6 @@ sections/
 - Views import and compose these sections (views stay thin)
 - Home page sections live at the root of `sections/` (no subfolder)
 - Shared patterns like `BenefitsSection` and `DescriptionSection` repeat per service but are NOT shared components — they contain service-specific content
+- Dashboard sections use `DashboardLayout` as the page wrapper (provided by the view)
+- Modal sections (e.g. `CouponFormModal`, `EditPetModal`, `UserFormModal`) extend `BaseModal` from `shared/`
+- Dashboard tables/lists use shared `DashboardFilterBar`, `DashboardStatsSection`, `ServiceBadge`, and `StatusBadge` components
