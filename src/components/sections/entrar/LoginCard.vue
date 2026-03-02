@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import iconGoogle from '@/assets/images/icon-google.svg'
+import { useAuthStore } from '@/stores/auth'
+
+const router = useRouter()
+const authStore = useAuthStore()
 
 const email = ref('')
 const password = ref('')
@@ -9,7 +14,11 @@ const showPassword = ref(false)
 const isFormValid = computed(() => email.value !== '' && password.value !== '')
 
 const handleSubmit = () => {
-  console.log('Login submitted', { email: email.value, password: password.value })
+  const success = authStore.login(email.value, password.value)
+  if (success) {
+    const route = authStore.isAdmin ? '/dashboard/admin' : '/dashboard/cliente'
+    router.push(route)
+  }
 }
 
 const handleGoogleLogin = () => {
@@ -27,6 +36,8 @@ const handleGoogleLogin = () => {
           <router-link to="/cadastro" class="login-card__link">Crie uma conta</router-link>
         </p>
       </div>
+
+      <p v-if="authStore.error" class="login-card__error">{{ authStore.error }}</p>
 
       <form class="login-card__form" @submit.prevent="handleSubmit">
         <div class="login-card__inputs">
@@ -141,6 +152,13 @@ const handleGoogleLogin = () => {
 
 .login-card__link:hover {
   opacity: 0.7;
+}
+
+.login-card__error {
+  color: var(--color-danger);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  margin-top: -16px;
 }
 
 .login-card__form {

@@ -36,3 +36,30 @@ Responsive breakpoint detection.
 ```typescript
 const { isMobile, isTablet, isDesktop, width, height } = useViewport()
 ```
+
+## useInputMasks()
+
+Input formatting masks for Brazilian locale fields.
+
+```typescript
+const { formatDate, formatCPF, formatPhone, formatCEP, formatDisplayDate, formatCurrency } = useInputMasks()
+```
+
+- `formatDate` — `DD/MM/YYYY`
+- `formatCPF` — `000.000.000-00`
+- `formatPhone` — `(00) 00000-0000`
+- `formatCEP` — `00000-000`
+- `formatDisplayDate` — converts `YYYY-MM-DD` → `DD/MM/YYYY`
+- `formatCurrency` — `R$ 1.234,56` (pt-BR locale)
+
+## usePhotoUpload(onUpdate)
+
+Handles photo file selection via FileReader, returns base64 data URL.
+
+```typescript
+const { handleFileChange } = usePhotoUpload((dataUrl) => {
+  form.photo = dataUrl
+})
+```
+
+Bind `handleFileChange` to an `<input type="file">` change event.

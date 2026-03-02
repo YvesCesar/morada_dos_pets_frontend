@@ -1,8 +1,15 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { crechePlans } from '@/data'
+import { crechePlans as staticCrechePlans } from '@/data'
+import { usePricesStore } from '@/stores/prices'
 
 const router = useRouter()
+const pricesStore = usePricesStore()
+
+const crechePlans = computed(() =>
+  pricesStore.crechePlans.length > 0 ? pricesStore.crechePlans : staticCrechePlans,
+)
 
 const handleSolicitar = (planId: string) => {
   router.push({ name: 'pagamento', query: { tipo: 'creche', plano: planId } })

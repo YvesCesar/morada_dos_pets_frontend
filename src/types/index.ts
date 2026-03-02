@@ -241,3 +241,132 @@ export interface UnitOption {
   id: string
   label: string
 }
+
+// ============================================
+// Dashboard - Auth & Users
+// ============================================
+
+export type UserRole = 'admin' | 'customer'
+
+export interface UserProfile {
+  id: string
+  name: string
+  email: string
+  role: UserRole
+  phone: string
+  cpf: string
+  birthDate: string
+  cep: string
+  address: string
+  addressNumber: string
+  neighborhood: string
+  photo: string
+  active: boolean
+  createdAt: string
+}
+
+// ============================================
+// Dashboard - Pets
+// ============================================
+
+export interface DashboardPet {
+  id: string
+  ownerId: string
+  name: string
+  breed: string
+  birthDate: string
+  weight: number
+  photo: string
+}
+
+// ============================================
+// Dashboard - Notifications
+// ============================================
+
+export interface Notification {
+  id: string
+  userId: string
+  message: string
+  read: boolean
+  createdAt: string
+}
+
+// ============================================
+// Dashboard - Appointments
+// ============================================
+
+export type AppointmentStatus = 'confirmado' | 'pendente' | 'cancelado'
+
+export interface Appointment {
+  id: string
+  clientId: string
+  clientName: string
+  petId: string
+  petName: string
+  service: 'Dog Spa' | 'Hospedagem' | 'Dog Táxi'
+  serviceDetail: string
+  date: string
+  time: string
+  status: AppointmentStatus
+  value: number
+  unit: string
+  address?: string
+}
+
+// ============================================
+// Dashboard - Coupons
+// ============================================
+
+export interface Coupon {
+  id: string
+  code: string
+  type: 'percentage' | 'fixed'
+  value: number
+  maxUses: number
+  currentUses: number
+  expiresAt: string
+  active: boolean
+}
+
+// ============================================
+// Dashboard - Testimonials
+// ============================================
+
+export interface DashboardTestimonial {
+  id: string
+  userId: string
+  authorName: string
+  authorPhoto: string
+  quote: string
+  allowPublic: boolean
+  approved: boolean
+  createdAt: string
+}
+
+// ============================================
+// Dashboard - Metrics
+// ============================================
+
+export interface AdminMetrics {
+  activeClients: number
+  inactiveClients: number
+  registeredPets: number
+  cancellations: number
+}
+
+export interface CustomerMetrics {
+  totalPets: number
+  confirmedAppointments: number
+  pendingAppointments: number
+  totalSpent: number
+}
+
+// ============================================
+// Dashboard - Submenu
+// ============================================
+
+export interface SubmenuItem {
+  label: string
+  icon: string
+  route: string
+}

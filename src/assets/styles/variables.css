@@ -11,7 +11,26 @@
   --color-black: #000000;
   --color-text: #1e1e1e;
   --color-text-muted: #5f5d5d;
-  
+
+  /* Status / Feedback */
+  --color-danger: #A31C0A;
+  --color-danger-light: #FEF2F2;
+  --color-success: #00A63E;
+  --color-success-light: #F0FDF4;
+  --color-warning: #D08700;
+  --color-warning-light: #FEFCE8;
+  --color-neutral-light: #F3F4F6;
+  --color-input-border: #BDB5B0;
+  --color-bg-hover: #FAFAFA;
+  --color-bg-readonly: #F9F7F4;
+
+  /* Badge */
+  --radius-badge: 20px;
+  --text-badge: 0.8125rem;
+
+  /* Input */
+  --radius-input: 4px;
+
   /* Typography */
   --font-primary: 'Quicksand', sans-serif;
   --font-logo: 'Rammetto One', cursive;

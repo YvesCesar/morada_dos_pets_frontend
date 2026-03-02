@@ -1,8 +1,15 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { hospedagemPlans } from '@/data'
+import { hospedagemPlans as staticHospedagemPlans } from '@/data'
+import { usePricesStore } from '@/stores/prices'
 
 const router = useRouter()
+const pricesStore = usePricesStore()
+
+const hospedagemPlans = computed(() =>
+  pricesStore.hospedagemPlans.length > 0 ? pricesStore.hospedagemPlans : staticHospedagemPlans,
+)
 
 const handleSolicitar = (planId: string) => {
   router.push({ name: 'pagamento', query: { tipo: 'hospedagem', plano: planId } })

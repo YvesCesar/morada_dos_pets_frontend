@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch, nextTick } from 'vue'
+import { ref, computed, watch } from 'vue'
 import type { Pet, ServiceRequest } from '@/types'
 import { mockPets, serviceTypes, serviceOptions, unitOptions, timeSlots } from '@/data/pagamento'
 import OrderSummary from './OrderSummary.vue'

@@ -1,9 +1,19 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import arrowCarousel from '@/assets/images/arrow-carousel.svg'
-import { testimonials } from '@/data'
+import { testimonials as staticTestimonials } from '@/data'
+import { useTestimonialsStore } from '@/stores/testimonials'
 import { useCarousel, useSwipe } from '@/composables'
 
-const { currentIndex, currentItem: currentTestimonial, next, prev, goTo } = useCarousel(testimonials)
+const testimonialsStore = useTestimonialsStore()
+
+const activeTestimonials = computed(() =>
+  testimonialsStore.publicCarouselItems.length > 0
+    ? testimonialsStore.publicCarouselItems
+    : staticTestimonials,
+)
+
+const { currentIndex, currentItem: currentTestimonial, next, prev, goTo } = useCarousel(activeTestimonials)
 
 const { handleTouchStart, handleTouchMove, handleTouchEnd } = useSwipe({
   onSwipeLeft: next,
@@ -65,7 +75,7 @@ const { handleTouchStart, handleTouchMove, handleTouchEnd } = useSwipe({
       <!-- Pagination dots -->
       <div class="testimonials__pagination">
         <button
-          v-for="(testimonial, index) in testimonials"
+          v-for="(testimonial, index) in activeTestimonials"
           :key="testimonial.id"
           class="testimonials__dot"
           :class="{ 'testimonials__dot--active': index === currentIndex }"

@@ -1,15 +1,21 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRoute, RouterLink } from 'vue-router'
+import { ref, computed } from 'vue'
+import { useRoute, useRouter, RouterLink } from 'vue-router'
 import logoSvg from '@/assets/images/logo-casa.svg'
 import { navLinks } from '@/data'
+import { adminSubmenuItems, customerSubmenuItems } from '@/data'
 import type { NavLink } from '@/types'
+import { useAuthStore } from '@/stores/auth'
+import NotificationBell from './NotificationBell.vue'
+import ProfileDropdown from './ProfileDropdown.vue'
 
 defineProps<{
   minimal?: boolean
 }>()
 
 const route = useRoute()
+const router = useRouter()
+const authStore = useAuthStore()
 const isMenuOpen = ref(false)
 
 const toggleMenu = () => {
@@ -22,16 +28,24 @@ const closeMenu = () => {
 
 const isActive = (link: NavLink) => {
   if (link.isRoute && link.to) {
-    // Check for exact match or if current path starts with the link path (for sub-pages)
-    if (route.path === link.to) {
-      return true
-    }
-    // For non-home routes, check if current path is a sub-page
-    if (link.to !== '/' && route.path.startsWith(link.to)) {
-      return true
-    }
+    if (route.path === link.to) return true
+    if (link.to !== '/' && route.path.startsWith(link.to)) return true
   }
   return false
+}
+
+const menuItems = computed(() => {
+  return authStore.isAdmin ? adminSubmenuItems : customerSubmenuItems
+})
+
+const handleLogout = () => {
+  authStore.logout()
+  router.push('/')
+}
+
+const navigateDashboard = (path: string) => {
+  closeMenu()
+  router.push(path)
 }
 </script>
 
@@ -81,10 +95,36 @@ const isActive = (link: NavLink) => {
             </li>
           </ul>
 
-          <!-- Auth Buttons -->
-          <div class="header__auth">
+          <!-- Authenticated: bell + dropdown -->
+          <div v-if="authStore.isAuthenticated" class="header__user">
+            <NotificationBell />
+            <ProfileDropdown
+              :user-name="authStore.user?.name ?? ''"
+              :user-photo="authStore.user?.photo ?? ''"
+              :menu-items="menuItems"
+              @logout="handleLogout"
+            />
+          </div>
+
+          <!-- Guest: auth buttons -->
+          <div v-else class="header__auth">
             <RouterLink to="/entrar" class="btn btn--outline" @click="closeMenu">Entrar</RouterLink>
             <RouterLink to="/cadastro" class="btn btn--primary" @click="closeMenu">Criar conta</RouterLink>
+          </div>
+
+          <!-- Mobile dashboard links (when authenticated) -->
+          <div v-if="authStore.isAuthenticated" class="header__mobile-dashboard">
+            <button
+              v-for="item in menuItems"
+              :key="item.route"
+              class="header__mobile-dashboard-item"
+              @click="navigateDashboard(item.route)"
+            >
+              {{ item.label }}
+            </button>
+            <button class="header__mobile-dashboard-item header__mobile-dashboard-item--logout" @click="handleLogout">
+              Sair
+            </button>
           </div>
         </nav>
       </template>
@@ -183,6 +223,13 @@ const isActive = (link: NavLink) => {
   background: var(--color-primary);
 }
 
+/* User area (authenticated) */
+.header__user {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 /* Auth Buttons */
 .header__auth {
   display: flex;
@@ -216,6 +263,39 @@ const isActive = (link: NavLink) => {
 
 .btn--primary:hover {
   opacity: 0.9;
+}
+
+/* Mobile Dashboard Links */
+.header__mobile-dashboard {
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.header__mobile-dashboard-item {
+  width: 100%;
+  padding: 10px 0;
+  text-align: left;
+  border: none;
+  background: none;
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.header__mobile-dashboard-item:hover {
+  color: var(--color-primary);
+}
+
+.header__mobile-dashboard-item--logout {
+  color: var(--color-danger);
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* Mobile Menu Button */
@@ -313,6 +393,14 @@ const isActive = (link: NavLink) => {
   .header__auth .btn {
     width: 100%;
     text-align: center;
+  }
+
+  .header__user {
+    margin-top: 1.5rem;
+  }
+
+  .header__mobile-dashboard {
+    display: flex;
   }
 }
 

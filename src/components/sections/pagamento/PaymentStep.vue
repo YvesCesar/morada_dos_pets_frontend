@@ -7,6 +7,7 @@ import PaymentDebit from './PaymentDebit.vue'
 import PaymentCredit from './PaymentCredit.vue'
 import OrderSummary from './OrderSummary.vue'
 import CouponInput from './CouponInput.vue'
+import { useCouponsStore } from '@/stores/coupons'
 
 interface Props {
   serviceRequests: ServiceRequest[]
@@ -18,6 +19,8 @@ const emit = defineEmits<{
   back: []
   confirm: []
 }>()
+
+const couponsStore = useCouponsStore()
 
 // Estado local
 const paymentMethod = ref<PaymentMethod | null>(null)
@@ -46,11 +49,8 @@ const selectPaymentMethod = (method: PaymentMethod | null) => {
 
 const handleCouponApply = (code: string) => {
   couponCode.value = code
-  if (code === 'MORADA10') {
-    discount.value = Math.round(subtotal.value * 0.1)
-  } else {
-    discount.value = 0
-  }
+  const result = couponsStore.validateCoupon(code, subtotal.value)
+  discount.value = result.discount
 }
 
 const handlePixBack = () => {
