@@ -1,0 +1,113 @@
+// =============================================
+// Buttons - Global Reusable Classes
+// =============================================
+// Usage: <button class="btn btn--primary">...</button>
+
+@use '../abstracts/mixins' as *;
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-primary);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-base);
+  line-height: 1.25;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: opacity var(--transition-fast), background-color var(--transition-fast);
+  padding: 8px 24px;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  // ── Variants ──────────────────────────────
+  &--primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+
+    &:hover:not(:disabled) {
+      opacity: 0.9;
+    }
+  }
+
+  &--outline {
+    background-color: var(--color-white);
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+
+    &:hover:not(:disabled) {
+      background-color: rgba(41, 16, 0, 0.04);
+    }
+  }
+
+  &--danger {
+    background: var(--color-danger);
+    color: var(--color-white);
+
+    &:hover:not(:disabled) {
+      opacity: 0.9;
+    }
+  }
+
+  &--danger-light {
+    background: var(--color-danger-light);
+    color: var(--color-danger);
+
+    &:hover:not(:disabled) {
+      opacity: 0.85;
+    }
+  }
+
+  &--google {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 8px 65px;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-primary);
+    border-radius: 8px;
+    color: var(--color-text);
+    font-weight: var(--font-medium);
+  }
+
+  // ── Sizes ─────────────────────────────────
+  &--sm {
+    font-size: var(--text-xs);
+    padding: 6px 14px;
+  }
+
+  &--lg {
+    font-size: var(--text-lg);
+    min-width: 177px;
+    height: 41px;
+  }
+}
+
+// ── Icon Buttons (action buttons in tables) ──
+.action-btn {
+  width: 32px;
+  height: 32px;
+  @include flex-center;
+  border: none;
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--color-text-muted);
+  transition: all var(--transition-fast);
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.08);
+    color: var(--color-text);
+  }
+
+  &--danger:hover {
+    color: var(--color-danger);
+    background: var(--color-danger-light);
+  }
+}

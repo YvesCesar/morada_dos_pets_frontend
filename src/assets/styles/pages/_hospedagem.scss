@@ -1,0 +1,198 @@
+
+@use '../mixins/hero-banner' as *;
+@use '../mixins/pricing-card' as *;
+@use '../abstracts/mixins' as *;
+
+// ── HeroBanner ──────────────────────────────
+.hero-banner-hospedagem {
+  @include hero-banner;
+  
+  @media (max-width: 480px) {
+    &__title {
+      margin-bottom: 20px;
+    }
+  }
+}
+// ── DescriptionSection ──────────────────────────────
+
+.hospedagem-description {
+  padding: 100px var(--container-padding) 50px;
+  background-color: var(--color-white);
+}
+
+.hospedagem-description__container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.hospedagem-description__title {
+  font-size: 32px;
+  font-weight: var(--font-medium);
+  color: var(--color-text);
+  line-height: 1.25em;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.hospedagem-description__text {
+  font-size: 24px;
+  font-weight: var(--font-regular);
+  color: var(--color-text);
+  line-height: 1.25em;
+  text-align: left;
+  max-width: 1208px;
+  margin: 0 auto;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .hospedagem-description {
+    padding: 80px var(--container-padding) 40px;
+  }
+
+  .hospedagem-description__title {
+    font-size: 28px;
+  }
+
+  .hospedagem-description__text {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hospedagem-description {
+    padding: 60px var(--container-padding) 30px;
+  }
+
+  .hospedagem-description__title {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+
+  .hospedagem-description__text {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hospedagem-description {
+    padding: 50px var(--container-padding) 24px;
+  }
+
+  .hospedagem-description__title {
+    font-size: 22px;
+  }
+
+  .hospedagem-description__text {
+    font-size: 16px;
+  }
+}
+
+// ── HospedagemPricingSection ──────────────────────────────
+
+.hospedagem-pricing {
+  @include pricing-card-section;
+}
+
+// ── CrechePricingSection ──────────────────────────────
+
+.creche-pricing {
+  @include pricing-card-section;
+  padding-top: 35px;
+
+  &__grid {
+    grid-template-columns: repeat(2, 404px);
+    justify-content: center;
+  }
+
+  &__card {
+    width: 404px;
+  }
+
+  &__card-header {
+    gap: 12px;
+  }
+
+  &__card-schedule {
+    font-size: 16px;
+    font-weight: var(--font-regular);
+    color: var(--color-text);
+    line-height: 1.25em;
+  }
+
+  @include respond-to(tablet) {
+    padding-top: 35px;
+
+    &__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    &__card {
+      width: 100%;
+    }
+  }
+
+  @include respond-to(mobile) {
+    padding: 35px var(--container-padding) 60px;
+  }
+
+  @include respond-to(small) {
+    padding: 35px var(--container-padding) 50px;
+
+    &__card-schedule,
+    &__price-frequency {
+      font-size: 14px;
+    }
+  }
+}
+
+// ── PricingNoteSection ──────────────────────────────
+
+.pricing-note {
+  padding: 30px var(--container-padding) 35px;
+  background-color: var(--color-white);
+}
+
+.pricing-note__container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.pricing-note__text {
+  font-size: 18px;
+  font-weight: var(--font-regular);
+  color: var(--color-text);
+  line-height: 1.25em;
+  text-align: left;
+  max-width: 1014px;
+}
+
+@media (max-width: 992px) {
+  .pricing-note {
+    padding: 24px var(--container-padding) 30px;
+  }
+
+  .pricing-note__text {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .pricing-note {
+    padding: 20px var(--container-padding) 24px;
+  }
+
+  .pricing-note__text {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pricing-note {
+    padding: 16px var(--container-padding) 20px;
+  }
+
+  .pricing-note__text {
+    font-size: 14px;
+  }
+}

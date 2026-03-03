@@ -1,0 +1,249 @@
+// =============================================
+// Payment Method Mixin
+// =============================================
+// Shared base for PaymentCredit and PaymentDebit
+
+@use '../abstracts/mixins' as *;
+
+@mixin payment-method {
+  $parent: &;
+  width: 100%;
+  max-width: 637px;
+
+  &__title {
+    font-family: var(--font-primary);
+    font-weight: var(--font-semibold);
+    font-size: var(--text-lg);
+    line-height: 1.25em;
+    color: var(--color-black);
+    margin-bottom: var(--spacing-md);
+  }
+
+  &__selected-method {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  &__radio-indicator {
+    display: block;
+    width: 23px;
+    height: 22px;
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-primary);
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  &__radio-indicator::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 7px;
+    width: 6px;
+    height: 11px;
+    border: solid var(--color-white);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  &__card-icon {
+    flex-shrink: 0;
+  }
+
+  &__method-label {
+    font-family: var(--font-primary);
+    font-weight: var(--font-regular);
+    font-size: var(--text-base);
+    line-height: 1.25em;
+    color: var(--color-black);
+  }
+
+  &__secure-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  &__secure-text {
+    font-family: var(--font-primary);
+    font-weight: var(--font-medium);
+    font-size: var(--text-base);
+    line-height: 1.25em;
+    color: var(--color-black);
+  }
+
+  &__brands-img {
+    height: 64px;
+    object-fit: contain;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__row {
+    display: flex;
+    gap: var(--spacing-lg);
+  }
+
+  &__label {
+    font-family: var(--font-primary);
+    font-weight: var(--font-medium);
+    font-size: var(--text-base);
+    line-height: 1.25em;
+    color: var(--color-black);
+  }
+
+  &__input {
+    width: 100%;
+    max-width: 400px;
+    height: 45px;
+    padding: 0 var(--spacing-sm);
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-primary);
+    font-weight: 300;
+    font-size: var(--text-base);
+    line-height: 1.25em;
+    color: var(--color-black);
+    background-color: var(--color-white);
+    transition: border-color var(--transition-fast);
+  }
+
+  &__input::placeholder {
+    color: rgba(0, 0, 0, 0.55);
+  }
+
+  &__input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(41, 16, 0, 0.1);
+  }
+
+  &__checkbox {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+    margin-top: var(--spacing-xs);
+  }
+
+  &__checkbox-custom {
+    display: block;
+    width: 23px;
+    height: 22px;
+    border: 1px solid var(--color-border-grey);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-white);
+    flex-shrink: 0;
+    position: relative;
+    transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  }
+
+  // Complex combined selectors need @at-root with captured parent
+  @at-root #{$parent}__checkbox-input:checked + #{$parent}__checkbox-custom {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+
+  @at-root #{$parent}__checkbox-input:checked + #{$parent}__checkbox-custom::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 7px;
+    width: 6px;
+    height: 11px;
+    border: solid var(--color-white);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  @at-root #{$parent}__checkbox-input:focus-visible + #{$parent}__checkbox-custom {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  &__checkbox-label {
+    font-family: var(--font-primary);
+    font-weight: 300;
+    font-size: var(--text-base);
+    line-height: 1.25em;
+    color: var(--color-black);
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+  }
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 177.55px;
+    height: 40.64px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-primary);
+    font-weight: var(--font-semibold);
+    font-size: var(--text-lg);
+    line-height: 1.25em;
+    cursor: pointer;
+    transition: opacity var(--transition-fast), background-color var(--transition-fast);
+  }
+
+  &__btn--outline {
+    background-color: var(--color-white);
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+  }
+
+  &__btn--outline:hover {
+    background-color: rgba(41, 16, 0, 0.04);
+  }
+
+  &__btn--primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    min-width: 186px;
+  }
+
+  &__btn--primary:hover {
+    opacity: 0.9;
+  }
+
+  @include respond-to(mobile) {
+    &__input {
+      max-width: 100%;
+    }
+
+    &__actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    &__btn {
+      width: 100%;
+    }
+
+    &__brands-img {
+      width: 100%;
+    }
+  }
+}

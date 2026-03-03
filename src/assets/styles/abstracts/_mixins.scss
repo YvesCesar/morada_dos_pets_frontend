@@ -1,0 +1,67 @@
+// =============================================
+// MORADA DOS PETS - SCSS Mixins
+// =============================================
+
+// ── Responsive Breakpoints ───────────────────
+// Usage: @include respond-to(tablet) { ... }
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == wide {
+    @media (max-width: 1400px) { @content; }
+  } @else if $breakpoint == desktop {
+    @media (max-width: 1200px) { @content; }
+  } @else if $breakpoint == tablet {
+    @media (max-width: 992px) { @content; }
+  } @else if $breakpoint == mobile {
+    @media (max-width: 768px) { @content; }
+  } @else if $breakpoint == small {
+    @media (max-width: 480px) { @content; }
+  }
+}
+
+// ── Flexbox Shortcuts ────────────────────────
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column($gap: 0) {
+  display: flex;
+  flex-direction: column;
+  @if $gap != 0 {
+    gap: $gap;
+  }
+}
+
+// ── Container ────────────────────────────────
+@mixin container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+// ── Text Ellipsis ────────────────────────────
+@mixin text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// ── Visually Hidden (sr-only) ────────────────
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

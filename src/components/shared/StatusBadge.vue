@@ -27,16 +27,3 @@ const label = computed(() => {
     {{ label }}
   </span>
 </template>
-
-<style scoped>
-.status-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 12px;
-  border-radius: var(--radius-badge);
-  font-size: var(--text-badge);
-  font-weight: var(--font-medium);
-  line-height: 1.25;
-  white-space: nowrap;
-}
-</style>

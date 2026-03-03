@@ -1,0 +1,25 @@
+// =============================================
+// MORADA DOS PETS - Main Stylesheet Entry Point
+// =============================================
+// Import order matters: abstracts → base → components → layout → shared → pages → views
+
+// 1. Design tokens & tools (no CSS output)
+@use 'abstracts';
+
+// 2. CSS reset & base styles
+@use 'base';
+
+// 3. Reusable global component classes (.btn, .form-*, .dashboard-table, .card, .badge, .base-modal)
+@use 'components';
+
+// 4. Layout components (header, footer, dashboard layout, notification bell, profile dropdown)
+@use 'layout';
+
+// 5. Shared component styles (carousel, service cards, tabs, benefits, stats, filter bar)
+@use 'shared';
+
+// 6. Page-specific styles (home, services, dog-spa, dog-taxi, hospedagem, quem-somos, contact, auth, payment, dashboard, etc.)
+@use 'pages';
+
+// 7. View-level styles (min-height, auth layouts, dashboard layouts)
+@use 'views';

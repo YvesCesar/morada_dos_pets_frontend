@@ -1,0 +1,134 @@
+// =============================================
+// MORADA DOS PETS - Design System Variables
+// =============================================
+
+:root {
+  // ── Colors ──────────────────────────────────
+  --color-primary: #291000;
+  --color-primary-light: #dbb947;
+  --color-secondary: #fbf8ed;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-text: #1e1e1e;
+  --color-text-muted: #5f5d5d;
+
+  // ── Status / Feedback ───────────────────────
+  --color-danger: #a31c0a;
+  --color-danger-light: #fef2f2;
+  --color-success: #00a63e;
+  --color-success-light: #f0fdf4;
+  --color-warning: #d08700;
+  --color-warning-light: #fefce8;
+  --color-neutral-light: #f3f4f6;
+  --color-input-border: #bdb5b0;
+  --color-bg-hover: #fafafa;
+  --color-bg-readonly: #f9f7f4;
+
+  // ── Extended Palette ───────────────────────
+  --color-divider-brown: #705f54;
+  --color-admin-gold: #c7a841;
+  --color-warning-text: #854d0e;
+  --color-error: #e74c3c;
+  --color-border-grey: #b2abab;
+  --color-coupon-success: #2d7a3a;
+  --color-coupon-error: #c0392b;
+  --color-contact-bg: #f8f9fa;
+  --color-contact-border: #e9ecef;
+  --color-notification-border: #f0ede9;
+  --color-notification-highlight: #fef9c3;
+  --color-service-brown: #544033;
+  --color-service-blue: #327d9b;
+  --color-bg-dark: #3d2000;
+  --color-muted-secondary: #9d918a;
+
+  // ── Typography ──────────────────────────────
+  --font-primary: 'Quicksand', sans-serif;
+  --font-logo: 'Rammetto One', cursive;
+
+  // Font Sizes
+  --text-xs: 0.875rem;   // 14px
+  --text-sm: 1rem;       // 16px
+  --text-base: 1.125rem; // 18px
+  --text-lg: 1.25rem;    // 20px
+  --text-xl: 1.5rem;     // 24px
+  --text-2xl: 2rem;      // 32px
+  --text-3xl: 2.5rem;    // 40px
+  --text-4xl: 3rem;      // 48px
+
+  // Badge
+  --text-badge: 0.8125rem;
+
+  // Font Weights
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  // ── Spacing ─────────────────────────────────
+  --spacing-xs: 0.5rem;  // 8px
+  --spacing-sm: 1rem;    // 16px
+  --spacing-md: 1.5rem;  // 24px
+  --spacing-lg: 2rem;    // 32px
+  --spacing-xl: 3rem;    // 48px
+  --spacing-2xl: 4rem;   // 64px
+  --spacing-3xl: 6rem;   // 96px
+
+  // ── Border Radius ──────────────────────────
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 21px;
+  --radius-full: 50%;
+  --radius-badge: 20px;
+  --radius-input: 4px;
+  --radius-card: 14px;
+  --radius-auth: 15px;
+  --radius-pricing: 10px;
+
+  // ── Shadows ────────────────────────────────
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-pricing: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+  --shadow-modal: 0 8px 32px rgba(0, 0, 0, 0.15);
+
+  // ── Transitions ────────────────────────────
+  --transition-fast: 150ms ease;
+  --transition-base: 300ms ease;
+  --transition-slow: 500ms ease;
+
+  // ── Layout ─────────────────────────────────
+  --container-max: 1440px;
+  --container-padding: 135px;
+  --header-height: 90px;
+
+  // ── Z-index ────────────────────────────────
+  --z-header: 100;
+  --z-modal: 200;
+  --z-tooltip: 300;
+}
+
+// ── Responsive Container Padding ─────────────
+@media (max-width: 1200px) {
+  :root {
+    --container-padding: 80px;
+  }
+}
+
+@media (max-width: 992px) {
+  :root {
+    --container-padding: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --container-padding: 24px;
+    --text-4xl: 2rem;
+    --text-3xl: 1.75rem;
+    --text-2xl: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --container-padding: 16px;
+  }
+}

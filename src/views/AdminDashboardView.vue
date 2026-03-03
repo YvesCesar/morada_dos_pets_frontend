@@ -91,11 +91,3 @@ const handleCancelConfirm = () => {
     />
   </DashboardLayout>
 </template>
-
-<style scoped>
-.admin-dashboard {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-}
-</style>

@@ -23,7 +23,3 @@ const isDashboardPage = computed(() => {
   <RouterView />
   <AppFooter v-if="!isAuthPage && !isDashboardPage" />
 </template>
-
-<style scoped>
-/* App-level scoped styles if needed */
-</style>

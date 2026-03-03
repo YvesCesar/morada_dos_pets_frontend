@@ -13,15 +13,3 @@ import ContactInfoSection from '@/components/sections/contato/ContactInfoSection
     </main>
   </div>
 </template>
-
-<style scoped>
-.contato-view {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-main {
-  flex-grow: 1;
-}
-</style>

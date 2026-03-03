@@ -1,0 +1,49 @@
+// =============================================
+// Users Management Page
+// =============================================
+
+@use '../mixins/dashboard-table' as *;
+@use '../mixins/dashboard-form' as *;
+
+// ── UsersTable ──────────────────────────────
+
+.users-table {
+  @include dashboard-table;
+
+  &__role {
+    padding: 4px 10px;
+    border-radius: var(--radius-badge);
+    font-size: var(--text-badge);
+    font-weight: var(--font-medium);
+    background: var(--color-success-light);
+    color: var(--color-success);
+  }
+
+  &__role--admin {
+    background: var(--color-secondary);
+    color: var(--color-admin-gold);
+  }
+
+  &__toggle {
+    padding: 4px 12px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: var(--radius-badge);
+    font-size: var(--text-badge);
+    font-weight: var(--font-medium);
+    background: var(--color-danger-light);
+    color: var(--color-danger);
+    cursor: pointer;
+  }
+
+  &__toggle--active {
+    background: var(--color-success-light);
+    color: var(--color-success);
+    border-color: rgba(0, 163, 62, 0.2);
+  }
+}
+
+// ── UserFormModal ──────────────────────────────
+
+.user-form {
+  @include dashboard-form;
+}

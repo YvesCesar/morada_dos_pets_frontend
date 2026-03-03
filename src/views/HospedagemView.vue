@@ -35,9 +35,3 @@ const isHospedagem = computed(() => activeTab.value === 'hospedagem')
     <BenefitsSection />
   </main>
 </template>
-
-<style scoped>
-.hospedagem {
-  min-height: 100vh;
-}
-</style>

@@ -1,0 +1,23 @@
+// =============================================
+// Cards - Global Reusable Classes
+// =============================================
+
+.card {
+  background-color: var(--color-white);
+  overflow: hidden;
+
+  // ── Dashboard Card ────────────────────────
+  &--dashboard {
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    padding: var(--spacing-md);
+  }
+
+  // ── Pricing Card ──────────────────────────
+  &--pricing {
+    border-radius: var(--radius-pricing);
+    box-shadow: var(--shadow-pricing);
+    display: flex;
+    flex-direction: column;
+  }
+}

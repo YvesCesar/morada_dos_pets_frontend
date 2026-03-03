@@ -1,0 +1,407 @@
+
+@use '../mixins/hero-banner' as *;
+
+// ── HeroBanner ──────────────────────────────
+.hero-banner-dog-taxi {
+  @include hero-banner;
+}
+// ── DescriptionSection ──────────────────────────────
+
+.dog-taxi-description {
+  padding: 100px var(--container-padding) 60px;
+  background-color: var(--color-white);
+}
+
+.dog-taxi-description__container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.dog-taxi-description__title {
+  font-size: 32px;
+  font-weight: var(--font-medium);
+  color: var(--color-text);
+  line-height: 1.25em;
+  margin-bottom: 40px;
+}
+
+.dog-taxi-description__text {
+  font-size: 24px;
+  font-weight: var(--font-regular);
+  color: var(--color-text);
+  line-height: 1.25em;
+  margin-bottom: 50px;
+}
+
+.dog-taxi-description__content {
+  display: flex;
+  gap: 88px;
+  align-items: center;
+}
+
+.dog-taxi-description__map {
+  flex: 1;
+  max-width: 669px;
+  aspect-ratio: 669 / 529;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.15);
+}
+
+.dog-taxi-description__map-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.dog-taxi-description__card {
+  flex-shrink: 0;
+  width: 413px;
+}
+
+.dog-taxi-description__card-title {
+  font-size: 24px;
+  font-weight: var(--font-medium);
+  color: var(--color-text);
+  line-height: 1.25em;
+  margin-bottom: 12px;
+}
+
+.dog-taxi-description__card-note {
+  font-size: 14px;
+  font-weight: var(--font-regular);
+  color: var(--color-text);
+  line-height: 0.93em;
+  margin-bottom: 30px;
+}
+
+.dog-taxi-description__form {
+  margin-bottom: 20px;
+}
+
+.dog-taxi-description__form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.dog-taxi-description__connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 28px;
+  width: 11px;
+  flex-shrink: 0;
+}
+
+.dog-taxi-description__connector-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.dog-taxi-description__connector-line {
+  flex: 1;
+  width: 3px;
+  border-left: 3px dashed rgba(41, 16, 0, 0.3);
+  min-height: 67px;
+}
+
+.dog-taxi-description__fields {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dog-taxi-description__input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dog-taxi-description__label {
+  font-size: 14px;
+  font-weight: var(--font-regular);
+  color: var(--color-text);
+  line-height: 1.25em;
+}
+
+.dog-taxi-description__input,
+.dog-taxi-description__select {
+  width: 100%;
+  padding: 10px 16px;
+  border: 1px solid var(--color-primary);
+  border-radius: 6px;
+  font-size: 16px;
+  font-family: inherit;
+  color: var(--color-text);
+  background-color: var(--color-white);
+  transition: border-color var(--transition-fast);
+}
+
+.dog-taxi-description__input:focus,
+.dog-taxi-description__select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(41, 16, 0, 0.1);
+}
+
+.dog-taxi-description__input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.dog-taxi-description__button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.dog-taxi-description__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 24px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: var(--font-semibold);
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.dog-taxi-description__button:hover {
+  background-color: var(--color-bg-dark);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .dog-taxi-description__content {
+    gap: 40px;
+  }
+
+  .dog-taxi-description__map {
+    max-width: 500px;
+  }
+
+  .dog-taxi-description__card {
+    width: 380px;
+  }
+}
+
+@media (max-width: 992px) {
+  .dog-taxi-description {
+    padding: 80px var(--container-padding) 50px;
+  }
+
+  .dog-taxi-description__title {
+    font-size: 28px;
+    text-align: center;
+  }
+
+  .dog-taxi-description__text {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .dog-taxi-description__content {
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .dog-taxi-description__map {
+    max-width: 500px;
+    width: 100%;
+    order: 2;
+  }
+
+  .dog-taxi-description__card {
+    width: 100%;
+    max-width: 500px;
+    order: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .dog-taxi-description {
+    padding: 60px var(--container-padding) 40px;
+  }
+
+  .dog-taxi-description__title {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+
+  .dog-taxi-description__text {
+    font-size: 18px;
+    margin-bottom: 32px;
+  }
+
+  .dog-taxi-description__map {
+    max-width: 100%;
+    border-radius: 16px;
+  }
+
+  .dog-taxi-description__card {
+    max-width: 100%;
+  }
+
+  .dog-taxi-description__card-title {
+    font-size: 20px;
+  }
+
+  .dog-taxi-description__card-note {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .dog-taxi-description__input,
+  .dog-taxi-description__select {
+    font-size: 14px;
+    padding: 12px 14px;
+  }
+
+  .dog-taxi-description__label {
+    font-size: 13px;
+  }
+
+  .dog-taxi-description__button {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .dog-taxi-description {
+    padding: 50px var(--container-padding) 30px;
+  }
+
+  .dog-taxi-description__title {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .dog-taxi-description__text {
+    font-size: 16px;
+    margin-bottom: 28px;
+  }
+
+  .dog-taxi-description__content {
+    gap: 24px;
+  }
+
+  .dog-taxi-description__map {
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+  }
+
+  .dog-taxi-description__card-title {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .dog-taxi-description__card-note {
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .dog-taxi-description__form-row {
+    gap: 10px;
+  }
+
+  .dog-taxi-description__connector {
+    padding-top: 26px;
+    width: 10px;
+  }
+
+  .dog-taxi-description__connector-dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .dog-taxi-description__connector-line {
+    min-height: 60px;
+  }
+
+  .dog-taxi-description__input,
+  .dog-taxi-description__select {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  .dog-taxi-description__label {
+    font-size: 12px;
+  }
+
+  .dog-taxi-description__button {
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 20px;
+  }
+
+  .dog-taxi-description__button-wrapper {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .dog-taxi-description {
+    padding: 40px var(--container-padding) 24px;
+  }
+
+  .dog-taxi-description__title {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .dog-taxi-description__text {
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+
+  .dog-taxi-description__map {
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+  }
+
+  .dog-taxi-description__card-title {
+    font-size: 17px;
+  }
+
+  .dog-taxi-description__connector {
+    padding-top: 24px;
+    width: 8px;
+  }
+
+  .dog-taxi-description__connector-dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .dog-taxi-description__connector-line {
+    width: 2px;
+    border-left-width: 2px;
+    min-height: 55px;
+  }
+
+  .dog-taxi-description__input,
+  .dog-taxi-description__select {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .dog-taxi-description__label {
+    font-size: 11px;
+  }
+
+  .dog-taxi-description__button {
+    font-size: 15px;
+    padding: 10px 16px;
+  }
+}
