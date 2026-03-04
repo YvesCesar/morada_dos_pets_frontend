@@ -1,0 +1,203 @@
+// =============================================
+// Pricing Card Grid Mixin
+// =============================================
+// Shared base for DogSpaServicesSection, HospedagemPricingSection, CrechePricingSection
+
+@use '../abstracts/mixins' as *;
+
+@mixin pricing-card-section($bottom-padding: 100px) {
+  padding: 0 var(--container-padding) $bottom-padding;
+  background-color: var(--color-white);
+
+  &__container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  &__card {
+    background-color: var(--color-white);
+    border-radius: 10px;
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__card-image {
+    width: 100%;
+    height: 227px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+  }
+
+  &__card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    padding: 20px 26px 30px;
+    flex: 1;
+  }
+
+  &__card-info {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    gap: 24px;
+    flex: 1;
+  }
+
+  &__card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 23px;
+  }
+
+  &__card-title {
+    font-size: 22px;
+    font-weight: var(--font-medium);
+    color: var(--color-text);
+    line-height: 1.25em;
+  }
+
+  &__card-divider {
+    width: 100%;
+    height: 3px;
+    background-color: var(--color-divider-brown);
+  }
+
+  &__prices {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  &__prices-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  &__price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+  }
+
+  &__price-size,
+  &__price-frequency {
+    font-size: 16px;
+    font-weight: var(--font-regular);
+    color: var(--color-text);
+    line-height: 1.25em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__bullet {
+    color: var(--color-text);
+  }
+
+  &__price-value {
+    font-size: 18px;
+    font-weight: var(--font-semibold);
+    color: var(--color-text);
+    line-height: 1.25em;
+    text-align: right;
+  }
+
+  &__btn {
+    font-family: var(--font-primary);
+    font-size: 18px;
+    font-weight: var(--font-semibold);
+    line-height: 1.25em;
+    color: var(--color-white);
+    background: var(--color-primary);
+    border: none;
+    border-radius: 6px;
+    padding: 8px 24px;
+    cursor: pointer;
+    transition: opacity var(--transition-fast);
+  }
+
+  &__btn:hover {
+    opacity: 0.9;
+  }
+
+  @include respond-to(desktop) {
+    &__grid {
+      gap: 24px;
+    }
+
+    &__card-image {
+      height: 200px;
+    }
+  }
+
+  @include respond-to(tablet) {
+    padding: 0 var(--container-padding) 80px;
+
+    &__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+  }
+
+  @include respond-to(mobile) {
+    padding: 0 var(--container-padding) 60px;
+
+    &__grid {
+      grid-template-columns: 1fr;
+      max-width: 450px;
+      margin: 0 auto;
+    }
+
+    &__card-content {
+      padding: 16px 20px 24px;
+      gap: 30px;
+    }
+
+    &__card-title {
+      font-size: 20px;
+    }
+  }
+
+  @include respond-to(small) {
+    padding: 0 var(--container-padding) 50px;
+
+    &__card-image {
+      height: 180px;
+    }
+
+    &__card-content {
+      padding: 14px 16px 20px;
+      gap: 24px;
+    }
+
+    &__card-title {
+      font-size: 18px;
+    }
+
+    &__price-size,
+    &__price-frequency {
+      font-size: 14px;
+    }
+
+    &__price-value {
+      font-size: 16px;
+    }
+
+    &__btn {
+      font-size: 16px;
+      padding: 6px 20px;
+    }
+  }
+}

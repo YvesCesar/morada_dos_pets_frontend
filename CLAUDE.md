@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Vue.js 3 SPA (TypeScript, Composition API, Vite, Pinia, Vue Router) for Morada dos Pets pet shop.
+Vue.js 3 SPA (TypeScript, Composition API, Vite, SCSS, Pinia, Vue Router) for Morada dos Pets pet shop.
 
 ## Commands
 
@@ -16,7 +16,16 @@ npm run format       # Prettier
 
 ```
 src/
-├── assets/           # Images, global styles, static files
+├── assets/           # Images, SCSS stylesheets
+│   └── styles/       # Centralized SCSS (7-1 pattern, no <style> in SFCs)
+│       ├── abstracts/ # Variables, mixins (no CSS output)
+│       ├── base/      # Reset, body defaults
+│       ├── components/ # Global classes (.btn, .form-*, .badge, .dashboard-table)
+│       ├── mixins/    # Reusable @mixin (hero-banner, auth-card, pricing-card, etc.)
+│       ├── layout/    # Header, footer, dashboard layout
+│       ├── shared/    # Shared component styles
+│       ├── pages/     # Page-specific section styles
+│       └── views/     # View-level layout styles
 ├── components/
 │   ├── layout/       # AppHeader, AppFooter, DashboardLayout, NotificationBell, ProfileDropdown
 │   ├── sections/     # Page sections organized by route (includes dashboard subfolders)
@@ -32,9 +41,10 @@ src/
 
 ## Code Conventions
 
-- **SFC order:** `<script setup lang="ts">` → `<template>` → `<style scoped>`
+- **SFC order:** `<script setup lang="ts">` → `<template>` (no `<style>` blocks — styles are centralized in `src/assets/styles/`)
 - **Components:** PascalCase. **Composables:** `use` prefix. **Data/config:** camelCase. **Types:** PascalCase.
-- **CSS:** BEM naming (`.block__element--modifier`) + CSS variables from `src/assets/styles/variables.css`
+- **CSS:** BEM naming (`.block__element--modifier`) + SCSS with CSS variables from `src/assets/styles/abstracts/_variables.scss`
+- **SCSS:** `@use`/`@forward` module system (never `@import`). Mixins imported with `as *`
 
 ## Mandatory Patterns
 
@@ -66,7 +76,7 @@ Agents should read these only when working on the related area:
 
 | File | When to read |
 |------|-------------|
-| `src/assets/styles/AGENTS.md` | Styling, CSS variables, design tokens, responsive breakpoints |
+| `src/assets/styles/AGENTS.md` | Styling, SCSS architecture, design tokens, mixins, responsive breakpoints |
 | `src/components/sections/AGENTS.md` | Creating/editing page sections, understanding page composition |
 | `src/components/layout/AGENTS.md` | Layout components (header, footer, dashboard layout, dropdowns) |
 | `src/composables/AGENTS.md` | Using or creating composables (carousel, swipe, viewport, masks, photo upload) |

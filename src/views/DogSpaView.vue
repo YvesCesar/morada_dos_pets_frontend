@@ -13,9 +13,3 @@ import BenefitsSection from '@/components/sections/dog-spa/BenefitsSection.vue'
     <BenefitsSection />
   </main>
 </template>
-
-<style scoped>
-.dog-spa {
-  min-height: 100vh;
-}
-</style>

@@ -11,9 +11,3 @@ import BenefitsSection from '@/components/sections/dog-taxi/BenefitsSection.vue'
     <BenefitsSection />
   </main>
 </template>
-
-<style scoped>
-.dog-taxi {
-  min-height: 100vh;
-}
-</style>

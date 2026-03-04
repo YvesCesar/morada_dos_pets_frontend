@@ -71,33 +71,3 @@ const handleRemove = () => {
     />
   </DashboardLayout>
 </template>
-
-<style scoped>
-.coupons-view {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-}
-
-.coupons-view__header {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.coupons-view__add-btn {
-  padding: 8px 20px;
-  background: var(--color-primary);
-  color: var(--color-white);
-  border: none;
-  border-radius: var(--radius-sm);
-  font-family: var(--font-primary);
-  font-size: var(--text-xs);
-  font-weight: var(--font-semibold);
-  cursor: pointer;
-  transition: opacity var(--transition-fast);
-}
-
-.coupons-view__add-btn:hover {
-  opacity: 0.9;
-}
-</style>

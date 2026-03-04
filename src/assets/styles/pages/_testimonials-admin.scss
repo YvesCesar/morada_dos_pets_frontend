@@ -1,0 +1,78 @@
+// =============================================
+// Admin Testimonials Page
+// =============================================
+
+@use '../mixins/dashboard-table' as *;
+
+// ── AdminTestimonialsSection ──────────────────────────────
+
+.testimonials-table {
+  @include dashboard-table;
+
+  &__table td {
+    vertical-align: middle;
+  }
+
+  &__author {
+    font-weight: var(--font-medium);
+    white-space: nowrap;
+  }
+
+  &__quote {
+    max-width: 340px;
+    color: var(--color-text-muted);
+  }
+
+  &__status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: var(--radius-badge);
+    font-size: var(--text-badge);
+    font-weight: var(--font-medium);
+    white-space: nowrap;
+  }
+
+  &__status--approved {
+    background: var(--color-success-light);
+    color: var(--color-success);
+  }
+
+  &__status--pending {
+    background: var(--color-warning-light);
+    color: var(--color-warning-text);
+  }
+
+  &__status--neutral {
+    background: var(--color-neutral-light);
+    color: var(--color-text-muted);
+  }
+
+  // Override: testimonials use text buttons instead of icon buttons
+  &__action-btn {
+    width: auto;
+    height: auto;
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-primary);
+    font-size: var(--text-xs);
+    font-weight: var(--font-semibold);
+    background: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  &__action-btn:hover:not(:disabled) {
+    opacity: 0.85;
+    background: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  &__action-btn--revoke {
+    background: var(--color-danger-light);
+    color: var(--color-danger);
+  }
+
+  &__action-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}

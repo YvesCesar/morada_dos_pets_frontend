@@ -1,0 +1,154 @@
+// =============================================
+// Forms - Global Reusable Classes
+// =============================================
+// Usage: <div class="form-group">
+//          <div class="form-row">
+//            <div class="form-field">
+//              <label class="form-label">...</label>
+//              <input class="form-input" />
+//            </div>
+//          </div>
+//        </div>
+
+@use '../abstracts/mixins' as *;
+
+.form-group {
+  @include flex-column(var(--spacing-md));
+}
+
+.form-row {
+  display: flex;
+  gap: var(--spacing-md);
+
+  @include respond-to(mobile) {
+    flex-direction: column;
+  }
+}
+
+.form-field {
+  @include flex-column(8px);
+  flex: 1;
+}
+
+.form-label {
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  color: var(--color-text);
+  line-height: 1.25;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-input);
+  font-family: var(--font-primary);
+  font-size: var(--text-xs);
+  color: var(--color-text);
+  background-color: var(--color-white);
+  transition: border-color var(--transition-fast);
+
+  &::placeholder {
+    color: rgba(0, 0, 0, 0.55);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary-light);
+  }
+
+  &--error {
+    border-color: var(--color-error);
+  }
+
+  &--readonly {
+    background-color: var(--color-bg-readonly);
+    cursor: default;
+  }
+}
+
+.form-select {
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%235f5d5d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+// ── Custom Checkbox ──────────────────────────
+// Usage: <label class="form-checkbox">
+//          <input type="checkbox" class="form-checkbox__input" />
+//          <span class="form-checkbox__custom"></span>
+//          <span class="form-checkbox__label">...</span>
+//        </label>
+.form-checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+
+  &__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked + .form-checkbox__custom {
+      background-color: var(--color-primary);
+      border-color: var(--color-primary);
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 3px;
+        left: 7px;
+        width: 6px;
+        height: 11px;
+        border: solid var(--color-white);
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+    }
+
+    &:focus-visible + .form-checkbox__custom {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+  }
+
+  &__custom {
+    display: block;
+    width: 23px;
+    height: 22px;
+    border: 1px solid var(--color-border-grey);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-white);
+    flex-shrink: 0;
+    position: relative;
+    transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  }
+
+  &__label {
+    font-family: var(--font-primary);
+    font-weight: 300;
+    font-size: var(--text-base);
+    line-height: 1.25em;
+    color: var(--color-black);
+  }
+}
+
+// ── Form Actions ────────────────────────────
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
+}

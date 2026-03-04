@@ -1,6 +1,6 @@
-/* =============================================
-   MORADA DOS PETS - CSS Reset & Base Styles
-   ============================================= */
+// =============================================
+// MORADA DOS PETS - CSS Reset & Base Styles
+// =============================================
 
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Rammetto+One&display=swap');
 
@@ -69,7 +69,7 @@ h6 {
   line-height: 1.25;
 }
 
-/* Utility Classes */
+// ── Utility Classes ──────────────────────────
 .container {
   width: 100%;
   max-width: var(--container-max);

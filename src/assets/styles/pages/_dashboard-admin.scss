@@ -1,0 +1,118 @@
+// ── AdminServiceCards ──────────────────────────────
+
+.admin-service-cards__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md);
+}
+
+.admin-service-cards__card {
+  background: var(--color-white);
+  border-radius: 10px;
+  box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.1), 0px 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid;
+  padding: 24px 24px 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 132px;
+}
+
+.admin-service-cards__top {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.admin-service-cards__icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.admin-service-cards__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.admin-service-cards__name {
+  font-size: 14px;
+  font-weight: var(--font-semibold);
+  color: var(--color-divider-brown);
+  line-height: 1.43;
+}
+
+.admin-service-cards__count {
+  font-size: 30px;
+  font-weight: var(--font-bold);
+  color: var(--color-text);
+  text-align: right;
+  line-height: 1.2;
+}
+
+.admin-service-cards__label {
+  font-size: 14px;
+  color: var(--color-muted-secondary);
+  text-align: right;
+  line-height: 1.43;
+}
+
+@media (max-width: 768px) {
+  .admin-service-cards__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ── AdminAppointmentsTable ──────────────────────────────
+
+.admin-table {
+  background: var(--color-white);
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.admin-table__wrapper {
+  overflow-x: auto;
+}
+
+.admin-table__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table__table th {
+  text-align: left;
+  padding: 14px 16px;
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-muted);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  white-space: nowrap;
+}
+
+.admin-table__table td {
+  padding: 14px 16px;
+  font-size: var(--text-xs);
+  color: var(--color-text);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  white-space: nowrap;
+}
+
+.admin-table__row {
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.admin-table__row:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.admin-table__empty {
+  text-align: center;
+  padding: var(--spacing-xl) !important;
+  color: var(--color-text-muted);
+}

@@ -1,0 +1,46 @@
+// =============================================
+// Coupons Management Page
+// =============================================
+
+@use '../mixins/dashboard-table' as *;
+@use '../mixins/dashboard-form' as *;
+
+// ── CouponsTable ──────────────────────────────
+
+.coupons-table {
+  @include dashboard-table;
+
+  &__code {
+    background: var(--color-neutral-light);
+    padding: 2px 8px;
+    border-radius: var(--radius-input);
+    font-weight: var(--font-semibold);
+    font-size: var(--text-badge);
+  }
+
+  &__status {
+    padding: 4px 10px;
+    border-radius: var(--radius-badge);
+    font-size: var(--text-badge);
+    font-weight: var(--font-medium);
+    background: var(--color-danger-light);
+    color: var(--color-danger);
+  }
+
+  &__status--active {
+    background: var(--color-success-light);
+    color: var(--color-success);
+  }
+}
+
+// ── CouponFormModal ──────────────────────────────
+
+.coupon-form {
+  @include dashboard-form;
+
+  &__field--checkbox {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+}

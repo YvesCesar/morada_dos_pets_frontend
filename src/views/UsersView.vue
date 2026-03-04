@@ -86,33 +86,3 @@ const handleLoginAs = (user: UserProfile) => {
     />
   </DashboardLayout>
 </template>
-
-<style scoped>
-.users-view {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-}
-
-.users-view__header {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.users-view__add-btn {
-  padding: 8px 20px;
-  background: var(--color-primary);
-  color: var(--color-white);
-  border: none;
-  border-radius: var(--radius-sm);
-  font-family: var(--font-primary);
-  font-size: var(--text-xs);
-  font-weight: var(--font-semibold);
-  cursor: pointer;
-  transition: opacity var(--transition-fast);
-}
-
-.users-view__add-btn:hover {
-  opacity: 0.9;
-}
-</style>

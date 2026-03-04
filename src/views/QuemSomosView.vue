@@ -15,9 +15,3 @@ import TestimonialsSection from '@/components/sections/quem-somos/TestimonialsSe
     <TestimonialsSection />
   </main>
 </template>
-
-<style scoped>
-.quem-somos {
-  min-height: 100vh;
-}
-</style>

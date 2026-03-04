@@ -1,0 +1,83 @@
+// =============================================
+// Dashboard Form Mixin
+// =============================================
+// Shared base for UserFormModal and CouponFormModal
+
+@use '../abstracts/mixins' as *;
+
+@mixin dashboard-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+
+  &__row {
+    display: flex;
+    gap: var(--spacing-md);
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+  }
+
+  &__label {
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    color: var(--color-text);
+  }
+
+  &__input {
+    padding: 10px 14px;
+    border: 1px solid var(--color-primary);
+    border-radius: 4px;
+    font-family: var(--font-primary);
+    font-size: var(--text-xs);
+    color: var(--color-text);
+  }
+
+  &__input:focus {
+    outline: none;
+    border-color: var(--color-primary-light);
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+  }
+
+  &__btn {
+    padding: 8px 24px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-primary);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    cursor: pointer;
+  }
+
+  &__btn--cancel {
+    background: none;
+    border: 1px solid var(--color-primary);
+    color: var(--color-text);
+  }
+
+  &__btn--save {
+    background: var(--color-primary);
+    border: none;
+    color: var(--color-white);
+  }
+
+  &__btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  @include respond-to(small) {
+    &__row {
+      flex-direction: column;
+    }
+  }
+}

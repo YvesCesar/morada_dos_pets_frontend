@@ -1,0 +1,98 @@
+// ── ProfileDropdown ──────────────────────────────
+
+.profile-dropdown {
+  position: relative;
+}
+
+.profile-dropdown__trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.profile-dropdown__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+}
+
+.profile-dropdown__avatar--initial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-light);
+  color: var(--color-white);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+}
+
+.profile-dropdown__chevron {
+  color: var(--color-text);
+  transition: transform var(--transition-fast);
+}
+
+.profile-dropdown__chevron--open {
+  transform: rotate(180deg);
+}
+
+.profile-dropdown__menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 239px;
+  background: var(--color-white);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  padding: 8px 0;
+  z-index: 50;
+}
+
+.profile-dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  text-align: left;
+}
+
+.profile-dropdown__item:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.profile-dropdown__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: var(--color-text);
+  flex-shrink: 0;
+}
+
+.profile-dropdown__label {
+  font-family: var(--font-primary);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  color: var(--color-text);
+}
+
+.profile-dropdown__divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+  margin: 4px 0;
+}
+
+.profile-dropdown__item--logout .profile-dropdown__icon,
+.profile-dropdown__item--logout .profile-dropdown__label {
+  color: var(--color-danger);
+}

@@ -15,9 +15,3 @@ import ClientsCarouselSection from '@/components/sections/servicos/ClientsCarous
     <ClientsCarouselSection />
   </main>
 </template>
-
-<style scoped>
-.servicos {
-  min-height: 100vh;
-}
-</style>

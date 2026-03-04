@@ -1,0 +1,114 @@
+// =============================================
+// Modals - Global Reusable Classes
+// =============================================
+
+@use '../abstracts/mixins' as *;
+
+.base-modal {
+  &__overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    @include flex-center;
+    z-index: var(--z-modal);
+    padding: var(--spacing-sm);
+  }
+
+  position: relative;
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  padding: 32px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-modal);
+
+  &__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    @include flex-center;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: var(--color-text-muted);
+    border-radius: var(--radius-full);
+    transition: background var(--transition-fast);
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  &__title {
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+    padding-right: 32px;
+  }
+
+  @include respond-to(small) {
+    padding: 24px 16px;
+    max-width: 100%;
+  }
+}
+
+// ── Confirm Modal ────────────────────────────
+.confirm-modal {
+  @include flex-column(var(--spacing-sm));
+  align-items: center;
+  text-align: center;
+
+  &__icon {
+    margin-bottom: 8px;
+  }
+
+  &__title {
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    color: var(--color-text);
+  }
+
+  &__text {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    max-width: 320px;
+  }
+
+  &__actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+  }
+
+  &__btn {
+    padding: 8px 24px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-primary);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    cursor: pointer;
+    transition: opacity var(--transition-fast);
+  }
+
+  &__btn--cancel {
+    background: none;
+    border: 1px solid var(--color-primary);
+    color: var(--color-text);
+  }
+
+  &__btn--confirm {
+    background: var(--color-danger);
+    border: none;
+    color: var(--color-white);
+  }
+
+  &__btn--confirm:hover {
+    opacity: 0.9;
+  }
+}

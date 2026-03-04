@@ -1,0 +1,291 @@
+// =============================================
+// Auth Pages (Login + Register)
+// =============================================
+
+@use '../mixins/hero-banner' as *;
+@use '../mixins/auth-card' as *;
+@use '../abstracts/mixins' as *;
+
+// ── LoginBanner ──────────────────────────────
+
+.login-banner {
+  @include auth-banner;
+  position: absolute;
+  inset: 0;
+
+  &__image {
+    object-position: center;
+  }
+}
+
+// ── LoginCard ──────────────────────────────
+
+.login-card {
+  @include auth-card;
+  position: absolute;
+  top: 64px;
+  right: 124px;
+
+  &__subtitle {
+    font-size: var(--text-xl);
+    font-weight: var(--font-medium);
+    color: var(--color-text);
+    line-height: 1.25;
+  }
+
+  &__link {
+    color: var(--color-text);
+    text-decoration: underline;
+    transition: opacity var(--transition-fast);
+  }
+
+  &__link:hover {
+    opacity: 0.7;
+  }
+
+  &__error {
+    color: var(--color-danger);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    margin-top: -16px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin-top: 24px;
+  }
+
+  &__checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__checkbox {
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--color-primary);
+    border-radius: 2px;
+    cursor: pointer;
+    accent-color: var(--color-primary);
+  }
+
+  &__checkbox-label {
+    font-size: var(--text-xs);
+    font-weight: var(--font-regular);
+    color: var(--color-text);
+    line-height: 1.25;
+    cursor: pointer;
+  }
+
+  &__forgot-link {
+    font-size: var(--text-xs);
+    font-weight: var(--font-regular);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: opacity var(--transition-fast);
+    align-self: flex-start;
+  }
+
+  &__forgot-link:hover {
+    opacity: 0.7;
+    text-decoration: underline;
+  }
+
+  @include respond-to(wide) {
+    right: 80px;
+  }
+
+  @include respond-to(desktop) {
+    right: 40px;
+  }
+
+  @include respond-to(tablet) {
+    position: relative;
+    top: auto;
+    right: auto;
+
+    &__subtitle {
+      font-size: var(--text-lg);
+    }
+  }
+
+  @include respond-to(small) {
+    &__subtitle {
+      font-size: var(--text-base);
+    }
+  }
+}
+
+// ── RegisterBanner ──────────────────────────────
+
+.register-banner {
+  @include auth-banner;
+  position: fixed;
+  top: 90px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  &__image {
+    object-position: center top;
+  }
+
+  @include respond-to(tablet) {
+    top: 0;
+  }
+}
+
+// ── RegisterCard ──────────────────────────────
+
+.register-card {
+  @include auth-card;
+  position: relative;
+  margin-top: 64px;
+  margin-left: auto;
+  margin-right: 124px;
+  margin-bottom: 96px;
+
+  &__step {
+    font-size: var(--text-xl);
+    font-weight: var(--font-medium);
+    color: var(--color-text);
+    line-height: 1.25;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  &__section-title {
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    color: var(--color-text);
+    line-height: 1.25;
+    white-space: nowrap;
+  }
+
+  &__section-line {
+    flex: 1;
+    height: 1px;
+    background-color: rgba(16, 13, 13, 0.6);
+  }
+
+  &__row {
+    display: flex;
+    gap: 24px;
+  }
+
+  &__field {
+    width: 100%;
+  }
+
+  &__field--date {
+    width: 157px;
+    flex-shrink: 0;
+  }
+
+  &__field--cpf {
+    width: 188px;
+    flex-shrink: 0;
+  }
+
+  &__field--phone {
+    width: 204px;
+    flex-shrink: 0;
+  }
+
+  &__field--cep {
+    width: 150px;
+    flex-shrink: 0;
+  }
+
+  &__field--address {
+    flex: 1;
+    max-width: 308px;
+  }
+
+  &__field--number {
+    width: 109px;
+    flex-shrink: 0;
+  }
+
+  &__input--error {
+    border-color: var(--color-error);
+  }
+
+  &__input--masked {
+    padding: 10px 24px;
+  }
+
+  &__input--masked::placeholder {
+    font-weight: 300;
+    font-size: var(--text-base);
+    color: rgba(0, 0, 0, 0.55);
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  @include respond-to(wide) {
+    margin-right: 80px;
+  }
+
+  @include respond-to(desktop) {
+    margin-right: 40px;
+  }
+
+  @include respond-to(tablet) {
+    margin: 0 auto;
+
+    &__step {
+      font-size: var(--text-lg);
+    }
+
+    &__row {
+      flex-wrap: wrap;
+    }
+
+    &__field--date,
+    &__field--cpf,
+    &__field--phone,
+    &__field--cep,
+    &__field--address,
+    &__field--number {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+
+  @include respond-to(small) {
+    &__step {
+      font-size: var(--text-base);
+    }
+  }
+}

@@ -11,29 +11,3 @@ import RegisterCard from '@/components/sections/cadastro/RegisterCard.vue'
     </main>
   </div>
 </template>
-
-<style scoped>
-.cadastro-view {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.cadastro-view__main {
-  position: relative;
-  flex-grow: 1;
-  margin-top: 90px;
-  min-height: calc(100vh - 90px);
-  overflow-y: auto;
-}
-
-@media (max-width: 992px) {
-  .cadastro-view__main {
-    height: auto;
-    min-height: calc(100vh - 90px);
-    display: flex;
-    flex-direction: column;
-    overflow: visible;
-  }
-}
-</style>
