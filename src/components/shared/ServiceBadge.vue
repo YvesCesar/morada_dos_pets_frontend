@@ -11,7 +11,7 @@ const colors = computed(() => SERVICE_COLORS[props.service] ?? { bg: '#888', tex
 
 <template>
   <span
-    class="service-badge"
+    class="badge"
     :style="{ backgroundColor: colors.bg, color: colors.text }"
   >
     {{ service }}

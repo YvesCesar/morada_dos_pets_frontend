@@ -1,12 +1,5 @@
 // ── AboutView ──────────────────────────────
-
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
+// (scoped under .quem-somos so it doesn't affect AboutSection on the home page)
 
 // ── AdminDashboardView ──────────────────────────────
 
@@ -192,6 +185,14 @@ main {
 
 .quem-somos {
   min-height: 100vh;
+
+  .about {
+    @media (min-width: 1024px) {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+  }
 }
 
 // ── ServicosView ──────────────────────────────

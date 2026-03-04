@@ -85,4 +85,30 @@
     gap: var(--spacing-sm);
     margin-top: var(--spacing-sm);
   }
+
+  &__btn {
+    padding: 8px 24px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-primary);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    cursor: pointer;
+    transition: opacity var(--transition-fast);
+  }
+
+  &__btn--cancel {
+    background: none;
+    border: 1px solid var(--color-primary);
+    color: var(--color-text);
+  }
+
+  &__btn--confirm {
+    background: var(--color-danger);
+    border: none;
+    color: var(--color-white);
+  }
+
+  &__btn--confirm:hover {
+    opacity: 0.9;
+  }
 }

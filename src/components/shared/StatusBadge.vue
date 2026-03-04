@@ -21,7 +21,7 @@ const label = computed(() => {
 
 <template>
   <span
-    class="status-badge"
+    class="badge"
     :style="{ backgroundColor: colors.bg, color: colors.text }"
   >
     {{ label }}
