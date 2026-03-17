@@ -96,3 +96,7 @@ sections/
 - Dashboard sections use `DashboardLayout` as the page wrapper (provided by the view)
 - Modal sections (e.g. `CouponFormModal`, `EditPetModal`, `UserFormModal`) extend `BaseModal` from `shared/`
 - Dashboard tables/lists use shared `DashboardFilterBar`, `DashboardStatsSection`, `ServiceBadge`, and `StatusBadge` components
+
+## Testing
+
+Shared components (`src/components/shared/`) have tests in `tests/components/shared/`. Modal components require `global: { stubs: { Teleport: true } }` when mounting. See `tests/AGENTS.md` for full testing patterns.
