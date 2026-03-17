@@ -16,7 +16,7 @@ export function withSetup<T>(composable: () => T): { result: T; unmount: () => v
     }),
   )
   const div = document.createElement('div')
-  const instance = app.mount(div)
+  app.mount(div)
   return {
     result,
     unmount: () => app.unmount(),
@@ -48,7 +48,7 @@ export function freshPinia() {
  */
 export function mountWithPlugins<T extends Component>(
   component: T,
-  options: MountingOptions<any> = {},
+  options: MountingOptions<Record<string, unknown>> = {},
 ) {
   const pinia = createPinia()
   setActivePinia(pinia)

@@ -7,7 +7,7 @@ describe('ConfirmModal', () => {
     message: 'Tem certeza que deseja cancelar o agendamento de Banho para Thor?',
   }
 
-  const mountModal = (props: Record<string, any> = {}) =>
+  const mountModal = (props: Record<string, unknown> = {}) =>
     mount(ConfirmModal, {
       props: { ...defaultProps, ...props },
       global: { stubs: { Teleport: true } },

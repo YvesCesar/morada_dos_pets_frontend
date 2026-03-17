@@ -8,7 +8,7 @@ describe('usePhotoUpload', () => {
     const petPhotoDataUrl = 'data:image/png;base64,goldenRetrieverPhoto'
 
     class MockFileReader {
-      onload: ((e: any) => void) | null = null
+      onload: ((e: ProgressEvent<FileReader>) => void) | null = null
       readAsDataURL = vi.fn(() => {
         this.onload?.({ target: { result: petPhotoDataUrl } })
       })
@@ -40,7 +40,7 @@ describe('usePhotoUpload', () => {
     const { handleFileChange } = usePhotoUpload(onUpdate)
 
     class MockFileReader {
-      onload: ((e: any) => void) | null = null
+      onload: ((e: ProgressEvent<FileReader>) => void) | null = null
       readAsDataURL = vi.fn(() => {
         this.onload?.({ target: { result: '' } })
       })

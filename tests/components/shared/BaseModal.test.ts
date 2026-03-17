@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 import BaseModal from '@/components/shared/BaseModal.vue'
 
 describe('BaseModal', () => {
-  const mountModal = (props: Record<string, any> = {}, slots: Record<string, string> = {}) =>
+  const mountModal = (props: Record<string, unknown> = {}, slots: Record<string, string> = {}) =>
     mount(BaseModal, {
       props,
       slots,
