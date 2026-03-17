@@ -41,3 +41,12 @@ Import by name: `import { useAuthStore } from '@/stores/auth'`.
 - Expose only what's needed via `return { ... }`
 - Use `computed` for derived state (filters, counts, role checks)
 - Types come from `@/types` — never define inline interfaces
+
+## Testing
+
+Tests live in `tests/stores/`. Each store has a corresponding `.test.ts` file.
+
+- Use `freshPinia()` from `tests/helpers.ts` in `beforeEach` for clean state
+- **Mock data mutation caveat**: stores use shallow copies (`[...mockArray]`), so `Object.assign` mutates shared mock objects. Always add fresh items before testing mutations.
+- Use `vi.useFakeTimers()` + `vi.setSystemTime()` for date-dependent logic (coupons expiration, appointment period filters)
+- Mock image imports with `vi.mock('@/assets/images/...', () => ({ default: 'mock.png' }))`

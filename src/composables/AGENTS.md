@@ -63,3 +63,12 @@ const { handleFileChange } = usePhotoUpload((dataUrl) => {
 ```
 
 Bind `handleFileChange` to an `<input type="file">` change event.
+
+## Testing
+
+Tests live in `tests/composables/`. Each composable has a corresponding `.test.ts` file.
+
+- **Pure function composables** (e.g. `useInputMasks`): call directly, no setup needed
+- **Lifecycle composables** (e.g. `useViewport`): use `withSetup()` from `tests/helpers.ts`
+- **Touch composables** (e.g. `useSwipe`): use `createMockTouchEvent()` from `tests/helpers.ts`
+- **FileReader composable** (e.g. `usePhotoUpload`): use `vi.stubGlobal('FileReader', MockClass)`

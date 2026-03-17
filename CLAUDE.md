@@ -10,6 +10,9 @@ npm run build        # Production build (type-check + vite build)
 npm run type-check   # TypeScript check
 npm run lint         # ESLint with auto-fix
 npm run format       # Prettier
+npm test             # Vitest watch mode
+npm run test:run     # Vitest single run (CI)
+npm run test:coverage # Vitest with coverage
 ```
 
 ## Directory Structure
@@ -37,6 +40,12 @@ src/
 ├── types/            # TypeScript interfaces (barrel export via index.ts)
 ├── views/            # Route-level page components
 └── router/           # Vue Router config + navigation guards
+tests/
+├── setup.ts              # Global setup (localStorage reset, polyfills)
+├── helpers.ts            # Test utilities (withSetup, freshPinia, mountWithPlugins, createMockTouchEvent)
+├── composables/          # Composable unit tests
+├── stores/               # Pinia store tests
+└── components/shared/    # Shared component tests
 ```
 
 ## Code Conventions
@@ -59,6 +68,7 @@ src/
 9. Dashboard pages wrap content in `DashboardLayout` component (provides title/subtitle header)
 10. Route auth via meta fields — `requiresAuth`, `requiresAdmin`, `requiresCustomer`, `guestOnly`
 11. Mock data lives in `/data/dashboard.ts` — dashboard currently runs without a backend (localStorage persistence)
+12. Tests in `tests/` — mirror `src/` structure, use Vitest + @vue/test-utils, helpers from `tests/helpers.ts`
 
 ## Dashboard System
 
@@ -82,6 +92,7 @@ Agents should read these only when working on the related area:
 | `src/composables/AGENTS.md` | Using or creating composables (carousel, swipe, viewport, masks, photo upload) |
 | `src/router/AGENTS.md` | Adding/modifying routes, navigation guards, auth redirects |
 | `src/stores/AGENTS.md` | Pinia stores, auth flow, CRUD patterns, mock data |
+| `tests/AGENTS.md` | Writing tests, test patterns, helpers, mocking strategies |
 
 ## Figma Integration
 
