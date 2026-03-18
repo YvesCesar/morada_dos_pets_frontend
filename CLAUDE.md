@@ -13,6 +13,9 @@ npm run format       # Prettier
 npm test             # Vitest watch mode
 npm run test:run     # Vitest single run (CI)
 npm run test:coverage # Vitest with coverage
+npm run test:e2e     # Playwright E2E tests
+npm run test:e2e:ui  # Playwright interactive UI mode
+npm run test:e2e:headed # Playwright headed mode
 ```
 
 ## Directory Structure
@@ -46,6 +49,13 @@ tests/
 ├── composables/          # Composable unit tests
 ├── stores/               # Pinia store tests
 └── components/shared/    # Shared component tests
+e2e/
+├── helpers/auth.ts       # Auth helpers (localStorage injection via addInitScript)
+├── public/               # Public page tests (home, navigation, services, contact, about)
+├── auth/                 # Auth flow tests (login, registration, guards)
+├── dashboard/            # Dashboard tests (admin, customer, coupons, users, prices, testimonials, profile, settings)
+├── shared/               # Shared component tests (header)
+└── payment/              # Payment wizard tests
 ```
 
 ## Code Conventions
@@ -69,6 +79,7 @@ tests/
 10. Route auth via meta fields — `requiresAuth`, `requiresAdmin`, `requiresCustomer`, `guestOnly`
 11. Mock data lives in `/data/dashboard.ts` — dashboard currently runs without a backend (localStorage persistence)
 12. Tests in `tests/` — mirror `src/` structure, use Vitest + @vue/test-utils, helpers from `tests/helpers.ts`
+13. E2E tests in `e2e/` — use Playwright, auth via localStorage injection (`e2e/helpers/auth.ts`)
 
 ## Dashboard System
 
@@ -93,6 +104,7 @@ Agents should read these only when working on the related area:
 | `src/router/AGENTS.md` | Adding/modifying routes, navigation guards, auth redirects |
 | `src/stores/AGENTS.md` | Pinia stores, auth flow, CRUD patterns, mock data |
 | `tests/AGENTS.md` | Writing tests, test patterns, helpers, mocking strategies |
+| `e2e/AGENTS.md` | Writing E2E tests, Playwright patterns, auth helper, selectors |
 
 ## Figma Integration
 
