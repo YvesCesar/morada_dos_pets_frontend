@@ -19,7 +19,7 @@ const breed = ref(props.pet.breed)
 const weight = ref(props.pet.weight)
 const photo = ref(props.pet.photo)
 
-const { formatDate } = useInputMasks()
+const { formatDate, getInitial } = useInputMasks()
 const { handleFileChange } = usePhotoUpload((url) => { photo.value = url })
 
 const isValid = computed(() =>
@@ -33,8 +33,6 @@ const handleDateInput = (event: Event) => {
   const target = event.target as HTMLInputElement
   birthDate.value = formatDate(target.value)
 }
-
-const getInitial = (n: string) => n.charAt(0).toUpperCase()
 
 const handleSave = () => {
   if (!isValid.value) return

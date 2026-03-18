@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { DashboardPet } from '@/types'
+import { useInputMasks } from '@/composables'
 
 defineProps<{
   pets: DashboardPet[]
@@ -11,20 +12,7 @@ const emit = defineEmits<{
   remove: [pet: DashboardPet]
 }>()
 
-const calculateAge = (birthDate: string) => {
-  const parts = birthDate.split('/')
-  const d = parts[0] ?? '01'
-  const m = parts[1] ?? '01'
-  const y = parts[2] ?? '2000'
-  const birth = new Date(+y, +m - 1, +d)
-  const now = new Date()
-  const years = now.getFullYear() - birth.getFullYear()
-  const months = now.getMonth() - birth.getMonth()
-  if (years > 0) return `${years} ano${years > 1 ? 's' : ''}`
-  return `${Math.max(1, months)} ${months === 1 ? 'mês' : 'meses'}`
-}
-
-const getInitial = (name: string) => name.charAt(0).toUpperCase()
+const { getInitial, calculateAge } = useInputMasks()
 </script>
 
 <template>

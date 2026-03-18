@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { DashboardTestimonial } from '@/types'
+import { useTestimonialStatus } from '@/composables'
 
 defineProps<{
   testimonials: DashboardTestimonial[]
@@ -9,18 +10,10 @@ const emit = defineEmits<{
   toggleApproved: [id: string]
 }>()
 
+const { getStatusLabel, getStatusClass } = useTestimonialStatus()
+
 const truncate = (text: string, max = 120) =>
   text.length > max ? text.slice(0, max) + '…' : text
-
-const statusLabel = (t: DashboardTestimonial) => {
-  if (!t.allowPublic) return 'Não autorizado'
-  return t.approved ? 'Publicado' : 'Aguardando'
-}
-
-const statusClass = (t: DashboardTestimonial) => {
-  if (!t.allowPublic) return 'testimonials-table__status--neutral'
-  return t.approved ? 'testimonials-table__status--approved' : 'testimonials-table__status--pending'
-}
 </script>
 
 <template>
@@ -49,8 +42,8 @@ const statusClass = (t: DashboardTestimonial) => {
               </span>
             </td>
             <td>
-              <span class="testimonials-table__status" :class="statusClass(t)">
-                {{ statusLabel(t) }}
+              <span class="testimonials-table__status" :class="getStatusClass(t, 'testimonials-table__status')">
+                {{ getStatusLabel(t) }}
               </span>
             </td>
             <td>

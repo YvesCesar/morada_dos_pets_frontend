@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import type { UserProfile } from '@/types'
-import { useInputMasks, usePhotoUpload } from '@/composables'
+import { useProfileForm } from '@/composables'
 
 const props = defineProps<{
   user: UserProfile
@@ -11,54 +10,20 @@ const emit = defineEmits<{
   save: [data: Partial<UserProfile>]
 }>()
 
-const { formatPhone, formatCEP } = useInputMasks()
-const { handleFileChange } = usePhotoUpload((url) => { photo.value = url })
-
-const name = ref(props.user.name)
-const photo = ref(props.user.photo)
-const phone = ref(props.user.phone)
-const cep = ref(props.user.cep)
-const address = ref(props.user.address)
-const addressNumber = ref(props.user.addressNumber)
-const neighborhood = ref(props.user.neighborhood)
-
-const handlePhoneInput = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  phone.value = formatPhone(target.value)
-}
-
-const handleCEPInput = async (event: Event) => {
-  const target = event.target as HTMLInputElement
-  cep.value = formatCEP(target.value)
-
-  const cepNumbers = cep.value.replace(/\D/g, '')
-  if (cepNumbers.length === 8) {
-    try {
-      const response = await fetch(`https://viacep.com.br/ws/${cepNumbers}/json/`)
-      const data = await response.json()
-      if (!data.erro) {
-        address.value = data.logradouro || ''
-        neighborhood.value = data.bairro || ''
-      }
-    } catch {
-      /* ignore */
-    }
-  }
-}
-
-const getInitial = (n: string) => n.charAt(0).toUpperCase()
-
-const handleSave = () => {
-  emit('save', {
-    name: name.value,
-    photo: photo.value,
-    phone: phone.value,
-    cep: cep.value,
-    address: address.value,
-    addressNumber: addressNumber.value,
-    neighborhood: neighborhood.value,
-  })
-}
+const {
+  name,
+  photo,
+  phone,
+  cep,
+  address,
+  addressNumber,
+  neighborhood,
+  getInitial,
+  handleFileChange,
+  handlePhoneInput,
+  handleCEPInput,
+  handleSave,
+} = useProfileForm(props, (_, data) => emit('save', data))
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 import { useInputMasks } from '@/composables/useInputMasks'
 
 describe('useInputMasks', () => {
-  const { formatDate, formatCPF, formatPhone, formatCEP, formatDisplayDate, formatCurrency } =
+  const { formatDate, formatCPF, formatPhone, formatCEP, formatDisplayDate, formatCurrency, getInitial, calculateAge } =
     useInputMasks()
 
   describe('formatDate', () => {
@@ -97,6 +97,35 @@ describe('useInputMasks', () => {
     it('formats zero', () => {
       const result = formatCurrency(0)
       expect(result).toContain('0')
+    })
+  })
+
+  describe('getInitial', () => {
+    it('returns uppercase first letter', () => {
+      expect(getInitial('Maria')).toBe('M')
+      expect(getInitial('rex')).toBe('R')
+    })
+
+    it('returns empty string for empty input', () => {
+      expect(getInitial('')).toBe('')
+    })
+  })
+
+  describe('calculateAge', () => {
+    it('returns age in years for dates older than 1 year', () => {
+      const twoYearsAgo = new Date()
+      twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2)
+      const dateStr = `${String(twoYearsAgo.getDate()).padStart(2, '0')}/${String(twoYearsAgo.getMonth() + 1).padStart(2, '0')}/${twoYearsAgo.getFullYear()}`
+
+      expect(calculateAge(dateStr)).toBe('2 anos')
+    })
+
+    it('returns singular for 1 year', () => {
+      const oneYearAgo = new Date()
+      oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1)
+      const dateStr = `${String(oneYearAgo.getDate()).padStart(2, '0')}/${String(oneYearAgo.getMonth() + 1).padStart(2, '0')}/${oneYearAgo.getFullYear()}`
+
+      expect(calculateAge(dateStr)).toBe('1 ano')
     })
   })
 })

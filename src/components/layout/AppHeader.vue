@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useRoute, useRouter, RouterLink } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import logoSvg from '@/assets/images/logo-casa.svg'
 import { navLinks } from '@/data'
-import { adminSubmenuItems, customerSubmenuItems } from '@/data'
-import type { NavLink } from '@/types'
-import { useAuthStore } from '@/stores/auth'
+import { useAppHeader } from '@/composables'
 import NotificationBell from './NotificationBell.vue'
 import ProfileDropdown from './ProfileDropdown.vue'
 
@@ -13,40 +10,16 @@ defineProps<{
   minimal?: boolean
 }>()
 
-const route = useRoute()
-const router = useRouter()
-const authStore = useAuthStore()
-const isMenuOpen = ref(false)
-
-const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value
-}
-
-const closeMenu = () => {
-  isMenuOpen.value = false
-}
-
-const isActive = (link: NavLink) => {
-  if (link.isRoute && link.to) {
-    if (route.path === link.to) return true
-    if (link.to !== '/' && route.path.startsWith(link.to)) return true
-  }
-  return false
-}
-
-const menuItems = computed(() => {
-  return authStore.isAdmin ? adminSubmenuItems : customerSubmenuItems
-})
-
-const handleLogout = () => {
-  authStore.logout()
-  router.push('/')
-}
-
-const navigateDashboard = (path: string) => {
-  closeMenu()
-  router.push(path)
-}
+const {
+  authStore,
+  isMenuOpen,
+  menuItems,
+  toggleMenu,
+  closeMenu,
+  isActive,
+  handleLogout,
+  navigateDashboard,
+} = useAppHeader()
 </script>
 
 <template>
