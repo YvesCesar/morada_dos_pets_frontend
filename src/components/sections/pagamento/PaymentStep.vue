@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import type { PaymentMethod, ServiceRequest } from '@/types'
+import type { ServiceRequest } from '@/types'
+import { usePaymentStep } from '@/composables'
 import PaymentMethodSelector from './PaymentMethodSelector.vue'
 import PaymentPix from './PaymentPix.vue'
 import PaymentDebit from './PaymentDebit.vue'
 import PaymentCredit from './PaymentCredit.vue'
 import OrderSummary from './OrderSummary.vue'
 import CouponInput from './CouponInput.vue'
-import { useCouponsStore } from '@/stores/coupons'
 
 interface Props {
   serviceRequests: ServiceRequest[]
@@ -20,65 +19,25 @@ const emit = defineEmits<{
   confirm: []
 }>()
 
-const couponsStore = useCouponsStore()
-
-// Estado local
-const paymentMethod = ref<PaymentMethod | null>(null)
-const paymentSubStep = ref<'select' | 'pix' | 'debito' | 'credito'>('select')
-const couponCode = ref('')
-const discount = ref(0)
-
-// Seções colapsáveis
-const showServiceRequests = ref(false)
-const showPaymentMethod = ref(true)
-
-// Cálculos
-const subtotal = computed(() => {
-  return props.serviceRequests.reduce((sum, r) => sum + r.price, 0)
+const {
+  paymentMethod,
+  paymentSubStep,
+  discount,
+  showServiceRequests,
+  showPaymentMethod,
+  subtotal,
+  selectPaymentMethod,
+  handleCouponApply,
+  handlePixBack,
+  handleCardBack,
+  handleCardSubmit,
+  handleConfirmStep,
+  toggleServiceRequests,
+  togglePaymentMethod,
+} = usePaymentStep(props, (event) => {
+  if (event === 'back') emit('back')
+  else emit('confirm')
 })
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const total = computed(() => {
-  return Math.max(0, subtotal.value - discount.value)
-})
-
-// Handlers
-const selectPaymentMethod = (method: PaymentMethod | null) => {
-  paymentMethod.value = method
-}
-
-const handleCouponApply = (code: string) => {
-  couponCode.value = code
-  const result = couponsStore.validateCoupon(code, subtotal.value)
-  discount.value = result.discount
-}
-
-const handlePixBack = () => {
-  paymentSubStep.value = 'select'
-  paymentMethod.value = null
-}
-
-const handleCardBack = () => {
-  paymentSubStep.value = 'select'
-  paymentMethod.value = null
-}
-
-const handleCardSubmit = () => {
-  emit('confirm')
-}
-
-const handleConfirmStep = () => {
-  if (!paymentMethod.value) return
-  paymentSubStep.value = paymentMethod.value
-}
-
-const toggleServiceRequests = () => {
-  showServiceRequests.value = !showServiceRequests.value
-}
-
-const togglePaymentMethod = () => {
-  showPaymentMethod.value = !showPaymentMethod.value
-}
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import type { UserProfile } from '@/types'
+import { useCrudModal } from '@/composables'
 import DashboardLayout from '@/components/layout/DashboardLayout.vue'
 import UsersTable from '@/components/sections/users/UsersTable.vue'
 import UserFormModal from '@/components/sections/users/UserFormModal.vue'
@@ -13,36 +13,19 @@ const usersStore = useUsersStore()
 const authStore = useAuthStore()
 const router = useRouter()
 
-const showForm = ref(false)
-const editingUser = ref<UserProfile | null>(null)
-const removingUser = ref<UserProfile | null>(null)
-
-const handleAdd = () => {
-  editingUser.value = null
-  showForm.value = true
-}
-
-const handleEdit = (user: UserProfile) => {
-  editingUser.value = user
-  showForm.value = true
-}
-
-const handleSave = (data: Omit<UserProfile, 'id' | 'createdAt'>) => {
-  if (editingUser.value) {
-    usersStore.updateUser(editingUser.value.id, data)
-  } else {
-    usersStore.addUser(data)
-  }
-  showForm.value = false
-  editingUser.value = null
-}
-
-const handleRemove = () => {
-  if (removingUser.value) {
-    usersStore.removeUser(removingUser.value.id)
-    removingUser.value = null
-  }
-}
+const {
+  showForm,
+  editingItem: editingUser,
+  removingItem: removingUser,
+  handleAdd,
+  handleEdit,
+  handleSave,
+  handleRemove,
+} = useCrudModal<UserProfile>({
+  add: (data) => usersStore.addUser(data as Omit<UserProfile, 'id' | 'createdAt'>),
+  update: (id, data) => usersStore.updateUser(id, data as Partial<UserProfile>),
+  remove: (id) => usersStore.removeUser(id),
+})
 
 const handleToggleActive = (user: UserProfile) => {
   usersStore.toggleActive(user.id)

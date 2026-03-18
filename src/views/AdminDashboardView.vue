@@ -1,59 +1,24 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import type { Appointment } from '@/types'
+import { useAdminDashboard } from '@/composables'
 import DashboardLayout from '@/components/layout/DashboardLayout.vue'
 import DashboardStatsSection from '@/components/shared/DashboardStatsSection.vue'
-import type { StatCard } from '@/components/shared/DashboardStatsSection.vue'
-import iconAtivos from '@/assets/images/dashboard-icons/icon-clientes-ativos.svg'
-import iconInativos from '@/assets/images/dashboard-icons/icon-clientes-inativos.svg'
-import iconPets from '@/assets/images/dashboard-icons/icon-pets-cadastrados.svg'
-import iconCancelamentos from '@/assets/images/dashboard-icons/icon-cancelamentos.svg'
 import AdminServiceCards from '@/components/sections/admin-dashboard/AdminServiceCards.vue'
 import DashboardFilterBar from '@/components/shared/DashboardFilterBar.vue'
 import AdminAppointmentsTable from '@/components/sections/admin-dashboard/AdminAppointmentsTable.vue'
 import AppointmentDetailModal from '@/components/shared/AppointmentDetailModal.vue'
 import ConfirmModal from '@/components/shared/ConfirmModal.vue'
-import { useAppointmentsStore } from '@/stores/appointments'
-import { useUsersStore } from '@/stores/users'
-import { usePetsStore } from '@/stores/pets'
 
-const appointmentsStore = useAppointmentsStore()
-const usersStore = useUsersStore()
-const petsStore = usePetsStore()
-
-const selectedAppointment = ref<Appointment | null>(null)
-const cancelingAppointment = ref<Appointment | null>(null)
-
-const stats = computed<StatCard[]>(() => [
-  { label: 'Clientes Ativos', value: usersStore.users.filter((u) => u.active && u.role === 'customer').length, icon: iconAtivos },
-  { label: 'Clientes Inativos', value: usersStore.users.filter((u) => !u.active && u.role === 'customer').length, icon: iconInativos },
-  { label: 'Pets Cadastrados', value: petsStore.pets.length, icon: iconPets, subtitle: 'Total registrado' },
-  { label: 'Cancelamentos', value: appointmentsStore.appointments.filter((a) => a.status === 'cancelado').length, icon: iconCancelamentos, subtitle: 'Este mês', valueColor: 'var(--color-danger)' },
-])
-
-const handleServiceFilter = (value: string) => {
-  appointmentsStore.setServiceFilter(value as Appointment['service'] | '')
-}
-
-const handlePeriodFilter = (value: string) => {
-  appointmentsStore.setPeriodFilter(value as 'semana' | 'mes' | 'trimestre' | '')
-}
-
-const handleSelectAppointment = (appointment: Appointment) => {
-  selectedAppointment.value = appointment
-}
-
-const handleCancelRequest = () => {
-  cancelingAppointment.value = selectedAppointment.value
-  selectedAppointment.value = null
-}
-
-const handleCancelConfirm = () => {
-  if (cancelingAppointment.value) {
-    appointmentsStore.cancelAppointment(cancelingAppointment.value.id)
-    cancelingAppointment.value = null
-  }
-}
+const {
+  appointmentsStore,
+  selectedAppointment,
+  cancelingAppointment,
+  stats,
+  handleSelectAppointment,
+  handleCancelRequest,
+  handleCancelConfirm,
+  handleServiceFilter,
+  handlePeriodFilter,
+} = useAdminDashboard()
 </script>
 
 <template>

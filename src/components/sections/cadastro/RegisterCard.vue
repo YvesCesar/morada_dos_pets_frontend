@@ -1,116 +1,30 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import iconGoogle from '@/assets/images/icon-google.svg'
-import { useInputMasks } from '@/composables'
+import { useRegisterForm } from '@/composables'
 
-const router = useRouter()
-const { formatDate, formatCPF, formatPhone, formatCEP } = useInputMasks()
-
-// Controle de etapa
-const currentStep = ref(1)
-
-// Etapa 1 - Credenciais
-const email = ref('')
-const password = ref('')
-const confirmPassword = ref('')
-
-// Etapa 2 - Dados pessoais e contato
-const nome = ref('')
-const dataNascimento = ref('')
-const cpf = ref('')
-const celular = ref('')
-const cep = ref('')
-const endereco = ref('')
-const numero = ref('')
-const bairro = ref('')
-
-// Validações Etapa 1
-const isPasswordValid = computed(() => password.value.length >= 6)
-const isPasswordMatch = computed(() => password.value === confirmPassword.value && confirmPassword.value !== '')
-const isStep1Valid = computed(() => email.value !== '' && isPasswordValid.value && isPasswordMatch.value)
-
-// Validações Etapa 2
-const isStep2Valid = computed(() => {
-  return (
-    nome.value !== '' &&
-    dataNascimento.value.length === 10 &&
-    cpf.value.length === 14 &&
-    celular.value.length >= 14 &&
-    cep.value.length === 9 &&
-    endereco.value !== '' &&
-    numero.value !== '' &&
-    bairro.value !== ''
-  )
-})
-
-const isFormValid = computed(() => currentStep.value === 1 ? isStep1Valid.value : isStep2Valid.value)
-
-// Handlers de input com máscara
-const handleDateInput = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  dataNascimento.value = formatDate(target.value)
-}
-
-const handleCPFInput = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  cpf.value = formatCPF(target.value)
-}
-
-const handlePhoneInput = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  celular.value = formatPhone(target.value)
-}
-
-const handleCEPInput = async (event: Event) => {
-  const target = event.target as HTMLInputElement
-  cep.value = formatCEP(target.value)
-
-  // Buscar endereço pelo CEP
-  const cepNumbers = cep.value.replace(/\D/g, '')
-  if (cepNumbers.length === 8) {
-    try {
-      const response = await fetch(`https://viacep.com.br/ws/${cepNumbers}/json/`)
-      const data = await response.json()
-      if (!data.erro) {
-        endereco.value = data.logradouro || ''
-        bairro.value = data.bairro || ''
-      }
-    } catch (error) {
-      console.error('Erro ao buscar CEP:', error)
-    }
-  }
-}
-
-const handleSubmit = () => {
-  if (!isFormValid.value) return
-
-  if (currentStep.value === 1) {
-    // Avança para etapa 2
-    currentStep.value = 2
-  } else {
-    // Finaliza cadastro
-    console.log('Cadastro completo:', {
-      email: email.value,
-      password: password.value,
-      nome: nome.value,
-      dataNascimento: dataNascimento.value,
-      cpf: cpf.value,
-      celular: celular.value,
-      cep: cep.value,
-      endereco: endereco.value,
-      numero: numero.value,
-      bairro: bairro.value,
-    })
-
-    // Redirecionar para login
-    router.push({ name: 'entrar' })
-  }
-}
-
-const handleGoogleRegister = () => {
-  console.log('Google register clicked')
-}
+const {
+  currentStep,
+  email,
+  password,
+  confirmPassword,
+  nome,
+  dataNascimento,
+  cpf,
+  celular,
+  cep,
+  endereco,
+  numero,
+  bairro,
+  isPasswordValid,
+  isPasswordMatch,
+  isFormValid,
+  handleDateInput,
+  handleCPFInput,
+  handlePhoneInput,
+  handleCEPInput,
+  handleSubmit,
+  handleGoogleRegister,
+} = useRegisterForm()
 </script>
 
 <template>

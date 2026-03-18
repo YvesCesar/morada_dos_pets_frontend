@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, computed, watch, toRaw } from 'vue'
 import type { DogSpaService, HospedagemPlan, CrechePlan } from '@/types'
+import { usePricesEditor } from '@/composables'
 
 const props = defineProps<{
   dogSpaServices: DogSpaService[]
@@ -14,62 +14,24 @@ const emit = defineEmits<{
   saveCreche: [plans: CrechePlan[]]
 }>()
 
-const activeTab = ref('dog-spa')
-
-const tabs = [
-  { id: 'dog-spa', label: 'Dog Spa' },
-  { id: 'hospedagem', label: 'Hospedagem' },
-  { id: 'creche', label: 'Creche' },
-]
-
-const draftDogSpa = ref<DogSpaService[]>(structuredClone(toRaw(props.dogSpaServices)))
-const draftHospedagem = ref<HospedagemPlan[]>(structuredClone(toRaw(props.hospedagemPlans)))
-const draftCreche = ref<CrechePlan[]>(structuredClone(toRaw(props.crechePlans)))
-
-watch(
-  () => props.dogSpaServices,
-  (val) => { draftDogSpa.value = structuredClone(toRaw(val)) },
-)
-watch(
-  () => props.hospedagemPlans,
-  (val) => { draftHospedagem.value = structuredClone(toRaw(val)) },
-)
-watch(
-  () => props.crechePlans,
-  (val) => { draftCreche.value = structuredClone(toRaw(val)) },
-)
-
-const hasDogSpaChanges = computed(
-  () => JSON.stringify(draftDogSpa.value) !== JSON.stringify(props.dogSpaServices),
-)
-const hasHospedagemChanges = computed(
-  () => JSON.stringify(draftHospedagem.value) !== JSON.stringify(props.hospedagemPlans),
-)
-const hasCrecheChanges = computed(
-  () => JSON.stringify(draftCreche.value) !== JSON.stringify(props.crechePlans),
-)
-
-const savedTab = ref<string | null>(null)
-
-const showSaved = (tabId: string) => {
-  savedTab.value = tabId
-  setTimeout(() => { savedTab.value = null }, 2500)
-}
-
-const saveDogSpa = () => {
-  emit('saveDogSpa', structuredClone(toRaw(draftDogSpa.value)))
-  showSaved('dog-spa')
-}
-
-const saveHospedagem = () => {
-  emit('saveHospedagem', structuredClone(toRaw(draftHospedagem.value)))
-  showSaved('hospedagem')
-}
-
-const saveCreche = () => {
-  emit('saveCreche', structuredClone(toRaw(draftCreche.value)))
-  showSaved('creche')
-}
+const {
+  activeTab,
+  tabs,
+  draftDogSpa,
+  draftHospedagem,
+  draftCreche,
+  hasDogSpaChanges,
+  hasHospedagemChanges,
+  hasCrecheChanges,
+  savedTab,
+  saveDogSpa,
+  saveHospedagem,
+  saveCreche,
+} = usePricesEditor(props, (event, data) => {
+  if (event === 'saveDogSpa') emit('saveDogSpa', data as DogSpaService[])
+  else if (event === 'saveHospedagem') emit('saveHospedagem', data as HospedagemPlan[])
+  else if (event === 'saveCreche') emit('saveCreche', data as CrechePlan[])
+})
 </script>
 
 <template>

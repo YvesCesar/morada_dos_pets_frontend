@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
 import type { CardPaymentData } from '@/types'
+import { usePaymentCredit } from '@/composables'
 import cardBrandsCredit from '@/assets/images/pagamento/card-brands.svg'
 
 const emit = defineEmits<{
@@ -8,45 +8,16 @@ const emit = defineEmits<{
   submit: [data: CardPaymentData]
 }>()
 
-const form = reactive<CardPaymentData>({
-  cardNumber: '',
-  cardName: '',
-  expiry: '',
-  securityCode: '',
-  rememberCard: false,
-  installments: 1,
+const {
+  form,
+  installmentOptions,
+  formatCardNumber,
+  formatExpiry,
+  handleSubmit,
+} = usePaymentCredit((event, data) => {
+  if (event === 'back') emit('back')
+  else if (event === 'submit' && data) emit('submit', data)
 })
-
-const installmentOptions = [
-  { value: 1, label: '1x (à vista)' },
-  { value: 2, label: '2x' },
-  { value: 3, label: '3x' },
-  { value: 4, label: '4x' },
-  { value: 5, label: '5x' },
-  { value: 6, label: '6x' },
-]
-
-const formatCardNumber = (event: Event) => {
-  const input = event.target as HTMLInputElement
-  let value = input.value.replace(/\D/g, '')
-  if (value.length > 16) value = value.slice(0, 16)
-  form.cardNumber = value.replace(/(\d{4})(?=\d)/g, '$1 ')
-}
-
-const formatExpiry = (event: Event) => {
-  const input = event.target as HTMLInputElement
-  let value = input.value.replace(/\D/g, '')
-  if (value.length > 4) value = value.slice(0, 4)
-  if (value.length >= 2) {
-    form.expiry = value.slice(0, 2) + ' / ' + value.slice(2)
-  } else {
-    form.expiry = value
-  }
-}
-
-const handleSubmit = () => {
-  emit('submit', { ...form })
-}
 </script>
 
 <template>

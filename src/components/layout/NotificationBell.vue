@@ -1,63 +1,20 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useAuthStore } from '@/stores/auth'
-import { useNotificationsStore } from '@/stores/notifications'
+import { useNotificationBell } from '@/composables'
 
-const authStore = useAuthStore()
-const notificationsStore = useNotificationsStore()
-
-const isOpen = ref(false)
-
-const userId = computed(() => authStore.user?.id ?? '')
-
-const userNotifications = computed(() =>
-  notificationsStore.getByUser(userId.value).sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-  ),
-)
-
-const hasUnread = computed(() =>
-  userNotifications.value.some((n) => !n.read),
-)
-
-const toggle = () => {
-  isOpen.value = !isOpen.value
-}
-
-const close = () => {
-  isOpen.value = false
-}
-
-const markAllRead = () => {
-  notificationsStore.markAllAsRead(userId.value)
-}
-
-const handleClickOutside = (event: MouseEvent) => {
-  const el = document.querySelector('.notification-bell')
-  if (el && !el.contains(event.target as Node)) {
-    close()
-  }
-}
-
-onMounted(() => {
-  document.addEventListener('mousedown', handleClickOutside)
-})
-
-onUnmounted(() => {
-  document.removeEventListener('mousedown', handleClickOutside)
-})
-
-const formatDate = (dateStr: string) => {
-  const [year, month, day] = dateStr.split('-').map(Number)
-  return new Date(year!, month! - 1, day!).toLocaleDateString('pt-BR', {
-    day: '2-digit',
-    month: 'short',
-  })
-}
+const {
+  isOpen,
+  bellRef,
+  userNotifications,
+  hasUnread,
+  toggle,
+  markAllRead,
+  formatDate,
+  notificationsStore,
+} = useNotificationBell()
 </script>
 
 <template>
-  <div class="notification-bell">
+  <div ref="bellRef" class="notification-bell">
     <button
       class="notification-bell__btn"
       :aria-label="isOpen ? 'Fechar notificações' : 'Abrir notificações'"

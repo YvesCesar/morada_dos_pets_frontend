@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import type { Coupon } from '@/types'
+import { useCrudModal } from '@/composables'
 import DashboardLayout from '@/components/layout/DashboardLayout.vue'
 import CouponsTable from '@/components/sections/coupons/CouponsTable.vue'
 import CouponFormModal from '@/components/sections/coupons/CouponFormModal.vue'
@@ -9,36 +9,19 @@ import { useCouponsStore } from '@/stores/coupons'
 
 const couponsStore = useCouponsStore()
 
-const showForm = ref(false)
-const editingCoupon = ref<Coupon | null>(null)
-const removingCoupon = ref<Coupon | null>(null)
-
-const handleAdd = () => {
-  editingCoupon.value = null
-  showForm.value = true
-}
-
-const handleEdit = (coupon: Coupon) => {
-  editingCoupon.value = coupon
-  showForm.value = true
-}
-
-const handleSave = (data: Omit<Coupon, 'id' | 'currentUses'>) => {
-  if (editingCoupon.value) {
-    couponsStore.updateCoupon(editingCoupon.value.id, data)
-  } else {
-    couponsStore.addCoupon(data)
-  }
-  showForm.value = false
-  editingCoupon.value = null
-}
-
-const handleRemove = () => {
-  if (removingCoupon.value) {
-    couponsStore.removeCoupon(removingCoupon.value.id)
-    removingCoupon.value = null
-  }
-}
+const {
+  showForm,
+  editingItem: editingCoupon,
+  removingItem: removingCoupon,
+  handleAdd,
+  handleEdit,
+  handleSave,
+  handleRemove,
+} = useCrudModal<Coupon>({
+  add: (data) => couponsStore.addCoupon(data as Omit<Coupon, 'id' | 'currentUses'>),
+  update: (id, data) => couponsStore.updateCoupon(id, data as Partial<Coupon>),
+  remove: (id) => couponsStore.removeCoupon(id),
+})
 </script>
 
 <template>
