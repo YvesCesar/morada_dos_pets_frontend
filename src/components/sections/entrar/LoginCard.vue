@@ -1,25 +1,35 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
+import { loginSchema } from '@/schemas'
 import iconGoogle from '@/assets/images/icon-google.svg'
 import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
 const authStore = useAuthStore()
 
-const email = ref('')
-const password = ref('')
 const showPassword = ref(false)
 
-const isFormValid = computed(() => email.value !== '' && password.value !== '')
+const { handleSubmit, errors, defineField, meta } = useForm({
+  validationSchema: toTypedSchema(loginSchema),
+  initialValues: {
+    email: '',
+    password: '',
+  },
+})
 
-const handleSubmit = () => {
-  const success = authStore.login(email.value, password.value)
+const [email, emailAttrs] = defineField('email')
+const [password, passwordAttrs] = defineField('password')
+
+const onSubmit = handleSubmit((values) => {
+  const success = authStore.login(values.email, values.password)
   if (success) {
     const route = authStore.isAdmin ? '/dashboard/admin' : '/dashboard/cliente'
     router.push(route)
   }
-}
+})
 
 const handleGoogleLogin = () => {
   console.log('Google login clicked')
@@ -39,17 +49,20 @@ const handleGoogleLogin = () => {
 
       <p v-if="authStore.error" class="login-card__error">{{ authStore.error }}</p>
 
-      <form class="login-card__form" @submit.prevent="handleSubmit">
+      <form class="login-card__form" @submit.prevent="onSubmit">
         <div class="login-card__inputs">
           <div class="login-card__field">
             <label for="email" class="login-card__label">E-mail</label>
             <input
               id="email"
               v-model="email"
+              v-bind="emailAttrs"
               type="email"
               class="login-card__input"
+              :class="{ 'login-card__input--error': errors.email }"
               autocomplete="email"
             />
+            <span v-if="errors.email" class="form-error-message">{{ errors.email }}</span>
           </div>
 
           <div class="login-card__field">
@@ -57,10 +70,13 @@ const handleGoogleLogin = () => {
             <input
               id="password"
               v-model="password"
+              v-bind="passwordAttrs"
               :type="showPassword ? 'text' : 'password'"
               class="login-card__input"
+              :class="{ 'login-card__input--error': errors.password }"
               autocomplete="current-password"
             />
+            <span v-if="errors.password" class="form-error-message">{{ errors.password }}</span>
           </div>
         </div>
 
@@ -76,7 +92,7 @@ const handleGoogleLogin = () => {
           </div>
 
           <div class="login-card__submit-area">
-            <button type="submit" class="login-card__button login-card__button--primary" :disabled="!isFormValid">
+            <button type="submit" class="login-card__button login-card__button--primary" :disabled="!meta.valid">
               Continuar
             </button>
           </div>

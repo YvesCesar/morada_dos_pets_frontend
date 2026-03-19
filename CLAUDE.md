@@ -37,7 +37,8 @@ src/
 │   ├── sections/     # Page sections organized by route (includes dashboard subfolders)
 │   └── shared/       # Reusable components (BaseModal, ConfirmModal, DashboardStatsSection, DashboardFilterBar, ServiceBadge, StatusBadge, BenefitsSection, ImagesCarousel, ServicesCards, ServiceTabs)
 ├── composables/      # Reusable logic (barrel export via index.ts)
-├── config/           # App constants (carousel dimensions, service/status badge colors)
+├── config/           # App constants (carousel dimensions, service/status badge colors, input masks)
+├── schemas/          # Zod validation schemas (barrel export via index.ts)
 ├── data/             # Static data + mock data for dashboard (barrel export via index.ts)
 ├── stores/           # Pinia stores (auth, appointments, coupons, notifications, pets, prices, testimonials, users)
 ├── types/            # TypeScript interfaces (barrel export via index.ts)
@@ -47,6 +48,7 @@ tests/
 ├── setup.ts              # Global setup (localStorage reset, polyfills)
 ├── helpers.ts            # Test utilities (withSetup, freshPinia, mountWithPlugins, createMockTouchEvent)
 ├── composables/          # Composable unit tests
+├── schemas/              # Zod schema unit tests
 ├── stores/               # Pinia store tests
 └── components/shared/    # Shared component tests
 e2e/
@@ -55,7 +57,8 @@ e2e/
 ├── auth/                 # Auth flow tests (login, registration, guards)
 ├── dashboard/            # Dashboard tests (admin, customer, coupons, users, prices, testimonials, profile, settings)
 ├── shared/               # Shared component tests (header)
-└── payment/              # Payment wizard tests
+├── payment/              # Payment wizard tests
+└── forms/                # Form validation E2E specs
 ```
 
 ## Code Conventions
@@ -64,6 +67,8 @@ e2e/
 - **Components:** PascalCase. **Composables:** `use` prefix. **Data/config:** camelCase. **Types:** PascalCase.
 - **CSS:** BEM naming (`.block__element--modifier`) + SCSS with CSS variables from `src/assets/styles/abstracts/_variables.scss`
 - **SCSS:** `@use`/`@forward` module system (never `@import`). Mixins imported with `as *`
+- **Schemas:** camelCase with `Schema` suffix (e.g. `loginSchema`). Reusable fields in `schemas/common.ts`.
+- **Masks:** `v-maska` directive in template with constants from `config/masks.ts`. Never manual formatters in `@input`.
 
 ## Mandatory Patterns
 
@@ -80,6 +85,8 @@ e2e/
 11. Mock data lives in `/data/dashboard.ts` — dashboard currently runs without a backend (localStorage persistence)
 12. Tests in `tests/` — mirror `src/` structure, use Vitest + @vue/test-utils, helpers from `tests/helpers.ts`
 13. E2E tests in `e2e/` — use Playwright, auth via localStorage injection (`e2e/helpers/auth.ts`)
+14. Form validation via zod schemas in `/schemas/` + vee-validate `useForm` — never use only HTML `required`
+15. Input masks via maska directive (`v-maska`) — never use manual `@input` formatters
 
 ## Dashboard System
 
@@ -101,6 +108,7 @@ Agents should read these only when working on the related area:
 | `src/components/sections/AGENTS.md` | Creating/editing page sections, understanding page composition |
 | `src/components/layout/AGENTS.md` | Layout components (header, footer, dashboard layout, dropdowns) |
 | `src/composables/AGENTS.md` | Using or creating composables (carousel, swipe, viewport, masks, photo upload) |
+| `src/schemas/AGENTS.md` | Form validation, zod schemas, vee-validate integration patterns |
 | `src/router/AGENTS.md` | Adding/modifying routes, navigation guards, auth redirects |
 | `src/stores/AGENTS.md` | Pinia stores, auth flow, CRUD patterns, mock data |
 | `tests/AGENTS.md` | Writing tests, test patterns, helpers, mocking strategies |

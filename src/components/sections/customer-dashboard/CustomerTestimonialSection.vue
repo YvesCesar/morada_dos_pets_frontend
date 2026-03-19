@@ -5,9 +5,13 @@ const {
   testimonial,
   isEditing,
   quoteInput,
+  quoteInputAttrs,
   allowPublicInput,
+  allowPublicInputAttrs,
   photoInput,
   fileInputRef,
+  charCount,
+  errors,
   statusLabel,
   statusClass,
   handlePhotoChange,
@@ -61,17 +65,22 @@ const {
 
         <textarea
           v-model="quoteInput"
+          v-bind="quoteInputAttrs"
           class="customer-testimonial__textarea"
+          :class="{ 'customer-testimonial__textarea--error': errors.quote }"
           rows="4"
           placeholder="Escreva seu depoimento..."
         />
+        <div class="customer-testimonial__feedback">
+          <span v-if="errors.quote" class="form-error-message">{{ errors.quote }}</span>
+          <span class="customer-testimonial__char-count">{{ charCount }}/500</span>
+        </div>
         <label class="customer-testimonial__toggle">
-          <input type="checkbox" v-model="allowPublicInput" />
+          <input type="checkbox" v-model="allowPublicInput" v-bind="allowPublicInputAttrs" />
           <span>Autorizar uso no site</span>
         </label>
         <button
           class="customer-testimonial__btn"
-          :disabled="!quoteInput.trim()"
           @click="save"
         >
           Salvar depoimento
@@ -116,11 +125,17 @@ const {
 
         <textarea
           v-model="quoteInput"
+          v-bind="quoteInputAttrs"
           class="customer-testimonial__textarea"
+          :class="{ 'customer-testimonial__textarea--error': errors.quote }"
           rows="4"
         />
+        <div class="customer-testimonial__feedback">
+          <span v-if="errors.quote" class="form-error-message">{{ errors.quote }}</span>
+          <span class="customer-testimonial__char-count">{{ charCount }}/500</span>
+        </div>
         <label class="customer-testimonial__toggle">
-          <input type="checkbox" v-model="allowPublicInput" />
+          <input type="checkbox" v-model="allowPublicInput" v-bind="allowPublicInputAttrs" />
           <span>Autorizar uso no site</span>
         </label>
         <div class="customer-testimonial__actions">
@@ -129,7 +144,6 @@ const {
           </button>
           <button
             class="customer-testimonial__btn"
-            :disabled="!quoteInput.trim()"
             @click="save"
           >
             Salvar alterações

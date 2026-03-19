@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
+import { vMaska } from 'maska/vue'
+import { MASKS } from '@/config/masks'
+import { debitCardSchema } from '@/schemas'
 import type { CardPaymentData } from '@/types'
 import cardBrandsDebit from '@/assets/images/pagamento/card-brands.svg'
 
@@ -8,35 +12,26 @@ const emit = defineEmits<{
   submit: [data: CardPaymentData]
 }>()
 
-const form = reactive<CardPaymentData>({
-  cardNumber: '',
-  cardName: '',
-  expiry: '',
-  securityCode: '',
-  rememberCard: false,
+const { handleSubmit, errors, defineField, meta } = useForm({
+  validationSchema: toTypedSchema(debitCardSchema),
+  initialValues: {
+    cardNumber: '',
+    cardName: '',
+    expiry: '',
+    securityCode: '',
+    rememberCard: false,
+  },
 })
 
-const formatCardNumber = (event: Event) => {
-  const input = event.target as HTMLInputElement
-  let value = input.value.replace(/\D/g, '')
-  if (value.length > 16) value = value.slice(0, 16)
-  form.cardNumber = value.replace(/(\d{4})(?=\d)/g, '$1 ')
-}
+const [cardNumber, cardNumberAttrs] = defineField('cardNumber')
+const [cardName, cardNameAttrs] = defineField('cardName')
+const [expiry, expiryAttrs] = defineField('expiry')
+const [securityCode, securityCodeAttrs] = defineField('securityCode')
+const [rememberCard, rememberCardAttrs] = defineField('rememberCard')
 
-const formatExpiry = (event: Event) => {
-  const input = event.target as HTMLInputElement
-  let value = input.value.replace(/\D/g, '')
-  if (value.length > 4) value = value.slice(0, 4)
-  if (value.length >= 2) {
-    form.expiry = value.slice(0, 2) + ' / ' + value.slice(2)
-  } else {
-    form.expiry = value
-  }
-}
-
-const handleSubmit = () => {
-  emit('submit', { ...form })
-}
+const onSubmit = handleSubmit((values) => {
+  emit('submit', { ...values })
+})
 </script>
 
 <template>
@@ -59,31 +54,37 @@ const handleSubmit = () => {
     </div>
 
     <!-- Formulário -->
-    <form class="payment-debit__form" @submit.prevent="handleSubmit">
+    <form class="payment-debit__form" @submit.prevent="onSubmit">
       <div class="payment-debit__field">
         <label class="payment-debit__label" for="debit-card-number">Número do cartão</label>
         <input
           id="debit-card-number"
+          v-model="cardNumber"
+          v-bind="cardNumberAttrs"
+          v-maska="MASKS.cardNumber"
           type="text"
           class="payment-debit__input"
-          :value="form.cardNumber"
+          :class="{ 'payment-debit__input--error': errors.cardNumber }"
           placeholder="0000 0000 0000 0000"
           inputmode="numeric"
           autocomplete="cc-number"
-          @input="formatCardNumber"
         />
+        <span v-if="errors.cardNumber" class="form-error-message">{{ errors.cardNumber }}</span>
       </div>
 
       <div class="payment-debit__field">
         <label class="payment-debit__label" for="debit-card-name">Nome impresso no cartão</label>
         <input
           id="debit-card-name"
-          v-model="form.cardName"
+          v-model="cardName"
+          v-bind="cardNameAttrs"
           type="text"
           class="payment-debit__input"
+          :class="{ 'payment-debit__input--error': errors.cardName }"
           placeholder="Nome completo"
           autocomplete="cc-name"
         />
+        <span v-if="errors.cardName" class="form-error-message">{{ errors.cardName }}</span>
       </div>
 
       <div class="payment-debit__row">
@@ -91,33 +92,40 @@ const handleSubmit = () => {
           <label class="payment-debit__label" for="debit-expiry">Vencimento</label>
           <input
             id="debit-expiry"
+            v-model="expiry"
+            v-bind="expiryAttrs"
+            v-maska="MASKS.cardExpiry"
             type="text"
             class="payment-debit__input"
-            :value="form.expiry"
+            :class="{ 'payment-debit__input--error': errors.expiry }"
             placeholder="MM / AA"
             inputmode="numeric"
             autocomplete="cc-exp"
-            @input="formatExpiry"
           />
+          <span v-if="errors.expiry" class="form-error-message">{{ errors.expiry }}</span>
         </div>
         <div class="payment-debit__field payment-debit__field--half">
           <label class="payment-debit__label" for="debit-cvv">Código de segurança</label>
           <input
             id="debit-cvv"
-            v-model="form.securityCode"
+            v-model="securityCode"
+            v-bind="securityCodeAttrs"
+            v-maska="MASKS.securityCode"
             type="text"
             class="payment-debit__input"
+            :class="{ 'payment-debit__input--error': errors.securityCode }"
             placeholder="___"
-            maxlength="4"
             inputmode="numeric"
             autocomplete="cc-csc"
           />
+          <span v-if="errors.securityCode" class="form-error-message">{{ errors.securityCode }}</span>
         </div>
       </div>
 
       <label class="payment-debit__checkbox">
         <input
-          v-model="form.rememberCard"
+          v-model="rememberCard"
+          v-bind="rememberCardAttrs"
           type="checkbox"
           class="payment-debit__checkbox-input sr-only"
         />
@@ -129,7 +137,7 @@ const handleSubmit = () => {
         <button type="button" class="payment-debit__btn payment-debit__btn--outline" @click="emit('back')">
           Anterior
         </button>
-        <button type="submit" class="payment-debit__btn payment-debit__btn--primary">
+        <button type="submit" class="payment-debit__btn payment-debit__btn--primary" :disabled="!meta.valid">
           Finalizar compra
         </button>
       </div>

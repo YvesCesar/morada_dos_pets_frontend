@@ -32,6 +32,7 @@ const applyCoupon = () => {
         v-model="couponCode"
         type="text"
         class="coupon-input__field"
+        :class="{ 'coupon-input__field--error': errorMessage }"
         placeholder="Digite o cupom"
         @keyup.enter="applyCoupon"
       />
@@ -43,6 +44,6 @@ const applyCoupon = () => {
         {{ applied ? 'Aplicado!' : 'Aplicar' }}
       </button>
     </div>
-    <p v-if="errorMessage" class="coupon-input__error">{{ errorMessage }}</p>
+    <span v-if="errorMessage" class="form-error-message">{{ errorMessage }}</span>
   </div>
 </template>

@@ -1,59 +1,76 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
+import { changePasswordSchema } from '@/schemas'
 
-const currentPassword = ref('')
-const newPassword = ref('')
-const confirmPassword = ref('')
 const success = ref(false)
 
-const isNewPasswordValid = computed(() => newPassword.value.length >= 6)
-const isPasswordMatch = computed(() => newPassword.value === confirmPassword.value && confirmPassword.value !== '')
-const isValid = computed(() => currentPassword.value !== '' && isNewPasswordValid.value && isPasswordMatch.value)
+const { handleSubmit, errors, defineField, resetForm, meta } = useForm({
+  validationSchema: toTypedSchema(changePasswordSchema),
+  initialValues: {
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  },
+})
 
-const handleSubmit = () => {
-  if (!isValid.value) return
+const [currentPassword, currentPasswordAttrs] = defineField('currentPassword')
+const [newPassword, newPasswordAttrs] = defineField('newPassword')
+const [confirmPassword, confirmPasswordAttrs] = defineField('confirmPassword')
+
+const onSubmit = handleSubmit(() => {
   success.value = true
-  currentPassword.value = ''
-  newPassword.value = ''
-  confirmPassword.value = ''
+  resetForm()
   setTimeout(() => {
     success.value = false
   }, 3000)
-}
+})
 </script>
 
 <template>
   <div class="password-form">
     <p v-if="success" class="password-form__success">Senha alterada com sucesso!</p>
 
-    <form class="password-form__form" @submit.prevent="handleSubmit">
+    <form class="password-form__form" @submit.prevent="onSubmit">
       <div class="password-form__field">
         <label class="password-form__label">Senha atual</label>
-        <input v-model="currentPassword" type="password" class="password-form__input" />
+        <input
+          v-model="currentPassword"
+          v-bind="currentPasswordAttrs"
+          type="password"
+          class="password-form__input"
+          :class="{ 'password-form__input--error': errors.currentPassword }"
+        />
+        <span v-if="errors.currentPassword" class="form-error-message">{{ errors.currentPassword }}</span>
       </div>
 
       <div class="password-form__field">
         <label class="password-form__label">Nova senha (6 ou mais caracteres)</label>
         <input
           v-model="newPassword"
+          v-bind="newPasswordAttrs"
           type="password"
           class="password-form__input"
-          :class="{ 'password-form__input--error': newPassword && !isNewPasswordValid }"
+          :class="{ 'password-form__input--error': errors.newPassword }"
         />
+        <span v-if="errors.newPassword" class="form-error-message">{{ errors.newPassword }}</span>
       </div>
 
       <div class="password-form__field">
         <label class="password-form__label">Confirmar nova senha</label>
         <input
           v-model="confirmPassword"
+          v-bind="confirmPasswordAttrs"
           type="password"
           class="password-form__input"
-          :class="{ 'password-form__input--error': confirmPassword && !isPasswordMatch }"
+          :class="{ 'password-form__input--error': errors.confirmPassword }"
         />
+        <span v-if="errors.confirmPassword" class="form-error-message">{{ errors.confirmPassword }}</span>
       </div>
 
       <div class="password-form__actions">
-        <button type="submit" class="password-form__btn" :disabled="!isValid">Alterar senha</button>
+        <button type="submit" class="password-form__btn" :disabled="!meta.valid">Alterar senha</button>
       </div>
     </form>
   </div>

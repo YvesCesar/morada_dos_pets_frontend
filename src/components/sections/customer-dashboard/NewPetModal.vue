@@ -1,6 +1,11 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useInputMasks, usePhotoUpload } from '@/composables'
+import { ref } from 'vue'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
+import { vMaska } from 'maska/vue'
+import { MASKS } from '@/config/masks'
+import { petSchema } from '@/schemas'
+import { usePhotoUpload } from '@/composables'
 import BaseModal from '@/components/shared/BaseModal.vue'
 
 const emit = defineEmits<{
@@ -8,68 +13,90 @@ const emit = defineEmits<{
   save: [data: { name: string; birthDate: string; breed: string; weight: number; photo: string }]
 }>()
 
-const name = ref('')
-const birthDate = ref('')
-const breed = ref('')
-const weight = ref<number | null>(null)
 const photo = ref('')
 
-const { formatDate } = useInputMasks()
+const { handleSubmit, errors, defineField, meta } = useForm({
+  validationSchema: toTypedSchema(petSchema),
+  initialValues: {
+    name: '',
+    birthDate: '',
+    breed: '',
+    weight: undefined,
+  },
+})
+
+const [name, nameAttrs] = defineField('name')
+const [birthDate, birthDateAttrs] = defineField('birthDate')
+const [breed, breedAttrs] = defineField('breed')
+const [weight, weightAttrs] = defineField('weight')
+
 const { handleFileChange } = usePhotoUpload((url) => { photo.value = url })
 
-const isValid = computed(() =>
-  name.value.trim() !== '' &&
-  birthDate.value.length === 10 &&
-  breed.value.trim() !== '' &&
-  weight.value !== null && weight.value > 0,
-)
-
-const handleDateInput = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  birthDate.value = formatDate(target.value)
-}
-
-const handleSave = () => {
-  if (!isValid.value) return
+const onSubmit = handleSubmit((values) => {
   emit('save', {
-    name: name.value,
-    birthDate: birthDate.value,
-    breed: breed.value,
-    weight: weight.value!,
+    name: values.name,
+    birthDate: values.birthDate,
+    breed: values.breed,
+    weight: values.weight,
     photo: photo.value,
   })
-}
+})
 </script>
 
 <template>
   <BaseModal title="Novo Pet" @close="emit('close')">
-    <form class="pet-form" @submit.prevent="handleSave">
+    <form class="pet-form" @submit.prevent="onSubmit">
       <div class="pet-form__row">
         <div class="pet-form__field pet-form__field--name">
           <label class="pet-form__label">Nome</label>
-          <input v-model="name" type="text" class="pet-form__input" />
+          <input
+            v-model="name"
+            v-bind="nameAttrs"
+            type="text"
+            class="pet-form__input"
+            :class="{ 'pet-form__input--error': errors.name }"
+          />
+          <span v-if="errors.name" class="form-error-message">{{ errors.name }}</span>
         </div>
         <div class="pet-form__field pet-form__field--date">
           <label class="pet-form__label">Data de nascimento</label>
           <input
-            :value="birthDate"
+            v-model="birthDate"
+            v-bind="birthDateAttrs"
+            v-maska="MASKS.date"
             type="text"
             class="pet-form__input"
+            :class="{ 'pet-form__input--error': errors.birthDate }"
             placeholder="__/__/____"
-            maxlength="10"
-            @input="handleDateInput"
           />
+          <span v-if="errors.birthDate" class="form-error-message">{{ errors.birthDate }}</span>
         </div>
       </div>
 
       <div class="pet-form__row">
         <div class="pet-form__field pet-form__field--breed">
           <label class="pet-form__label">Raça</label>
-          <input v-model="breed" type="text" class="pet-form__input" />
+          <input
+            v-model="breed"
+            v-bind="breedAttrs"
+            type="text"
+            class="pet-form__input"
+            :class="{ 'pet-form__input--error': errors.breed }"
+          />
+          <span v-if="errors.breed" class="form-error-message">{{ errors.breed }}</span>
         </div>
         <div class="pet-form__field pet-form__field--weight">
           <label class="pet-form__label">Peso (kg)</label>
-          <input v-model.number="weight" type="number" step="0.1" min="0" class="pet-form__input" />
+          <input
+            v-model.number="weight"
+            v-bind="weightAttrs"
+            type="number"
+            step="0.1"
+            min="0"
+            class="pet-form__input"
+            :class="{ 'pet-form__input--error': errors.weight }"
+          />
+          <span v-if="errors.weight" class="form-error-message">{{ errors.weight }}</span>
         </div>
       </div>
 
@@ -80,7 +107,7 @@ const handleSave = () => {
 
       <div class="pet-form__actions">
         <button type="button" class="pet-form__btn pet-form__btn--cancel" @click="emit('close')">Cancelar</button>
-        <button type="submit" class="pet-form__btn pet-form__btn--save" :disabled="!isValid">Salvar</button>
+        <button type="submit" class="pet-form__btn pet-form__btn--save" :disabled="!meta.valid">Salvar</button>
       </div>
     </form>
   </BaseModal>

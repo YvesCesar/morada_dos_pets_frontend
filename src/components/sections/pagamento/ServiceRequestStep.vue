@@ -16,11 +16,17 @@ const emit = defineEmits<{
 
 const {
   selectedServiceType,
+  selectedServiceTypeAttrs,
   selectedService,
+  selectedServiceAttrs,
   selectedUnit,
+  selectedUnitAttrs,
   selectedPet,
+  selectedPetAttrs,
   selectedDate,
+  selectedDateAttrs,
   selectedTime,
+  selectedTimeAttrs,
   additionalInfo,
   formRef,
   serviceRequests,
@@ -28,6 +34,7 @@ const {
   subtotal,
   pets,
   isFormValid,
+  errors,
   handleEditRequest,
   handleRemoveRequest,
   handleAddPet,
@@ -47,7 +54,12 @@ const {
           <div class="service-request__field">
             <label class="service-request__label">Selecione o tipo de serviço</label>
             <div class="service-request__select-wrapper">
-              <select v-model="selectedServiceType" class="service-request__select">
+              <select
+                v-model="selectedServiceType"
+                v-bind="selectedServiceTypeAttrs"
+                class="service-request__select"
+                :class="{ 'service-request__select--error': errors.selectedServiceType }"
+              >
                 <option value="" disabled>Selecione...</option>
                 <option
                   v-for="type in serviceTypes"
@@ -59,6 +71,7 @@ const {
               </select>
               <img :src="arrowDownIcon" alt="" class="service-request__select-arrow" />
             </div>
+            <span v-if="errors.selectedServiceType" class="form-error-message">{{ errors.selectedServiceType }}</span>
           </div>
 
           <div class="service-request__field">
@@ -67,7 +80,12 @@ const {
               <svg class="service-request__field-icon" width="20" height="24" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M14.5 3.48C10.08 3.48 6.5 7.06 6.5 11.48C6.5 17.73 14.5 25.52 14.5 25.52C14.5 25.52 22.5 17.73 22.5 11.48C22.5 7.06 18.92 3.48 14.5 3.48ZM14.5 14.38C12.9 14.38 11.6 13.08 11.6 11.48C11.6 9.88 12.9 8.58 14.5 8.58C16.1 8.58 17.4 9.88 17.4 11.48C17.4 13.08 16.1 14.38 14.5 14.38Z" fill="rgba(41, 16, 0, 0.55)"/>
               </svg>
-              <select v-model="selectedUnit" class="service-request__select service-request__select--icon-left">
+              <select
+                v-model="selectedUnit"
+                v-bind="selectedUnitAttrs"
+                class="service-request__select service-request__select--icon-left"
+                :class="{ 'service-request__select--error': errors.selectedUnit }"
+              >
                 <option value="" disabled>Selecione...</option>
                 <option
                   v-for="unit in unitOptions"
@@ -79,6 +97,7 @@ const {
               </select>
               <img :src="arrowDownIcon" alt="" class="service-request__select-arrow" />
             </div>
+            <span v-if="errors.selectedUnit" class="form-error-message">{{ errors.selectedUnit }}</span>
           </div>
         </div>
 
@@ -87,7 +106,12 @@ const {
           <div class="service-request__field service-request__field--full">
             <label class="service-request__label">Selecione o serviço</label>
             <div class="service-request__select-wrapper">
-              <select v-model="selectedService" class="service-request__select">
+              <select
+                v-model="selectedService"
+                v-bind="selectedServiceAttrs"
+                class="service-request__select"
+                :class="{ 'service-request__select--error': errors.selectedService }"
+              >
                 <option value="" disabled>Selecione...</option>
                 <option
                   v-for="service in availableServices"
@@ -99,6 +123,7 @@ const {
               </select>
               <img :src="arrowDownIcon" alt="" class="service-request__select-arrow" />
             </div>
+            <span v-if="errors.selectedService" class="form-error-message">{{ errors.selectedService }}</span>
           </div>
         </div>
 
@@ -107,7 +132,12 @@ const {
           <div class="service-request__field service-request__field--full">
             <label class="service-request__label">Confirme sobre o Pet</label>
             <div class="service-request__select-wrapper">
-              <select v-model="selectedPet" class="service-request__select">
+              <select
+                v-model="selectedPet"
+                v-bind="selectedPetAttrs"
+                class="service-request__select"
+                :class="{ 'service-request__select--error': errors.selectedPet }"
+              >
                 <option value="" disabled>Selecione...</option>
                 <option
                   v-for="pet in pets"
@@ -119,6 +149,7 @@ const {
               </select>
               <img :src="arrowDownIcon" alt="" class="service-request__select-arrow" />
             </div>
+            <span v-if="errors.selectedPet" class="form-error-message">{{ errors.selectedPet }}</span>
           </div>
         </div>
 
@@ -132,11 +163,14 @@ const {
               </svg>
               <input
                 v-model="selectedDate"
+                v-bind="selectedDateAttrs"
                 type="date"
                 class="service-request__input service-request__input--icon-left"
+                :class="{ 'service-request__input--error': errors.selectedDate }"
               />
               <img :src="arrowDownIcon" alt="" class="service-request__select-arrow" />
             </div>
+            <span v-if="errors.selectedDate" class="form-error-message">{{ errors.selectedDate }}</span>
           </div>
 
           <div class="service-request__field">
@@ -146,7 +180,12 @@ const {
                 <circle cx="12" cy="12" r="9.5" stroke="rgba(41, 16, 0, 0.55)" stroke-width="1.2"/>
                 <path d="M12 6.5V12L15.5 14.5" stroke="rgba(41, 16, 0, 0.55)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <select v-model="selectedTime" class="service-request__select service-request__select--icon-left">
+              <select
+                v-model="selectedTime"
+                v-bind="selectedTimeAttrs"
+                class="service-request__select service-request__select--icon-left"
+                :class="{ 'service-request__select--error': errors.selectedTime }"
+              >
                 <option value="" disabled>Selecione...</option>
                 <option v-for="time in timeSlots" :key="time" :value="time">
                   {{ time }}
@@ -154,6 +193,7 @@ const {
               </select>
               <img :src="arrowDownIcon" alt="" class="service-request__select-arrow" />
             </div>
+            <span v-if="errors.selectedTime" class="form-error-message">{{ errors.selectedTime }}</span>
           </div>
         </div>
 

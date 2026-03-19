@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { vMaska } from 'maska/vue'
+import { MASKS } from '@/config/masks'
 import type { CardPaymentData } from '@/types'
 import { usePaymentCredit } from '@/composables'
 import cardBrandsCredit from '@/assets/images/pagamento/card-brands.svg'
@@ -9,10 +11,21 @@ const emit = defineEmits<{
 }>()
 
 const {
-  form,
+  cardNumber,
+  cardNumberAttrs,
+  cardName,
+  cardNameAttrs,
+  expiry,
+  expiryAttrs,
+  securityCode,
+  securityCodeAttrs,
+  rememberCard,
+  rememberCardAttrs,
+  installments,
+  installmentsAttrs,
   installmentOptions,
-  formatCardNumber,
-  formatExpiry,
+  errors,
+  meta,
   handleSubmit,
 } = usePaymentCredit((event, data) => {
   if (event === 'back') emit('back')
@@ -45,26 +58,32 @@ const {
         <label class="payment-credit__label" for="credit-card-number">Número do cartão</label>
         <input
           id="credit-card-number"
+          v-model="cardNumber"
+          v-bind="cardNumberAttrs"
+          v-maska="MASKS.cardNumber"
           type="text"
           class="payment-credit__input"
-          :value="form.cardNumber"
+          :class="{ 'payment-credit__input--error': errors.cardNumber }"
           placeholder="0000 0000 0000 0000"
           inputmode="numeric"
           autocomplete="cc-number"
-          @input="formatCardNumber"
         />
+        <span v-if="errors.cardNumber" class="form-error-message">{{ errors.cardNumber }}</span>
       </div>
 
       <div class="payment-credit__field">
         <label class="payment-credit__label" for="credit-card-name">Nome impresso no cartão</label>
         <input
           id="credit-card-name"
-          v-model="form.cardName"
+          v-model="cardName"
+          v-bind="cardNameAttrs"
           type="text"
           class="payment-credit__input"
+          :class="{ 'payment-credit__input--error': errors.cardName }"
           placeholder="Nome completo"
           autocomplete="cc-name"
         />
+        <span v-if="errors.cardName" class="form-error-message">{{ errors.cardName }}</span>
       </div>
 
       <div class="payment-credit__row payment-credit__row--three">
@@ -72,34 +91,41 @@ const {
           <label class="payment-credit__label" for="credit-expiry">Vencimento</label>
           <input
             id="credit-expiry"
+            v-model="expiry"
+            v-bind="expiryAttrs"
+            v-maska="MASKS.cardExpiry"
             type="text"
             class="payment-credit__input payment-credit__input--small"
-            :value="form.expiry"
+            :class="{ 'payment-credit__input--error': errors.expiry }"
             placeholder="MM / AA"
             inputmode="numeric"
             autocomplete="cc-exp"
-            @input="formatExpiry"
           />
+          <span v-if="errors.expiry" class="form-error-message">{{ errors.expiry }}</span>
         </div>
         <div class="payment-credit__field payment-credit__field--third">
           <label class="payment-credit__label" for="credit-cvv">Código de segurança</label>
           <input
             id="credit-cvv"
-            v-model="form.securityCode"
+            v-model="securityCode"
+            v-bind="securityCodeAttrs"
+            v-maska="MASKS.securityCode"
             type="text"
             class="payment-credit__input payment-credit__input--small"
+            :class="{ 'payment-credit__input--error': errors.securityCode }"
             placeholder="___"
-            maxlength="4"
             inputmode="numeric"
             autocomplete="cc-csc"
           />
+          <span v-if="errors.securityCode" class="form-error-message">{{ errors.securityCode }}</span>
         </div>
         <div class="payment-credit__field payment-credit__field--third">
           <label class="payment-credit__label" for="credit-installments">Parcelas</label>
           <div class="payment-credit__select-wrapper">
             <select
               id="credit-installments"
-              v-model.number="form.installments"
+              v-model.number="installments"
+              v-bind="installmentsAttrs"
               class="payment-credit__select"
             >
               <option
@@ -117,7 +143,8 @@ const {
 
       <label class="payment-credit__checkbox">
         <input
-          v-model="form.rememberCard"
+          v-model="rememberCard"
+          v-bind="rememberCardAttrs"
           type="checkbox"
           class="payment-credit__checkbox-input sr-only"
         />
@@ -129,7 +156,7 @@ const {
         <button type="button" class="payment-credit__btn payment-credit__btn--outline" @click="emit('back')">
           Anterior
         </button>
-        <button type="submit" class="payment-credit__btn payment-credit__btn--primary">
+        <button type="submit" class="payment-credit__btn payment-credit__btn--primary" :disabled="!meta.valid">
           Finalizar compra
         </button>
       </div>

@@ -9,7 +9,8 @@ e2e/
 ├── auth/                 # Auth flows (login, registration, route guards)
 ├── dashboard/            # Dashboard CRUD (admin, customer, coupons, users, prices, testimonials, profile, settings)
 ├── shared/               # Cross-cutting (header guest vs authenticated)
-└── payment/              # Payment wizard multi-step
+├── payment/              # Payment wizard multi-step
+└── forms/                # Form validation E2E (error messages, masks, error classes)
 ```
 
 ## Auth Helper (`e2e/helpers/auth.ts`)
@@ -39,8 +40,18 @@ test.beforeEach(async ({ page }) => {
 
 ## Key Patterns
 
+### Form Validation Errors
+Forms use zod + vee-validate. Error messages appear in `<span class="form-error-message">` elements. To test:
+```ts
+await page.locator('.contact-form__button').click()
+await expect(page.getByText('Nome é obrigatório')).toBeVisible()
+await expect(page.locator('.contact-form__input--error').first()).toBeVisible()
+```
+
+**Important:** All `useForm()` calls must include `initialValues` with empty strings for string fields. Without this, zod v4 shows generic type errors (`"Invalid input: expected string, received undefined"`) instead of custom messages.
+
 ### Masked Inputs
-Use `pressSequentially()` instead of `fill()` to trigger `@input` handlers that apply masks:
+Use `pressSequentially()` instead of `fill()` to trigger `v-maska` directive masks:
 ```ts
 await page.locator('#cpf').pressSequentially('12345678900')
 await expect(page.locator('#cpf')).toHaveValue('123.456.789-00')
