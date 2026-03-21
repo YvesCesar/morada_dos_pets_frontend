@@ -14,6 +14,7 @@ tests/
 ├── setup.ts                    # Global: localStorage.clear() in beforeEach, rAF polyfill
 ├── helpers.ts                  # Shared utilities (see below)
 ├── composables/                # One file per composable
+├── schemas/                    # Zod schema unit tests
 ├── stores/                     # One file per Pinia store
 └── components/shared/          # One file per shared component
 ```
@@ -89,6 +90,28 @@ mount(MyComponent, {
 | Fake timers | `vi.useFakeTimers()` + `vi.setSystemTime(new Date('...'))` + `vi.useRealTimers()` |
 | `requestAnimationFrame` | Polyfilled in `setup.ts` |
 | Teleport | `global: { stubs: { Teleport: true } }` in mount options |
+
+### Schemas
+
+Pure zod schema tests — no Vue setup needed:
+
+```ts
+import { loginSchema } from '@/schemas'
+
+it('accepts valid credentials', () => {
+  expect(loginSchema.safeParse({
+    email: 'admin@petshop.com',
+    password: 'senhaSegura',
+  }).success).toBe(true)
+})
+
+it('rejects invalid email', () => {
+  const result = loginSchema.safeParse({ email: 'invalid', password: 'test' })
+  expect(result.success).toBe(false)
+})
+```
+
+Use `safeParse` — never `parse` (avoids thrown errors). Test both success and failure cases with realistic pet shop domain data.
 
 ## Naming Convention
 

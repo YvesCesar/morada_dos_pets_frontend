@@ -22,6 +22,8 @@ test.describe('Users Management', () => {
     await modal.locator('input[type="text"]').first().fill('Carlos Oliveira')
     await modal.locator('input[type="email"]').fill('carlos@petshop.com')
     await modal.locator('select').selectOption('customer')
+    await modal.locator('input[type="text"]').nth(1).pressSequentially('11987654321')
+    await modal.locator('input[type="text"]').nth(2).pressSequentially('98765432100')
 
     await modal.locator('.user-form__btn--save').click()
 

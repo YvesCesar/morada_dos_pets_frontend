@@ -1,4 +1,7 @@
 import { ref, computed, watch } from 'vue'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
+import { serviceRequestSchema } from '@/schemas'
 import type { Pet, ServiceRequest } from '@/types'
 import { mockPets, serviceTypes, serviceOptions, unitOptions } from '@/data/pagamento'
 
@@ -14,12 +17,25 @@ export function useServiceRequestForm(
   props: ServiceRequestFormProps,
   emit: (event: 'confirm', requests: ServiceRequest[]) => void,
 ) {
-  const selectedServiceType = ref(props.initialServiceType || '')
-  const selectedService = ref(props.initialService || '')
-  const selectedUnit = ref('')
-  const selectedPet = ref('')
-  const selectedDate = ref('')
-  const selectedTime = ref('')
+  const { errors, defineField, validate, resetForm, setFieldValue } = useForm({
+    validationSchema: toTypedSchema(serviceRequestSchema),
+    initialValues: {
+      selectedServiceType: props.initialServiceType || '',
+      selectedService: props.initialService || '',
+      selectedUnit: '',
+      selectedPet: '',
+      selectedDate: '',
+      selectedTime: '',
+    },
+  })
+
+  const [selectedServiceType, selectedServiceTypeAttrs] = defineField('selectedServiceType')
+  const [selectedService, selectedServiceAttrs] = defineField('selectedService')
+  const [selectedUnit, selectedUnitAttrs] = defineField('selectedUnit')
+  const [selectedPet, selectedPetAttrs] = defineField('selectedPet')
+  const [selectedDate, selectedDateAttrs] = defineField('selectedDate')
+  const [selectedTime, selectedTimeAttrs] = defineField('selectedTime')
+
   const additionalInfo = ref('')
   const editingRequestId = ref<string | null>(null)
   const formRef = ref<HTMLElement | null>(null)
@@ -44,14 +60,14 @@ export function useServiceRequestForm(
   const pets = ref<Pet[]>([...mockPets])
 
   watch(selectedServiceType, () => {
-    selectedService.value = ''
+    setFieldValue('selectedService', '')
   })
 
   watch(
     () => [props.initialServiceType, props.initialService],
     ([type, service]) => {
-      if (type) selectedServiceType.value = type
-      if (service) selectedService.value = service
+      if (type) setFieldValue('selectedServiceType', type)
+      if (service) setFieldValue('selectedService', service)
     },
     { immediate: true },
   )
@@ -67,28 +83,24 @@ export function useServiceRequestForm(
     )
   })
 
-  const resetForm = () => {
-    selectedServiceType.value = ''
-    selectedService.value = ''
-    selectedUnit.value = ''
-    selectedPet.value = ''
-    selectedDate.value = ''
-    selectedTime.value = ''
+  const resetFormFields = () => {
+    resetForm()
     additionalInfo.value = ''
     editingRequestId.value = null
   }
 
-  const addServiceRequest = () => {
-    if (!isFormValid.value) return
+  const addServiceRequest = async () => {
+    const result = await validate()
+    if (!result.valid) return false
 
     const pet = pets.value.find(p => p.id === selectedPet.value)
-    if (!pet) return
+    if (!pet) return false
 
     const serviceType = serviceTypes.find(t => t.id === selectedServiceType.value)
     const service = availableServices.value.find(s => s.id === selectedService.value)
     const unit = unitOptions.find(u => u.id === selectedUnit.value)
 
-    if (!serviceType || !service || !unit) return
+    if (!serviceType || !service || !unit) return false
 
     if (editingRequestId.value) {
       const index = serviceRequests.value.findIndex(r => r.id === editingRequestId.value)
@@ -99,8 +111,8 @@ export function useServiceRequestForm(
           serviceName: service.label,
           unit: unit.label,
           pet,
-          date: selectedDate.value,
-          time: selectedTime.value,
+          date: selectedDate.value!,
+          time: selectedTime.value!,
           additionalInfo: additionalInfo.value,
           price: service.price,
         }
@@ -113,15 +125,16 @@ export function useServiceRequestForm(
         serviceName: service.label,
         unit: unit.label,
         pet,
-        date: selectedDate.value,
-        time: selectedTime.value,
+        date: selectedDate.value!,
+        time: selectedTime.value!,
         additionalInfo: additionalInfo.value,
         price: service.price,
       }
       serviceRequests.value.push(request)
     }
 
-    resetForm()
+    resetFormFields()
+    return true
   }
 
   const handleEditRequest = (id: string) => {
@@ -131,18 +144,18 @@ export function useServiceRequestForm(
     const serviceType = serviceTypes.find(t => t.label === request.serviceType)
     const unit = unitOptions.find(u => u.label === request.unit)
 
-    if (serviceType) selectedServiceType.value = serviceType.id
+    if (serviceType) setFieldValue('selectedServiceType', serviceType.id)
 
     setTimeout(() => {
       const services = serviceOptions[serviceType?.id || ''] || []
       const service = services.find(s => s.label === request.serviceName)
-      if (service) selectedService.value = service.id
+      if (service) setFieldValue('selectedService', service.id)
     }, 0)
 
-    if (unit) selectedUnit.value = unit.id
-    selectedPet.value = request.pet.id
-    selectedDate.value = request.date
-    selectedTime.value = request.time
+    if (unit) setFieldValue('selectedUnit', unit.id)
+    setFieldValue('selectedPet', request.pet.id)
+    setFieldValue('selectedDate', request.date)
+    setFieldValue('selectedTime', request.time)
     additionalInfo.value = request.additionalInfo
     editingRequestId.value = id
   }
@@ -151,14 +164,14 @@ export function useServiceRequestForm(
     serviceRequests.value = serviceRequests.value.filter(r => r.id !== id)
   }
 
-  const handleAddPet = () => {
-    addServiceRequest()
+  const handleAddPet = async () => {
+    await addServiceRequest()
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (isFormValid.value) {
-      addServiceRequest()
+      await addServiceRequest()
     }
 
     if (serviceRequests.value.length > 0) {
@@ -168,11 +181,17 @@ export function useServiceRequestForm(
 
   return {
     selectedServiceType,
+    selectedServiceTypeAttrs,
     selectedService,
+    selectedServiceAttrs,
     selectedUnit,
+    selectedUnitAttrs,
     selectedPet,
+    selectedPetAttrs,
     selectedDate,
+    selectedDateAttrs,
     selectedTime,
+    selectedTimeAttrs,
     additionalInfo,
     editingRequestId,
     formRef,
@@ -182,6 +201,7 @@ export function useServiceRequestForm(
     subtotal,
     pets,
     isFormValid,
+    errors,
     addServiceRequest,
     handleEditRequest,
     handleRemoveRequest,

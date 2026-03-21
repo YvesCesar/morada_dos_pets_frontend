@@ -51,11 +51,11 @@ test.describe('Customer Dashboard', () => {
 
     const nameInput = page.locator('.pet-form .pet-form__field--name input')
     await nameInput.clear()
-    await nameInput.fill('Thor Jr.')
+    await nameInput.fill('Thor Junior')
 
     await page.locator('.pet-form__btn--save').click()
 
-    await expect(page.locator('.user-pets__card').filter({ hasText: 'Thor Jr.' })).toBeVisible()
+    await expect(page.locator('.user-pets__card').filter({ hasText: 'Thor Junior' })).toBeVisible()
   })
 
   test('delete pet: click delete, confirm modal, card removed', async ({ page }) => {

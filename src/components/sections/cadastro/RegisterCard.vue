@@ -1,26 +1,37 @@
 <script setup lang="ts">
+import { vMaska } from 'maska/vue'
+import { MASKS } from '@/config/masks'
 import iconGoogle from '@/assets/images/icon-google.svg'
 import { useRegisterForm } from '@/composables'
 
 const {
   currentStep,
   email,
+  emailAttrs,
   password,
+  passwordAttrs,
   confirmPassword,
+  confirmPasswordAttrs,
   nome,
+  nomeAttrs,
   dataNascimento,
+  dataNascimentoAttrs,
   cpf,
+  cpfAttrs,
   celular,
+  celularAttrs,
   cep,
+  cepAttrs,
   endereco,
+  enderecoAttrs,
   numero,
+  numeroAttrs,
   bairro,
-  isPasswordValid,
-  isPasswordMatch,
-  isFormValid,
-  handleDateInput,
-  handleCPFInput,
-  handlePhoneInput,
+  bairroAttrs,
+  step1Errors,
+  step1Meta,
+  step2Errors,
+  step2Meta,
   handleCEPInput,
   handleSubmit,
   handleGoogleRegister,
@@ -44,11 +55,13 @@ const {
               <input
                 id="email"
                 v-model="email"
+                v-bind="emailAttrs"
                 type="email"
                 class="register-card__input"
+                :class="{ 'register-card__input--error': step1Errors.email }"
                 autocomplete="email"
-                required
               />
+              <span v-if="step1Errors.email" class="form-error-message">{{ step1Errors.email }}</span>
             </div>
 
             <div class="register-card__field">
@@ -56,12 +69,13 @@ const {
               <input
                 id="password"
                 v-model="password"
+                v-bind="passwordAttrs"
                 type="password"
                 class="register-card__input"
-                :class="{ 'register-card__input--error': password && !isPasswordValid }"
+                :class="{ 'register-card__input--error': step1Errors.password }"
                 autocomplete="new-password"
-                required
               />
+              <span v-if="step1Errors.password" class="form-error-message">{{ step1Errors.password }}</span>
             </div>
           </div>
 
@@ -71,19 +85,20 @@ const {
               <input
                 id="confirm-password"
                 v-model="confirmPassword"
+                v-bind="confirmPasswordAttrs"
                 type="password"
                 class="register-card__input"
-                :class="{ 'register-card__input--error': confirmPassword && !isPasswordMatch }"
+                :class="{ 'register-card__input--error': step1Errors.confirmPassword }"
                 autocomplete="new-password"
-                required
               />
+              <span v-if="step1Errors.confirmPassword" class="form-error-message">{{ step1Errors.confirmPassword }}</span>
             </div>
 
             <div class="register-card__submit-area">
               <button
                 type="submit"
                 class="register-card__button register-card__button--primary"
-                :disabled="!isFormValid"
+                :disabled="!step1Meta.valid"
               >
                 Continuar
               </button>
@@ -101,11 +116,13 @@ const {
               <input
                 id="nome"
                 v-model="nome"
+                v-bind="nomeAttrs"
                 type="text"
                 class="register-card__input"
+                :class="{ 'register-card__input--error': step2Errors.nome }"
                 autocomplete="name"
-                required
               />
+              <span v-if="step2Errors.nome" class="form-error-message">{{ step2Errors.nome }}</span>
             </div>
 
             <div class="register-card__row">
@@ -113,28 +130,30 @@ const {
                 <label for="dataNascimento" class="register-card__label">Data de nascimento</label>
                 <input
                   id="dataNascimento"
-                  :value="dataNascimento"
+                  v-model="dataNascimento"
+                  v-bind="dataNascimentoAttrs"
+                  v-maska="MASKS.date"
                   type="text"
                   class="register-card__input register-card__input--masked"
+                  :class="{ 'register-card__input--error': step2Errors.dataNascimento }"
                   placeholder="__ / __ / __"
-                  maxlength="10"
-                  @input="handleDateInput"
-                  required
                 />
+                <span v-if="step2Errors.dataNascimento" class="form-error-message">{{ step2Errors.dataNascimento }}</span>
               </div>
 
               <div class="register-card__field register-card__field--cpf">
                 <label for="cpf" class="register-card__label">CPF</label>
                 <input
                   id="cpf"
-                  :value="cpf"
+                  v-model="cpf"
+                  v-bind="cpfAttrs"
+                  v-maska="MASKS.cpf"
                   type="text"
                   class="register-card__input register-card__input--masked"
+                  :class="{ 'register-card__input--error': step2Errors.cpf }"
                   placeholder="___.___.___-__"
-                  maxlength="14"
-                  @input="handleCPFInput"
-                  required
                 />
+                <span v-if="step2Errors.cpf" class="form-error-message">{{ step2Errors.cpf }}</span>
               </div>
             </div>
           </div>
@@ -150,28 +169,31 @@ const {
                 <label for="celular" class="register-card__label">Celular</label>
                 <input
                   id="celular"
-                  :value="celular"
+                  v-model="celular"
+                  v-bind="celularAttrs"
+                  v-maska="MASKS.phone"
                   type="text"
                   class="register-card__input register-card__input--masked"
+                  :class="{ 'register-card__input--error': step2Errors.celular }"
                   placeholder="(__) _____-____"
-                  maxlength="15"
-                  @input="handlePhoneInput"
-                  required
                 />
+                <span v-if="step2Errors.celular" class="form-error-message">{{ step2Errors.celular }}</span>
               </div>
 
               <div class="register-card__field register-card__field--cep">
                 <label for="cep" class="register-card__label">CEP</label>
                 <input
                   id="cep"
-                  :value="cep"
+                  v-model="cep"
+                  v-bind="cepAttrs"
+                  v-maska="MASKS.cep"
                   type="text"
                   class="register-card__input register-card__input--masked"
+                  :class="{ 'register-card__input--error': step2Errors.cep }"
                   placeholder="_____-___"
-                  maxlength="9"
-                  @input="handleCEPInput"
-                  required
+                  @maska="handleCEPInput"
                 />
+                <span v-if="step2Errors.cep" class="form-error-message">{{ step2Errors.cep }}</span>
               </div>
             </div>
 
@@ -181,11 +203,13 @@ const {
                 <input
                   id="endereco"
                   v-model="endereco"
+                  v-bind="enderecoAttrs"
                   type="text"
                   class="register-card__input"
+                  :class="{ 'register-card__input--error': step2Errors.endereco }"
                   autocomplete="street-address"
-                  required
                 />
+                <span v-if="step2Errors.endereco" class="form-error-message">{{ step2Errors.endereco }}</span>
               </div>
 
               <div class="register-card__field register-card__field--number">
@@ -193,10 +217,12 @@ const {
                 <input
                   id="numero"
                   v-model="numero"
+                  v-bind="numeroAttrs"
                   type="text"
                   class="register-card__input"
-                  required
+                  :class="{ 'register-card__input--error': step2Errors.numero }"
                 />
+                <span v-if="step2Errors.numero" class="form-error-message">{{ step2Errors.numero }}</span>
               </div>
             </div>
 
@@ -205,17 +231,19 @@ const {
               <input
                 id="bairro"
                 v-model="bairro"
+                v-bind="bairroAttrs"
                 type="text"
                 class="register-card__input"
-                required
+                :class="{ 'register-card__input--error': step2Errors.bairro }"
               />
+              <span v-if="step2Errors.bairro" class="form-error-message">{{ step2Errors.bairro }}</span>
             </div>
 
             <div class="register-card__submit-area">
               <button
                 type="submit"
                 class="register-card__button register-card__button--primary"
-                :disabled="!isFormValid"
+                :disabled="!step2Meta.valid"
               >
                 Continuar
               </button>

@@ -145,6 +145,14 @@
   }
 }
 
+// ── Form Error Message ─────────────────────
+.form-error-message {
+  color: var(--color-error);
+  font-size: var(--text-xs);
+  min-height: 1.25em;
+  margin-top: 2px;
+}
+
 // ── Form Actions ────────────────────────────
 .form-actions {
   display: flex;

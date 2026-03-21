@@ -39,20 +39,18 @@ const { isMobile, isTablet, isDesktop, width, height } = useViewport()
 
 ## useInputMasks()
 
-Input formatting masks for Brazilian locale fields + utility functions.
+Display utility functions for Brazilian locale. **Input masks now use `v-maska` directive — see `src/config/masks.ts`.**
 
 ```typescript
-const { formatDate, formatCPF, formatPhone, formatCEP, formatDisplayDate, formatCurrency, getInitial, calculateAge } = useInputMasks()
+const { formatDisplayDate, formatCurrency, getInitial, calculateAge } = useInputMasks()
 ```
 
-- `formatDate` — `DD/MM/YYYY`
-- `formatCPF` — `000.000.000-00`
-- `formatPhone` — `(00) 00000-0000`
-- `formatCEP` — `00000-000`
 - `formatDisplayDate` — converts `YYYY-MM-DD` → `DD/MM/YYYY`
 - `formatCurrency` — `R$ 1.234,56` (pt-BR locale)
 - `getInitial(name)` — returns uppercase first letter of a name
 - `calculateAge(birthDate)` — returns human-readable age from `DD/MM/YYYY` string
+
+> **Note:** `formatDate`, `formatCPF`, `formatPhone`, `formatCEP` were removed. Use `v-maska` directive with masks from `src/config/masks.ts` instead.
 
 ## usePhotoUpload(onUpdate)
 
@@ -75,15 +73,24 @@ const bellRef = ref<HTMLElement | null>(null)
 useClickOutside(bellRef, () => { isOpen.value = false })
 ```
 
-## useCepLookup(initialCep?, initialAddress?, initialNeighborhood?)
+## useCepLookup(setAddressFields)
 
-Auto-fills address fields by fetching from ViaCEP API when a valid 8-digit CEP is entered.
+Auto-fills address fields by fetching from ViaCEP API when a valid 8-digit CEP is entered. Integrates with vee-validate `setFieldValue`.
 
 ```typescript
-const { cep, address, neighborhood, handleCEPInput } = useCepLookup(user.cep, user.address, user.neighborhood)
+const { lookupCep } = useCepLookup((address, neighborhood) => {
+  setFieldValue('address', address)
+  setFieldValue('neighborhood', neighborhood)
+})
+
+// Call lookupCep when CEP changes
+const handleCEPInput = async () => {
+  const cepNumbers = cep.value.replace(/\D/g, '')
+  if (cepNumbers.length === 8) await lookupCep(cepNumbers)
+}
 ```
 
-Used by: `RegisterCard.vue`, `ProfileForm.vue`
+Used by: `useRegisterForm`, `useProfileForm`
 
 ## useCrudModal<T>(storeActions)
 
@@ -127,17 +134,17 @@ These extract business logic from specific SFCs, keeping `.vue` files focused on
 
 | Composable | Source Component | Key exports |
 |---|---|---|
-| `useServiceRequestForm` | `ServiceRequestStep.vue` | Form state, service selection, request CRUD, validation |
+| `useServiceRequestForm` | `ServiceRequestStep.vue` | Form state, service selection, request CRUD, vee-validate integration |
 | `usePaymentStep` | `PaymentStep.vue` | Payment method selection, sub-step navigation, coupon handling |
-| `useRegisterForm` | `RegisterCard.vue` | Multi-step registration with masks and CEP lookup |
+| `useRegisterForm` | `RegisterCard.vue` | Multi-step registration with vee-validate + maska + CEP lookup |
 | `usePricesEditor` | `PricesEditor.vue` | Draft state, change detection, tab-based save |
 | `useNotificationBell` | `NotificationBell.vue` | Notifications list, read/unread, click-outside close |
 | `useCustomerDashboard` | `CustomerDashboardView.vue` | Stats, pet CRUD, appointment actions |
 | `useAdminDashboard` | `AdminDashboardView.vue` | Stats, filter handlers, appointment actions |
-| `useCustomerTestimonial` | `CustomerTestimonialSection.vue` | Edit/view toggle, form state, save/cancel |
+| `useCustomerTestimonial` | `CustomerTestimonialSection.vue` | Edit/view toggle, vee-validate form, save/cancel |
 | `useAppHeader` | `AppHeader.vue` | Menu toggle, active link detection, logout |
-| `usePaymentCredit` | `PaymentCredit.vue` | Card form, formatting, installments |
-| `useProfileForm` | `ProfileForm.vue` | Profile fields, photo upload, CEP lookup |
+| `usePaymentCredit` | `PaymentCredit.vue` | Card form with vee-validate + maska, installments |
+| `useProfileForm` | `ProfileForm.vue` | Profile fields with vee-validate + maska, photo upload, CEP lookup |
 
 ## Testing
 

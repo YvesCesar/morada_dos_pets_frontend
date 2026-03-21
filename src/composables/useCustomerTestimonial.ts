@@ -1,4 +1,7 @@
 import { ref, computed } from 'vue'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
+import { testimonialSchema } from '@/schemas'
 import { usePhotoUpload } from './usePhotoUpload'
 import { useAuthStore } from '@/stores/auth'
 import { useTestimonialsStore } from '@/stores/testimonials'
@@ -14,35 +17,48 @@ export function useCustomerTestimonial() {
   const testimonial = computed(() => testimonialsStore.getByUser(userId.value))
 
   const isEditing = ref(false)
-  const quoteInput = ref('')
-  const allowPublicInput = ref(false)
   const photoInput = ref('')
   const fileInputRef = ref<HTMLInputElement | null>(null)
+
+  const { handleSubmit, errors, defineField, setValues, resetForm } = useForm({
+    validationSchema: toTypedSchema(testimonialSchema),
+    initialValues: {
+      quote: '',
+      allowPublic: false,
+    },
+  })
+
+  const [quoteInput, quoteInputAttrs] = defineField('quote')
+  const [allowPublicInput, allowPublicInputAttrs] = defineField('allowPublic')
+
+  const charCount = computed(() => (quoteInput.value ?? '').length)
 
   const { handleFileChange: handlePhotoChange } = usePhotoUpload((url) => { photoInput.value = url })
 
   const startEdit = () => {
-    quoteInput.value = testimonial.value?.quote ?? ''
-    allowPublicInput.value = testimonial.value?.allowPublic ?? false
+    setValues({
+      quote: testimonial.value?.quote ?? '',
+      allowPublic: testimonial.value?.allowPublic ?? false,
+    })
     photoInput.value = testimonial.value?.authorPhoto ?? ''
     isEditing.value = true
   }
 
   const cancelEdit = () => {
     isEditing.value = false
+    resetForm()
   }
 
-  const save = () => {
-    if (!quoteInput.value.trim()) return
+  const save = handleSubmit((values) => {
     testimonialsStore.submitTestimonial(
       userId.value,
       authStore.user?.name ?? '',
       photoInput.value,
-      quoteInput.value.trim(),
-      allowPublicInput.value,
+      values.quote.trim(),
+      values.allowPublic,
     )
     isEditing.value = false
-  }
+  })
 
   const updateAllowPublic = (value: boolean) => {
     if (!testimonial.value) return
@@ -73,9 +89,13 @@ export function useCustomerTestimonial() {
     testimonial,
     isEditing,
     quoteInput,
+    quoteInputAttrs,
     allowPublicInput,
+    allowPublicInputAttrs,
     photoInput,
     fileInputRef,
+    charCount,
+    errors,
     statusLabel,
     statusClass,
     handlePhotoChange,

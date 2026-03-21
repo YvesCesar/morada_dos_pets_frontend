@@ -14,7 +14,7 @@ src/assets/styles/
 │   └── _reset.scss        # CSS reset, Google Fonts, body defaults, .container, .sr-only
 ├── components/            # Global reusable classes
 │   ├── _buttons.scss      # .btn, .btn--primary, .btn--outline, .btn--danger, .action-btn
-│   ├── _forms.scss        # .form-group, .form-field, .form-label, .form-input, .form-select
+│   ├── _forms.scss        # .form-group, .form-field, .form-label, .form-input, .form-select, .form-error-message
 │   ├── _tables.scss       # .dashboard-table (wrapper, th, td, actions, empty)
 │   ├── _cards.scss        # .card--dashboard, .card--pricing
 │   ├── _modals.scss       # .base-modal, .confirm-modal
