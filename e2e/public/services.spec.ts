@@ -15,8 +15,8 @@ test.describe('Services Pages', () => {
   test('/servicos/hospedagem tab switching shows different content', async ({ page }) => {
     await page.goto('/servicos/hospedagem')
 
-    const hospedagemTab = page.getByRole('button', { name: 'Hospedagem' })
-    const crecheTab = page.getByRole('button', { name: 'Creche' })
+    const hospedagemTab = page.getByRole('tab', { name: 'Hospedagem' })
+    const crecheTab = page.getByRole('tab', { name: 'Creche' })
 
     await expect(hospedagemTab).toBeVisible()
     await expect(crecheTab).toBeVisible()
