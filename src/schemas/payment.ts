@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { requiredString } from './common'
+import { cardNameSchema } from './common'
 
 const cardNumberSchema = z
   .string()
@@ -18,7 +18,7 @@ const securityCodeSchema = z
 
 export const creditCardSchema = z.object({
   cardNumber: cardNumberSchema,
-  cardName: requiredString('Nome no cartão'),
+  cardName: cardNameSchema,
   expiry: cardExpirySchema,
   securityCode: securityCodeSchema,
   rememberCard: z.boolean(),
@@ -27,7 +27,7 @@ export const creditCardSchema = z.object({
 
 export const debitCardSchema = z.object({
   cardNumber: cardNumberSchema,
-  cardName: requiredString('Nome no cartão'),
+  cardName: cardNameSchema,
   expiry: cardExpirySchema,
   securityCode: securityCodeSchema,
   rememberCard: z.boolean(),

@@ -17,6 +17,46 @@ export const nameSchema = z
   .string()
   .min(1, 'Nome é obrigatório')
   .min(2, 'Nome deve ter pelo menos 2 caracteres')
+  .regex(/^[A-Za-zÀ-ÖØ-öø-ÿ'\-\s]+$/, 'Nome deve conter apenas letras')
+
+export const cardNameSchema = z
+  .string()
+  .min(1, 'Nome no cartão é obrigatório')
+  .regex(/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/, 'Nome no cartão deve conter apenas letras')
+
+export const addressSchema = (label: string) =>
+  z
+    .string()
+    .min(1, `${label} é obrigatório`)
+    .regex(/^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s.,\-°º\/]+$/, 'Endereço contém caracteres inválidos')
+
+export const addressNumberSchema = z
+  .string()
+  .min(1, 'Número é obrigatório')
+  .regex(/^[0-9]+[A-Za-z]?$/, 'Número deve conter apenas dígitos e opcionalmente uma letra')
+
+export const neighborhoodSchema = (label: string) =>
+  z
+    .string()
+    .min(1, `${label} é obrigatório`)
+    .regex(/^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s\-]+$/, 'Bairro contém caracteres inválidos')
+
+export const breedSchema = z
+  .string()
+  .min(1, 'Raça é obrigatória')
+  .regex(/^[A-Za-zÀ-ÖØ-öø-ÿ\s\-]+$/, 'Raça deve conter apenas letras')
+
+export const alphanumericCodeSchema = (label: string) =>
+  z
+    .string()
+    .min(1, `${label} é obrigatório`)
+    .regex(/^[A-Za-z0-9\-_]+$/, 'Código deve conter apenas letras, números, hífens e underscores')
+
+export const subjectSchema = (label: string) =>
+  z
+    .string()
+    .min(1, `${label} é obrigatório`)
+    .regex(/^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s.,!?;:\-'()]+$/, 'Assunto contém caracteres inválidos')
 
 export const phoneSchema = z
   .string()

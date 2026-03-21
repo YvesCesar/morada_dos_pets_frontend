@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { emailSchema, nameSchema, phoneSchema, cpfSchema, requiredString } from './common'
+import { emailSchema, nameSchema, phoneSchema, cpfSchema, requiredString, alphanumericCodeSchema } from './common'
 
 export const userFormSchema = z.object({
   name: nameSchema,
@@ -11,7 +11,7 @@ export const userFormSchema = z.object({
 })
 
 export const couponFormSchema = z.object({
-  code: requiredString('Código'),
+  code: alphanumericCodeSchema('Código'),
   type: z.enum(['percentage', 'fixed']),
   value: z.number().positive('Valor deve ser maior que zero'),
   maxUses: z.number().int().positive('Limite deve ser maior que zero'),

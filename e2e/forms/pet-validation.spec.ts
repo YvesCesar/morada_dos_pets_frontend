@@ -23,6 +23,26 @@ test.describe('Pet Form Validation', () => {
     await expect(dateInput).toHaveValue('10/05/2020')
   })
 
+  test('pet name with symbols shows error', async ({ page }) => {
+    await page.locator('.user-pets__add-btn').click()
+
+    const modal = page.locator('.pet-form')
+    await modal.locator('.pet-form__field--name input').fill('Rex@!')
+    await modal.locator('.pet-form__field--breed input').click()
+
+    await expect(page.getByText('Nome deve conter apenas letras')).toBeVisible()
+  })
+
+  test('breed with numbers shows error', async ({ page }) => {
+    await page.locator('.user-pets__add-btn').click()
+
+    const modal = page.locator('.pet-form')
+    await modal.locator('.pet-form__field--breed input').fill('Labrador123')
+    await modal.locator('.pet-form__field--name input').click()
+
+    await expect(page.getByText('Raça deve conter apenas letras')).toBeVisible()
+  })
+
   test('valid pet form enables save and card appears', async ({ page }) => {
     await page.locator('.user-pets__add-btn').click()
 

@@ -21,6 +21,16 @@ describe('contactSchema', () => {
       message: 'Olá',
     }).success).toBe(false)
   })
+
+  it('rejects subject with HTML tags', () => {
+    expect(contactSchema.safeParse({
+      name: 'Maria Santos',
+      email: 'maria@petshop.com',
+      phone: '(21) 99876-5432',
+      subject: 'Assunto <script>',
+      message: 'Gostaria de saber os horários disponíveis para banho de golden retriever.',
+    }).success).toBe(false)
+  })
 })
 
 describe('profileSchema', () => {
@@ -43,6 +53,28 @@ describe('profileSchema', () => {
       address: 'Av. Faria Lima',
       addressNumber: '1234',
       neighborhood: 'Itaim',
+    }).success).toBe(false)
+  })
+
+  it('rejects name with numbers', () => {
+    expect(profileSchema.safeParse({
+      name: 'Carlos123',
+      phone: '(11) 98765-4321',
+      cep: '04538-132',
+      address: 'Av. Faria Lima',
+      addressNumber: '1234',
+      neighborhood: 'Itaim Bibi',
+    }).success).toBe(false)
+  })
+
+  it('rejects address number with only letters', () => {
+    expect(profileSchema.safeParse({
+      name: 'Carlos Oliveira',
+      phone: '(11) 98765-4321',
+      cep: '04538-132',
+      address: 'Av. Faria Lima',
+      addressNumber: 'abc',
+      neighborhood: 'Itaim Bibi',
     }).success).toBe(false)
   })
 })
@@ -69,6 +101,17 @@ describe('creditCardSchema', () => {
       installments: 1,
     }).success).toBe(false)
   })
+
+  it('rejects card name with numbers', () => {
+    expect(creditCardSchema.safeParse({
+      cardNumber: '4111 1111 1111 1111',
+      cardName: 'CARLOS 123',
+      expiry: '12 / 28',
+      securityCode: '123',
+      rememberCard: false,
+      installments: 3,
+    }).success).toBe(false)
+  })
 })
 
 describe('debitCardSchema', () => {
@@ -80,6 +123,16 @@ describe('debitCardSchema', () => {
       securityCode: '456',
       rememberCard: true,
     }).success).toBe(true)
+  })
+
+  it('rejects card name with numbers', () => {
+    expect(debitCardSchema.safeParse({
+      cardNumber: '5500 0000 0000 0004',
+      cardName: 'ANA 123',
+      expiry: '06 / 27',
+      securityCode: '456',
+      rememberCard: true,
+    }).success).toBe(false)
   })
 })
 
@@ -108,6 +161,15 @@ describe('petSchema', () => {
       birthDate: '10/03/2020',
       breed: 'Labrador',
       weight: -5,
+    }).success).toBe(false)
+  })
+
+  it('rejects breed with numbers', () => {
+    expect(petSchema.safeParse({
+      name: 'Rex',
+      birthDate: '10/03/2020',
+      breed: 'Labrador123',
+      weight: 28.5,
     }).success).toBe(false)
   })
 })
@@ -155,6 +217,17 @@ describe('couponFormSchema', () => {
       value: 0,
       maxUses: 50,
       expiresAt: '2026-06-30',
+      active: true,
+    }).success).toBe(false)
+  })
+
+  it('rejects code with spaces and special characters', () => {
+    expect(couponFormSchema.safeParse({
+      code: 'MORADA 10!',
+      type: 'percentage',
+      value: 10,
+      maxUses: 100,
+      expiresAt: '2026-12-31',
       active: true,
     }).success).toBe(false)
   })

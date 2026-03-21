@@ -46,6 +46,16 @@ test.describe('User Form Validation', () => {
     await expect(cpfInput).toHaveValue('987.654.321-00')
   })
 
+  test('name with special characters shows error', async ({ page }) => {
+    await page.locator('.users-view__add-btn').click()
+
+    const modal = page.locator('.user-form')
+    await modal.locator('input[type="text"]').first().fill('Admin#1')
+    await modal.locator('input[type="email"]').click()
+
+    await expect(page.getByText('Nome deve conter apenas letras')).toBeVisible()
+  })
+
   test('valid form enables save button', async ({ page }) => {
     await page.locator('.users-view__add-btn').click()
 

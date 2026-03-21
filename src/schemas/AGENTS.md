@@ -25,7 +25,14 @@ Zod validation schemas for all application forms. Used with vee-validate's `useF
 |--------|--------|---------------|
 | `emailSchema` | valid email | "E-mail inválido" |
 | `passwordSchema` | min 6 chars | "Mínimo 6 caracteres" |
-| `nameSchema` | min 2 chars | "Nome deve ter pelo menos 2 caracteres" |
+| `nameSchema` | min 2 chars, letters only (incl. accents, hyphens, apostrophes) | "Nome deve conter apenas letras" |
+| `cardNameSchema` | letters only (incl. accents, spaces) | "Nome no cartão deve conter apenas letras" |
+| `addressSchema(label)` | letters, numbers, spaces, `.,\-°º/` | "Endereço contém caracteres inválidos" |
+| `addressNumberSchema` | digits + optional letter suffix | "Número deve conter apenas dígitos e opcionalmente uma letra" |
+| `neighborhoodSchema(label)` | letters, numbers, spaces, hyphens | "Bairro contém caracteres inválidos" |
+| `breedSchema` | letters only (incl. accents, hyphens, spaces) | "Raça deve conter apenas letras" |
+| `alphanumericCodeSchema(label)` | letters, numbers, hyphens, underscores | "Código deve conter apenas letras, números, hífens e underscores" |
+| `subjectSchema(label)` | letters, numbers, common punctuation | "Assunto contém caracteres inválidos" |
 | `phoneSchema` | `(##) #####-####` | "Celular inválido" |
 | `cpfSchema` | `###.###.###-##` | "CPF inválido" |
 | `cepSchema` | `#####-###` | "CEP inválido" |

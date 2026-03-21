@@ -76,6 +76,32 @@ describe('auth schemas', () => {
         bairro: 'Centro',
       }).success).toBe(false)
     })
+
+    it('rejects name with numbers', () => {
+      expect(registerStep2Schema.safeParse({
+        nome: 'João123',
+        dataNascimento: '15/06/1990',
+        cpf: '123.456.789-00',
+        celular: '(11) 98765-4321',
+        cep: '01001-000',
+        endereco: 'Rua das Flores',
+        numero: '42',
+        bairro: 'Centro',
+      }).success).toBe(false)
+    })
+
+    it('rejects address number with only letters', () => {
+      expect(registerStep2Schema.safeParse({
+        nome: 'João da Silva',
+        dataNascimento: '15/06/1990',
+        cpf: '123.456.789-00',
+        celular: '(11) 98765-4321',
+        cep: '01001-000',
+        endereco: 'Rua das Flores',
+        numero: 'abc',
+        bairro: 'Centro',
+      }).success).toBe(false)
+    })
   })
 
   describe('changePasswordSchema', () => {

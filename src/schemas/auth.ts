@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { emailSchema, passwordSchema, nameSchema, phoneSchema, cpfSchema, cepSchema, dateSchema, requiredString } from './common'
+import { emailSchema, passwordSchema, nameSchema, phoneSchema, cpfSchema, cepSchema, dateSchema, addressSchema, addressNumberSchema, neighborhoodSchema } from './common'
 
 export const loginSchema = z.object({
   email: emailSchema,
@@ -21,9 +21,9 @@ export const registerStep2Schema = z.object({
   cpf: cpfSchema,
   celular: phoneSchema,
   cep: cepSchema,
-  endereco: requiredString('Endereço'),
-  numero: requiredString('Número'),
-  bairro: requiredString('Bairro'),
+  endereco: addressSchema('Endereço'),
+  numero: addressNumberSchema,
+  bairro: neighborhoodSchema('Bairro'),
 })
 
 export const changePasswordSchema = z.object({

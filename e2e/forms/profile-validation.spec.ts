@@ -27,6 +27,25 @@ test.describe('Profile Form Validation', () => {
     await expect(cepInput).toHaveValue('01310-100')
   })
 
+  test('name with numbers shows error', async ({ page }) => {
+    const nameInput = page.locator('.profile-form__form .profile-form__input').first()
+    await nameInput.clear()
+    await nameInput.fill('Carlos123')
+    await page.locator('.profile-form__form .profile-form__input').nth(1).click()
+
+    await expect(page.getByText('Nome deve conter apenas letras')).toBeVisible()
+  })
+
+  test('address number with only letters shows error', async ({ page }) => {
+    const form = page.locator('.profile-form__form')
+    const addressNumberInput = form.locator('.profile-form__input').nth(7)
+    await addressNumberInput.clear()
+    await addressNumberInput.fill('abc')
+    await form.locator('.profile-form__input').nth(6).click()
+
+    await expect(page.getByText('Número deve conter apenas dígitos e opcionalmente uma letra')).toBeVisible()
+  })
+
   test('valid form saves successfully', async ({ page }) => {
     const nameInput = page.locator('.profile-form__form .profile-form__input').first()
     await nameInput.clear()

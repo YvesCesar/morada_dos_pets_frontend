@@ -29,6 +29,20 @@ test.describe('Contact Form Validation', () => {
     await expect(page.locator('#phone')).toHaveValue('(11) 91234-5678')
   })
 
+  test('name with numbers shows error', async ({ page }) => {
+    await page.locator('#name').fill('João123')
+    await page.locator('#email').click()
+
+    await expect(page.getByText('Nome deve conter apenas letras')).toBeVisible()
+  })
+
+  test('subject with HTML tags shows error', async ({ page }) => {
+    await page.locator('#subject').fill('Assunto <script>')
+    await page.locator('#name').click()
+
+    await expect(page.getByText('Assunto contém caracteres inválidos')).toBeVisible()
+  })
+
   test('valid form submission clears form and shows success', async ({ page }) => {
     await page.locator('#name').fill('João Pedro Santos')
     await page.locator('#email').fill('joao.pedro@email.com')

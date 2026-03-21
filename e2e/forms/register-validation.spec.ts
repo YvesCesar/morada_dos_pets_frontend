@@ -46,6 +46,45 @@ test.describe('Registration Form Validation', () => {
     await expect(page.locator('#cep')).toHaveValue('04567-890')
   })
 
+  test('step 2: name with special characters shows error', async ({ page }) => {
+    await page.locator('#email').fill('novocliente@petshop.com')
+    await page.locator('#password').fill('senhasegura123')
+    await page.locator('#confirm-password').fill('senhasegura123')
+    await page.locator('.register-card__button--primary').click()
+    await expect(page.getByText('Etapa 2 de 2')).toBeVisible()
+
+    await page.locator('#nome').fill('Maria@Silva')
+    await page.locator('#endereco').click()
+
+    await expect(page.getByText('Nome deve conter apenas letras')).toBeVisible()
+  })
+
+  test('step 2: address number with only letters shows error', async ({ page }) => {
+    await page.locator('#email').fill('novocliente@petshop.com')
+    await page.locator('#password').fill('senhasegura123')
+    await page.locator('#confirm-password').fill('senhasegura123')
+    await page.locator('.register-card__button--primary').click()
+    await expect(page.getByText('Etapa 2 de 2')).toBeVisible()
+
+    await page.locator('#numero').fill('abc')
+    await page.locator('#endereco').click()
+
+    await expect(page.getByText('Número deve conter apenas dígitos e opcionalmente uma letra')).toBeVisible()
+  })
+
+  test('step 2: name with accents is accepted', async ({ page }) => {
+    await page.locator('#email').fill('novocliente@petshop.com')
+    await page.locator('#password').fill('senhasegura123')
+    await page.locator('#confirm-password').fill('senhasegura123')
+    await page.locator('.register-card__button--primary').click()
+    await expect(page.getByText('Etapa 2 de 2')).toBeVisible()
+
+    await page.locator('#nome').fill('João da Conceição')
+    await page.locator('#endereco').click()
+
+    await expect(page.getByText('Nome deve conter apenas letras')).not.toBeVisible()
+  })
+
   test('step 1: submit button is disabled with empty fields', async ({ page }) => {
     await expect(page.locator('.register-card__button--primary')).toBeDisabled()
   })
