@@ -24,6 +24,11 @@
     cursor: not-allowed;
   }
 
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
   // ── Variants ──────────────────────────────
   &--primary {
     background-color: var(--color-primary);
@@ -104,6 +109,11 @@
   &:hover {
     background: rgba(0, 0, 0, 0.08);
     color: var(--color-text);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
   }
 
   &--danger:hover {

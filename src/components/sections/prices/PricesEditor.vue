@@ -52,7 +52,7 @@ const {
     <div v-if="activeTab === 'dog-spa'" class="prices-editor__content">
       <div v-for="(service, si) in draftDogSpa" :key="service.id" class="prices-editor__section">
         <h3 class="prices-editor__section-title">{{ service.title }}</h3>
-        <table class="prices-editor__table">
+        <table class="prices-editor__table" aria-label="Tabela de preços">
           <thead>
             <tr>
               <th>Porte</th>
@@ -75,7 +75,7 @@ const {
       </div>
 
       <div v-if="hasDogSpaChanges || savedTab === 'dog-spa'" class="prices-editor__actions">
-        <span v-if="savedTab === 'dog-spa'" class="prices-editor__saved-msg">
+        <span v-if="savedTab === 'dog-spa'" class="prices-editor__saved-msg" role="status">
           Preços salvos com sucesso!
         </span>
         <button
@@ -92,7 +92,7 @@ const {
     <div v-if="activeTab === 'hospedagem'" class="prices-editor__content">
       <div v-for="(plan, pi) in draftHospedagem" :key="plan.id" class="prices-editor__section">
         <h3 class="prices-editor__section-title">{{ plan.title }}</h3>
-        <table class="prices-editor__table">
+        <table class="prices-editor__table" aria-label="Tabela de preços">
           <thead>
             <tr>
               <th>Porte</th>
@@ -115,7 +115,7 @@ const {
       </div>
 
       <div v-if="hasHospedagemChanges || savedTab === 'hospedagem'" class="prices-editor__actions">
-        <span v-if="savedTab === 'hospedagem'" class="prices-editor__saved-msg">
+        <span v-if="savedTab === 'hospedagem'" class="prices-editor__saved-msg" role="status">
           Preços salvos com sucesso!
         </span>
         <button
@@ -133,7 +133,7 @@ const {
       <div v-for="(plan, pi) in draftCreche" :key="plan.id" class="prices-editor__section">
         <h3 class="prices-editor__section-title">{{ plan.title }}</h3>
         <p class="prices-editor__schedule">{{ plan.schedule }}</p>
-        <table class="prices-editor__table">
+        <table class="prices-editor__table" aria-label="Tabela de preços">
           <thead>
             <tr>
               <th>Frequência</th>
@@ -156,7 +156,7 @@ const {
       </div>
 
       <div v-if="hasCrecheChanges || savedTab === 'creche'" class="prices-editor__actions">
-        <span v-if="savedTab === 'creche'" class="prices-editor__saved-msg">
+        <span v-if="savedTab === 'creche'" class="prices-editor__saved-msg" role="status">
           Preços salvos com sucesso!
         </span>
         <button

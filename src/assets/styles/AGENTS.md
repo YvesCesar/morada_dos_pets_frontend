@@ -94,6 +94,14 @@ Use the `respond-to` mixin from `abstracts/_mixins.scss`:
 | `dashboard-table` | `_dashboard-table.scss` | Admin table + action buttons |
 | `dashboard-form` | `_dashboard-form.scss` | Admin modal form |
 | `pricing-card-section($bottom-padding)` | `_pricing-card.scss` | Pricing card grid |
+| `focus-visible($color, $offset)` | `_mixins.scss` | Standard `:focus-visible` outline for keyboard a11y |
+
+## Accessibility Patterns
+
+- **Focus visible**: Use `@include focus-visible;` or add `:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }` after any `outline: none` rule
+- **Reduced motion**: Global `@media (prefers-reduced-motion: reduce)` in `_reset.scss` disables all animations/transitions
+- **Skip link**: `.skip-link` class in `_reset.scss` — visually hidden until focused
+- **Screen reader only**: `.sr-only` class in `_reset.scss` — hides content visually but keeps it accessible
 
 ## How to Add Styles
 

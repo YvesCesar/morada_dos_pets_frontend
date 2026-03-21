@@ -72,6 +72,11 @@
     border-color: var(--color-primary-light);
   }
 
+  &__input:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
   &__submit-area {
     display: flex;
     flex-direction: column;

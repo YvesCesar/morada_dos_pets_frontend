@@ -61,7 +61,7 @@ const {
                 :class="{ 'register-card__input--error': step1Errors.email }"
                 autocomplete="email"
               />
-              <span v-if="step1Errors.email" class="form-error-message">{{ step1Errors.email }}</span>
+              <span v-if="step1Errors.email" class="form-error-message" aria-live="polite">{{ step1Errors.email }}</span>
             </div>
 
             <div class="register-card__field">
@@ -75,7 +75,7 @@ const {
                 :class="{ 'register-card__input--error': step1Errors.password }"
                 autocomplete="new-password"
               />
-              <span v-if="step1Errors.password" class="form-error-message">{{ step1Errors.password }}</span>
+              <span v-if="step1Errors.password" class="form-error-message" aria-live="polite">{{ step1Errors.password }}</span>
             </div>
           </div>
 
@@ -91,7 +91,7 @@ const {
                 :class="{ 'register-card__input--error': step1Errors.confirmPassword }"
                 autocomplete="new-password"
               />
-              <span v-if="step1Errors.confirmPassword" class="form-error-message">{{ step1Errors.confirmPassword }}</span>
+              <span v-if="step1Errors.confirmPassword" class="form-error-message" aria-live="polite">{{ step1Errors.confirmPassword }}</span>
             </div>
 
             <div class="register-card__submit-area">
@@ -122,7 +122,7 @@ const {
                 :class="{ 'register-card__input--error': step2Errors.nome }"
                 autocomplete="name"
               />
-              <span v-if="step2Errors.nome" class="form-error-message">{{ step2Errors.nome }}</span>
+              <span v-if="step2Errors.nome" class="form-error-message" aria-live="polite">{{ step2Errors.nome }}</span>
             </div>
 
             <div class="register-card__row">
@@ -138,7 +138,7 @@ const {
                   :class="{ 'register-card__input--error': step2Errors.dataNascimento }"
                   placeholder="__ / __ / __"
                 />
-                <span v-if="step2Errors.dataNascimento" class="form-error-message">{{ step2Errors.dataNascimento }}</span>
+                <span v-if="step2Errors.dataNascimento" class="form-error-message" aria-live="polite">{{ step2Errors.dataNascimento }}</span>
               </div>
 
               <div class="register-card__field register-card__field--cpf">
@@ -153,7 +153,7 @@ const {
                   :class="{ 'register-card__input--error': step2Errors.cpf }"
                   placeholder="___.___.___-__"
                 />
-                <span v-if="step2Errors.cpf" class="form-error-message">{{ step2Errors.cpf }}</span>
+                <span v-if="step2Errors.cpf" class="form-error-message" aria-live="polite">{{ step2Errors.cpf }}</span>
               </div>
             </div>
           </div>
@@ -177,7 +177,7 @@ const {
                   :class="{ 'register-card__input--error': step2Errors.celular }"
                   placeholder="(__) _____-____"
                 />
-                <span v-if="step2Errors.celular" class="form-error-message">{{ step2Errors.celular }}</span>
+                <span v-if="step2Errors.celular" class="form-error-message" aria-live="polite">{{ step2Errors.celular }}</span>
               </div>
 
               <div class="register-card__field register-card__field--cep">
@@ -193,7 +193,7 @@ const {
                   placeholder="_____-___"
                   @maska="handleCEPInput"
                 />
-                <span v-if="step2Errors.cep" class="form-error-message">{{ step2Errors.cep }}</span>
+                <span v-if="step2Errors.cep" class="form-error-message" aria-live="polite">{{ step2Errors.cep }}</span>
               </div>
             </div>
 
@@ -209,7 +209,7 @@ const {
                   :class="{ 'register-card__input--error': step2Errors.endereco }"
                   autocomplete="street-address"
                 />
-                <span v-if="step2Errors.endereco" class="form-error-message">{{ step2Errors.endereco }}</span>
+                <span v-if="step2Errors.endereco" class="form-error-message" aria-live="polite">{{ step2Errors.endereco }}</span>
               </div>
 
               <div class="register-card__field register-card__field--number">
@@ -222,7 +222,7 @@ const {
                   class="register-card__input"
                   :class="{ 'register-card__input--error': step2Errors.numero }"
                 />
-                <span v-if="step2Errors.numero" class="form-error-message">{{ step2Errors.numero }}</span>
+                <span v-if="step2Errors.numero" class="form-error-message" aria-live="polite">{{ step2Errors.numero }}</span>
               </div>
             </div>
 
@@ -236,7 +236,7 @@ const {
                 class="register-card__input"
                 :class="{ 'register-card__input--error': step2Errors.bairro }"
               />
-              <span v-if="step2Errors.bairro" class="form-error-message">{{ step2Errors.bairro }}</span>
+              <span v-if="step2Errors.bairro" class="form-error-message" aria-live="polite">{{ step2Errors.bairro }}</span>
             </div>
 
             <div class="register-card__submit-area">

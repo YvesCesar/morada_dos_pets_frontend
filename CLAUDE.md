@@ -87,6 +87,11 @@ e2e/
 13. E2E tests in `e2e/` — use Playwright, auth via localStorage injection (`e2e/helpers/auth.ts`)
 14. Form validation via zod schemas in `/schemas/` + vee-validate `useForm` — never use only HTML `required`
 15. Input masks via maska directive (`v-maska`) — never use manual `@input` formatters
+16. Toggleable elements (dropdowns, menus) must have `:aria-expanded` bound to open state
+17. Dismissible overlays (modals, dropdowns) must use `useEscapeKey` composable
+18. Modals must use `useFocusTrap`, `role="dialog"`, `aria-modal="true"`, and `aria-labelledby`
+19. Never remove `outline` on `:focus` without adding a `:focus-visible` replacement
+20. Form error messages must have `aria-live="polite"` for screen reader announcements
 
 ## Dashboard System
 

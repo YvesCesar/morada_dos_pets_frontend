@@ -18,7 +18,7 @@ const { formatDisplayDate } = useInputMasks()
 <template>
   <section class="admin-table">
     <div class="admin-table__wrapper">
-      <table class="admin-table__table">
+      <table class="admin-table__table" aria-label="Lista de agendamentos">
         <thead>
           <tr>
             <th>Cliente</th>
@@ -34,7 +34,11 @@ const { formatDisplayDate } = useInputMasks()
             v-for="a in appointments"
             :key="a.id"
             class="admin-table__row"
+            tabindex="0"
+            role="button"
+            :aria-label="`Ver detalhes: ${a.clientName}, ${a.petName}`"
             @click="emit('select', a)"
+            @keydown.enter="emit('select', a)"
           >
             <td>{{ a.clientName }}</td>
             <td>{{ a.petName }}</td>

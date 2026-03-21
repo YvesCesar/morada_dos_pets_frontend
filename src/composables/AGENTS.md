@@ -128,6 +128,35 @@ getStatusClass(testimonial, 'testimonials-table__status') // 'testimonials-table
 
 Used by: `AdminTestimonialsSection.vue`, `CustomerTestimonialSection.vue`
 
+## useEscapeKey(callback)
+
+Calls a callback when the Escape key is pressed. Registers/deregisters listeners on mount/unmount.
+
+```typescript
+useEscapeKey(() => emit('close'))
+```
+
+Used by: `BaseModal.vue`, `NotificationBell.vue`, `ProfileDropdown.vue`
+
+## useFocusTrap(containerRef)
+
+Traps keyboard focus inside a container element (for modals/dialogs). Saves the previously focused element and restores it on unmount.
+
+```typescript
+const modalRef = ref<HTMLElement | null>(null)
+useFocusTrap(modalRef)
+```
+
+Used by: `BaseModal.vue`
+
+## useRouteAnnouncer()
+
+Updates `document.title` on route changes and moves focus to `#main-content`. Called once in `App.vue`.
+
+```typescript
+useRouteAnnouncer()
+```
+
 ## Component-Specific Composables
 
 These extract business logic from specific SFCs, keeping `.vue` files focused on template binding.

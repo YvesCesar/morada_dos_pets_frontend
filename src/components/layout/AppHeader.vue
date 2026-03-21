@@ -38,6 +38,7 @@ const {
           :class="{ 'is-active': isMenuOpen }"
           @click="toggleMenu"
           aria-label="Menu"
+          :aria-expanded="isMenuOpen"
         >
           <span></span>
           <span></span>

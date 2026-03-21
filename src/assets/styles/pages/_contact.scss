@@ -109,6 +109,13 @@
   border-color: var(--color-primary);
 }
 
+.contact-form__input:focus-visible,
+.contact-form__select:focus-visible,
+.contact-form__textarea:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 .contact-form__button {
   margin-top: 1rem;
   padding: 0.75rem 2.5rem;

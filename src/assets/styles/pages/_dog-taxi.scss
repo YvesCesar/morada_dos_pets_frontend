@@ -149,6 +149,12 @@
   box-shadow: 0 0 0 2px rgba(41, 16, 0, 0.1);
 }
 
+.dog-taxi-description__input:focus-visible,
+.dog-taxi-description__select:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 .dog-taxi-description__input::placeholder {
   color: var(--color-text-muted);
 }

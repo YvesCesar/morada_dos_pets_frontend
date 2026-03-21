@@ -219,6 +219,12 @@
   box-shadow: 0 0 0 2px rgba(41, 16, 0, 0.1);
 }
 
+.service-request__select:focus-visible,
+.service-request__input:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 .service-request__select-arrow {
   position: absolute;
   right: 8px;
@@ -249,6 +255,11 @@
 .service-request__textarea:focus {
   border-color: var(--color-primary);
   box-shadow: 0 0 0 2px rgba(41, 16, 0, 0.1);
+}
+
+.service-request__textarea:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .service-request__textarea::placeholder {
@@ -667,6 +678,11 @@
     box-shadow: 0 0 0 2px rgba(41, 16, 0, 0.1);
   }
 
+  &__select:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
   &__select-arrow {
     position: absolute;
     right: var(--spacing-sm);
@@ -1009,6 +1025,11 @@
   outline: none;
   border-color: var(--color-primary);
   box-shadow: 0 0 0 2px rgba(41, 16, 0, 0.1);
+}
+
+.coupon-input__field:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .coupon-input__btn {
