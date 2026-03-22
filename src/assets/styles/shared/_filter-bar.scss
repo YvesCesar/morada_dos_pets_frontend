@@ -40,6 +40,11 @@
   border-color: var(--color-primary);
 }
 
+.dashboard-filter-bar__select:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 @media (max-width: 480px) {
   .dashboard-filter-bar {
     flex-direction: column;

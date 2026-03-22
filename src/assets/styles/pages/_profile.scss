@@ -80,6 +80,11 @@
   border-color: var(--color-primary-light);
 }
 
+.profile-form__input:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 .profile-form__input--readonly {
   background: var(--color-bg-readonly);
   color: var(--color-text-muted);

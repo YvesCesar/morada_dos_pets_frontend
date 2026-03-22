@@ -346,6 +346,11 @@
   border-color: var(--color-primary);
 }
 
+.customer-testimonial__textarea:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 .customer-testimonial__toggle {
   display: flex;
   align-items: center;
@@ -486,6 +491,11 @@
   border-color: var(--color-primary-light);
 }
 
+.pet-form__input:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 .pet-form__input-file {
   font-family: var(--font-primary);
   font-size: var(--text-xs);
@@ -609,6 +619,11 @@
 .pet-form__input:focus {
   outline: none;
   border-color: var(--color-primary-light);
+}
+
+.pet-form__input:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .pet-form__actions {

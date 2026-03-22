@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import type { SubmenuItem } from '@/types'
+import { useEscapeKey } from '@/composables'
 
 const props = defineProps<{
   userName: string
@@ -35,11 +36,15 @@ const handleLogout = () => {
 }
 
 const initial = props.userName ? props.userName.charAt(0).toUpperCase() : '?'
+
+useEscapeKey(() => {
+  if (isOpen.value) close()
+})
 </script>
 
 <template>
   <div class="profile-dropdown" v-click-outside="close">
-    <button class="profile-dropdown__trigger" @click="toggle">
+    <button class="profile-dropdown__trigger" :aria-expanded="isOpen" aria-haspopup="true" @click="toggle">
       <img
         v-if="userPhoto"
         :src="userPhoto"

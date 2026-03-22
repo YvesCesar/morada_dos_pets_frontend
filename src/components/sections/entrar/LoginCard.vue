@@ -47,7 +47,7 @@ const handleGoogleLogin = () => {
         </p>
       </div>
 
-      <p v-if="authStore.error" class="login-card__error">{{ authStore.error }}</p>
+      <p v-if="authStore.error" class="login-card__error" role="alert">{{ authStore.error }}</p>
 
       <form class="login-card__form" @submit.prevent="onSubmit">
         <div class="login-card__inputs">
@@ -62,7 +62,7 @@ const handleGoogleLogin = () => {
               :class="{ 'login-card__input--error': errors.email }"
               autocomplete="email"
             />
-            <span v-if="errors.email" class="form-error-message">{{ errors.email }}</span>
+            <span v-if="errors.email" class="form-error-message" aria-live="polite">{{ errors.email }}</span>
           </div>
 
           <div class="login-card__field">
@@ -76,7 +76,7 @@ const handleGoogleLogin = () => {
               :class="{ 'login-card__input--error': errors.password }"
               autocomplete="current-password"
             />
-            <span v-if="errors.password" class="form-error-message">{{ errors.password }}</span>
+            <span v-if="errors.password" class="form-error-message" aria-live="polite">{{ errors.password }}</span>
           </div>
         </div>
 
