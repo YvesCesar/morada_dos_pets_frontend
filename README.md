@@ -2,6 +2,8 @@
 
 Website for **Morada dos Pets**: a space dedicated to the care and well-being of your pet.
 
+![morada_dos_pets_demo](https://github.com/user-attachments/assets/1b723e71-0f11-45d5-a8ce-b455e53daec7)
+
 ## What is it
 
 Morada dos Pets is an online platform where pet owners can explore the services offered by the pet shop, schedule appointments, and track everything through the customer dashboard.
