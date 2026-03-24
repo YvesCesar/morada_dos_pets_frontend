@@ -200,14 +200,6 @@ Protected routes use `meta` fields (`requiresAuth`, `requiresAdmin`, `requiresCu
 - Auth via `localStorage` injection (`e2e/helpers/auth.ts`)
 - Configuration in `playwright.config.ts`
 
-## Recommended IDE
-
-[VS Code](https://code.visualstudio.com/) with the [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) extension (disable Vetur if installed).
-
-Useful browser extensions:
-- [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) (Chrome/Edge)
-- [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/) (Firefox)
-
 ## Additional documentation
 
 For deeper details on specific areas, see the `AGENTS.md` files in their respective folders:
