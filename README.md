@@ -62,4 +62,4 @@ For technical setup instructions, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 This project is licensed under the [GPL v3](/LICENSE).
 
-The project originated in the Design program at UFAM and was conceived and visually designed by [Yamille Santos](https://www.linkedin.com/in/yamille-santos), and developed by [Yves César](https://www.linkedin.com/in/yvescesar/).
+The project originated in the Design program at UFAM and was conceived and visually designed by [Yamille Santos](https://www.behance.net/Ymille), and developed by [Yves César](https://yvescesar.github.io/).
