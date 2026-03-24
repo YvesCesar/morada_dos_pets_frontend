@@ -1,5 +1,17 @@
 # Morada dos Pets
 
+[![Vue.js](https://img.shields.io/badge/Vue.js-3.5-4FC08D?logo=vuedotjs&logoColor=white)](https://vuejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)](https://vite.dev/)
+[![Pinia](https://img.shields.io/badge/Pinia-3-FFD859?logo=pinia&logoColor=black)](https://pinia.vuejs.org/)
+[![SCSS](https://img.shields.io/badge/SCSS-BEM-CC6699?logo=sass&logoColor=white)](https://sass-lang.com/)
+[![Zod](https://img.shields.io/badge/Zod-Validation-3E67B1?logo=zod&logoColor=white)](https://zod.dev/)
+
+[![Vitest](https://img.shields.io/badge/Vitest-Unit_Tests-6E9F18?logo=vitest&logoColor=white)](https://vitest.dev/)
+[![Playwright](https://img.shields.io/badge/Playwright-E2E_Tests-2EAD33?logo=playwright&logoColor=white)](https://playwright.dev/)
+[![Docker](https://img.shields.io/badge/Docker-Dev_Environment-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue)](https://www.gnu.org/licenses/gpl-3.0)
+
 Website for **Morada dos Pets**: a space dedicated to the care and well-being of your pet.
 
 ![morada_dos_pets_demo](https://github.com/user-attachments/assets/1b723e71-0f11-45d5-a8ce-b455e53daec7)
