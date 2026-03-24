@@ -1,0 +1,35 @@
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - '5173:5173'
+    volumes:
+      - ..:/app
+      - /app/node_modules
+    command: npm run dev -- --host 0.0.0.0
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    healthcheck:
+      test: ['CMD-SHELL', 'curl -f http://localhost:5173 || exit 1']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 15s
+
+  e2e:
+    image: mcr.microsoft.com/playwright:v1.58.2-noble
+    working_dir: /app
+    volumes:
+      - ..:/app
+      - /app/node_modules
+    network_mode: 'service:app'
+    depends_on:
+      app:
+        condition: service_healthy
+    environment:
+      - SKIP_WEB_SERVER=true
+    command: sh -c "npm ci && npx playwright test"
+    profiles:
+      - e2e

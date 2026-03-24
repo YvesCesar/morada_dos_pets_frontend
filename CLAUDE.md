@@ -18,6 +18,17 @@ npm run test:e2e:ui  # Playwright interactive UI mode
 npm run test:e2e:headed # Playwright headed mode
 ```
 
+## Docker Commands
+
+```bash
+docker compose -f docker/docker-compose.yml up              # Dev server no container (porta 5173)
+docker compose -f docker/docker-compose.yml up --build      # Rebuild da imagem (após mudança de deps)
+docker compose -f docker/docker-compose.yml down            # Parar containers
+docker compose -f docker/docker-compose.yml down -v         # Parar e remover volumes (reset node_modules)
+docker compose -f docker/docker-compose.yml exec app sh     # Shell no container
+docker compose -f docker/docker-compose.yml run --rm e2e    # Rodar testes E2E (Playwright com Chromium)
+```
+
 ## Directory Structure
 
 ```
@@ -118,6 +129,7 @@ Agents should read these only when working on the related area:
 | `src/stores/AGENTS.md` | Pinia stores, auth flow, CRUD patterns, mock data |
 | `tests/AGENTS.md` | Writing tests, test patterns, helpers, mocking strategies |
 | `e2e/AGENTS.md` | Writing E2E tests, Playwright patterns, auth helper, selectors |
+| `docker/AGENTS.md` | Docker dev environment, container commands, volume strategy, Playwright in Docker |
 
 ## Figma Integration
 
