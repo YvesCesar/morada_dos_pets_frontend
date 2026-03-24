@@ -1,48 +1,65 @@
-# .
+# Morada dos Pets
 
-This template should help get you started developing with Vue 3 in Vite.
+Website for **Morada dos Pets**: a space dedicated to the care and well-being of your pet.
 
-## Recommended IDE Setup
+## What is it
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+Morada dos Pets is an online platform where pet owners can explore the services offered by the pet shop, schedule appointments, and track everything through the customer dashboard.
 
-## Recommended Browser Setup
+## Available services
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+- **Dog Spa** — baths, grooming, and aesthetic treatments for your pet
+- **Pet boarding** — comfortable and safe stays while you travel
+- **Dog Taxi** — pet-friendly transportation with pickup and delivery at your door
 
-## Type Support for `.vue` Imports in TS
+## Features
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+### For pet owners (customers)
 
-## Customize configuration
+- Browse services and check updated pricing
+- Create an account and log in
+- Schedule services through the payment flow
+- Track appointments via the customer dashboard
+- Manage registered pets
+- Submit testimonials about their experience
+- Edit profile and account settings
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+### For administrators
 
-## Project Setup
+- Admin dashboard with an overview of all appointments
+- User management
+- Discount coupon management
+- Service pricing updates
+- Testimonial moderation
 
-```sh
-npm install
-```
+## Pages
 
-### Compile and Hot-Reload for Development
+| Page | Description |
+|------|-------------|
+| Home | Pet shop showcase with photo carousel and testimonials |
+| About Us | History and values of Morada dos Pets |
+| Services | Overview of all services offered |
+| Contact | Form to send messages and questions |
+| Login / Register | Account access or new account creation |
+| Customer Dashboard | Logged-in area to track appointments and pets |
+| Admin Dashboard | Logged-in area to manage the pet shop |
 
-```sh
-npm run dev
-```
+## Technologies
 
-### Type-Check, Compile and Minify for Production
+This project was built with [Vue.js](https://vuejs.org/), a modern framework for building web interfaces.
 
-```sh
-npm run build
-```
+## How to contribute
 
-### Lint with [ESLint](https://eslint.org/)
+We welcome contributions from the community! Here's how you can help:
 
-```sh
-npm run lint
-```
+- **Report bugs**: found something broken? [Open an issue](https://github.com/YvesCesar/morada_dos_pets_frontend/issues) describing what happened and how to reproduce it
+- **Suggest improvements**: have an idea for a new feature or a better user experience? Open an issue with your proposal
+- **Submit code**: pick an open issue, fork the repo, and send a pull request
+
+For technical setup instructions, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## License
+
+This project is licensed under the [GPL v3](/LICENSE).
+
+The project originated in the Design program at UFAM and was conceived and visually designed by [Yamille Santos](https://www.linkedin.com/in/yamille-santos), and developed by [Yves César](https://www.linkedin.com/in/yvescesar/).
